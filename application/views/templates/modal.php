@@ -17,3 +17,30 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Menu Baru -->
+<div class="modal fade" id="modalTambahMenuBaru" tabindex="-1" aria-labelledby="modalTambahMenuBaruLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark" id="modalTambahMenuBaruLabel">Tambah Menu Baru</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body text-dark">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Nama Menu...">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary">Tambah</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
