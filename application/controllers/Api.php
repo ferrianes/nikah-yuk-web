@@ -9,46 +9,32 @@ class Api extends RestController {
     {
         // Construct the parent class
         parent::__construct();
+        $this->load->model('Menu_model', 'menu');
     }
 
-    public function users_get()
+    public function menus_get()
     {
-        // Users from a data store e.g. database
-        $users = [
-            ['id' => 0, 'name' => 'John', 'email' => 'john@example.com'],
-            ['id' => 1, 'name' => 'Jim', 'email' => 'jim@example.com'],
-        ];
-
-        $id = $this->get( 'id' );
-
-        if ( $id === null )
+        // menus from a data store e.g. database
+        $id = $this->get('id');
+        $menus = $this->menu->getMenus($id);
+        // Check if the menus data store contains menus
+        if ( $menus )
         {
-            // Check if the users data store contains users
-            if ( $users )
-            {
-                // Set the response and exit
-                $this->response( $users, 200 );
-            }
-            else
-            {
-                // Set the response and exit
-                $this->response( [
-                    'status' => false,
-                    'message' => 'No users were found'
-                ], 404 );
-            }
+            // Set the response and exit
+            $this->response($menus, 200);
         }
         else
         {
-            if ( array_key_exists( $id, $users ) )
-            {
-                $this->response( $users[$id], 200 );
-            }
-            else
-            {
+            // Set the response and exit
+            if ($id === NULL) {
                 $this->response( [
                     'status' => false,
-                    'message' => 'No such user found'
+                    'message' => 'Menu kosong'
+                ], 404 );
+            } else {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Menu tidak ditemukan'
                 ], 404 );
             }
         }
