@@ -68,6 +68,34 @@ class Api extends RestController {
         }
     }
 
+    public function access_menus_get()
+    {
+        // admins from a data store e.g. database
+        $level_id = $this->get('level_id'); 
+        $admins = $this->Api_model->getJoinDatas('admin_menu.id, menu', 'admin_menu', 'admin_access_menu', 'admin_menu.id = admin_access_menu.menu_id', 'admin_access_menu.level_id = '.$level_id);
+        // Check if the admins data store contains admins
+        if ( $admins )
+        {
+            // Set the response and exit
+            $this->response($admins, 200);
+        }
+        else
+        {
+            // Set the response and exit
+            if ($level_id === NULL) {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Akses Menu Admin kosong'
+                ], 404 );
+            } else {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Akses Menu Admin tidak ditemukan'
+                ], 404 );
+            }
+        }
+    }
+
     public function menus_post()
     {
         $data = ['menu' => $this->post('menu')];

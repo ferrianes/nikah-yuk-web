@@ -29,4 +29,20 @@ class Api_model extends CI_Model {
         $this->db->update($table, $data, $where);
         return $this->db->affected_rows();
     }
+
+    public function getJoinDatas($select, $from, $join, $on, $where=NULL)
+    {
+        if ($where === NULL) {
+            $this->db->select($select);
+            $this->db->from($from);
+            $this->db->join($join, $on);
+            return $this->db->get()->result_array();
+        } else {
+            $this->db->select($select);
+            $this->db->from($from);
+            $this->db->join($join, $on);
+            $this->db->where($where);
+            return $this->db->get()->result_array();
+        }
+    }
 }
