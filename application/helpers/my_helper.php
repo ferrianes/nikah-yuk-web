@@ -9,3 +9,7 @@ function is_logged_in() {
         
     }
 }
+
+function filter_output($str){
+    return htmlentities($str, ENT_QUOTES, 'UTF-8');
+}

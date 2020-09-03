@@ -9,14 +9,14 @@ class Api extends RestController {
     {
         // Construct the parent class
         parent::__construct();
-        $this->load->model('Menu_model', 'menu');
+        $this->load->model('Api_model');
     }
 
     public function menus_get()
     {
         // menus from a data store e.g. database
         $id = $this->get('id');
-        $menus = $this->menu->getMenus($id);
+        $menus = $this->Api_model->getDatas('admin_menu', 'id', $id);
         // Check if the menus data store contains menus
         if ( $menus )
         {
@@ -37,6 +37,73 @@ class Api extends RestController {
                     'message' => 'Menu tidak ditemukan'
                 ], 404 );
             }
+        }
+    }
+
+    public function admins_get()
+    {
+        // admins from a data store e.g. database
+        $id = $this->get('email'); 
+        $admins = $this->Api_model->getDatas('admin', 'email', $id);
+        // Check if the admins data store contains admins
+        if ( $admins )
+        {
+            // Set the response and exit
+            $this->response($admins, 200);
+        }
+        else
+        {
+            // Set the response and exit
+            if ($id === NULL) {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Admin kosong'
+                ], 404 );
+            } else {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Admin tidak ditemukan'
+                ], 404 );
+            }
+        }
+    }
+
+    public function menus_post()
+    {
+        $data = ['menu' => $this->post('menu')];
+
+        if ($this->Api_model->insertData('admin_menu', $data) > 0) {
+            $this->response(['message' => 'Data berhasil diinput'], 200);
+        } else {
+            $this->response(['message' => 'Data gagal diinput'], 400);
+        }
+    }
+
+    public function menus_delete()
+    {
+        $id = $this->delete('id');
+
+        if ($id === NULL) {
+            $this->response(['message' => 'Masukkan id!'], 400);
+        } else {
+            if ($this->Api_model->deleteData('admin_menu', $id) > 0) {
+                $this->response(['message' => 'Data berhasil dihapus'], 200);
+            } else {
+                $this->response(['message' => 'Id tidak ditemukan'], 400);
+            }
+        }
+
+    }
+
+    public function menus_put()
+    {
+        $data = ['menu' => $this->put('menu')];
+        $where = ['id' => $this->put('id')];
+
+        if ($this->Api_model->updateData('admin_menu', $data, $where) > 0) {
+            $this->response(['message' => 'Data berhasil diubah'], 200);
+        } else {
+            $this->response(['message' => 'Data gagal diubah'], 400);
         }
     }
 }

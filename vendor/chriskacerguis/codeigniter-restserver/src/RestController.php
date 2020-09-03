@@ -486,7 +486,7 @@ class RestController extends \CI_Controller
             $this->response([
                 $this->config->item('rest_status_field_name')  => false,
                 $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_unsupported'),
-            ], HTTP_FORBIDDEN);
+            ], 403);
         }
 
         // Remove the supported format from the function name e.g. index.json => index
@@ -519,7 +519,7 @@ class RestController extends \CI_Controller
             $this->response([
                 $this->config->item('rest_status_field_name')  => false,
                 $this->config->item('rest_message_field_name') => sprintf($this->lang->line('text_rest_invalid_api_key'), $this->rest->key),
-            ], HTTP_FORBIDDEN);
+            ], 403);
         }
 
         // Check to see if this key has access to the requested controller

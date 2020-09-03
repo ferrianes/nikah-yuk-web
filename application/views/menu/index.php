@@ -35,6 +35,7 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
+                    <?= $this->session->flashdata('pesan'); ?>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -49,10 +50,10 @@
                                 <?php $no = 1; foreach ($menus as $menu) : ?>
                                 <tr>
                                     <th scope="row"><?= $no; ?></th>
-                                    <td><?= $menu['menu']; ?></td>
+                                    <td><?= filter_output($menu['menu']); ?></td>
                                     <td>
                                         <a href="<?= base_url('menu') ?>" class="badge badge-primary"><i class="fas fa-fw fa-edit"></i> Edit</a> | 
-                                        <a href="#" class="badge badge-danger"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                                        <a href="" data-href="<?= base_url('menu/deleteMenu/' . $menu['id']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusMenu" class="badge badge-danger"><i class="fas fa-fw fa-trash"></i> Hapus</a>
                                     </td>
                                 </tr>
                                 <?php $no++; endforeach; ?>

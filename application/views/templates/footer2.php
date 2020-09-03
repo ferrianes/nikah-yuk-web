@@ -10,6 +10,9 @@
     <!-- Custom scripts for all pages-->
     <script src="<?= base_url('assets/js/sb-admin-2/sb-admin-2.min.js') ?>"></script>
 
+    <!-- Custom -->
+    <script src="<?= base_url('assets/js/custom/script.js') ?>"></script>
+
 </body>
 
 </html>
