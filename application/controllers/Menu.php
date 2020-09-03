@@ -48,4 +48,34 @@ class Menu extends CI_Controller {
         redirect('menu');
     }
 
+    public function editMenu()
+    {
+        // Validasi Menu
+        $this->form_validation->set_rules('menu', 'Menu', 'required|trim', [
+            'required' => 'Menu Harus diisi!!!'
+        ]);
+
+        if ($this->form_validation->run() === FALSE) {
+            $data['title'] = 'Menu Management';
+            $id = $this->uri->segment(3);
+    
+            $data['admin'] = $this->Utama_model->getDatas('admins', 'email', $this->session->userdata('email'));
+    
+            $data['menu'] = $this->Utama_model->getDatas('menus', 'id', $id);
+    
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('menu/edit', $data);
+            $this->load->view('templates/footer');
+            $this->load->view('templates/modal');
+            $this->load->view('templates/footer2');
+        } else {
+            $this->Utama_model->updateData('menus');
+
+            $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> diubah.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            redirect('menu');
+        }
+    }
+
 }

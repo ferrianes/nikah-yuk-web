@@ -30,7 +30,7 @@ $menus = $this->db->query($queryMenu)->result_array();
 
 <!-- Heading -->
 <div class="sidebar-heading">
-    <?= $menu['menu']; ?>
+    <?= filter_output($menu['menu']); ?>
 </div>
 
     <?php 
@@ -43,9 +43,9 @@ $menus = $this->db->query($queryMenu)->result_array();
     ?>
     <!-- Nav Item -->
     <li class="nav-item <?= ($title == $subMenu['title'] ? 'active' : ''); ?>">
-        <a class="nav-link" href="<?= base_url($subMenu['url']); ?>">
-            <i class="<?= $subMenu['icon']; ?>"></i>
-            <span><?= $subMenu['title']; ?></span>
+        <a class="nav-link" href="<?= filter_output(base_url($subMenu['url'])); ?>">
+            <i class="<?= filter_output($subMenu['icon']); ?>"></i>
+            <span><?= filter_output($subMenu['title']); ?></span>
         </a>
     </li>
     <?php endforeach; ?>

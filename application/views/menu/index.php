@@ -52,7 +52,7 @@
                                     <th scope="row"><?= $no; ?></th>
                                     <td><?= filter_output($menu['menu']); ?></td>
                                     <td>
-                                        <a href="<?= base_url('menu') ?>" class="badge badge-primary"><i class="fas fa-fw fa-edit"></i> Edit</a> | 
+                                        <a href="<?= base_url('menu/editMenu/'.$menu['id']); ?>" class="badge badge-primary"><i class="fas fa-fw fa-edit"></i> Edit</a> | 
                                         <a href="" data-name="<?= $menu['menu']; ?>" data-href="<?= base_url('menu/deleteMenu/' . $menu['id']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusMenu" class="badge badge-danger"><i class="fas fa-fw fa-trash"></i> Hapus</a>
                                     </td>
                                 </tr>

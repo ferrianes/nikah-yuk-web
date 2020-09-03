@@ -13,6 +13,5 @@ $(function() {
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
         $(this).find('#nama-menu-modal').html($.sanitize($(e.relatedTarget).data('name')));
     });
-
 });
 
