@@ -58,7 +58,7 @@
             </div>
             <form method="post" action="<?= base_url('menu') ?>">
                 <div class="modal-body text-dark">
-                    <p>Anda yakin untuk menghapus Menu? </p>
+                    <p>Anda yakin untuk menghapus Menu <span id='nama-menu-modal'></span>? </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
