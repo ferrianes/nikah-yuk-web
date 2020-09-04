@@ -23,18 +23,21 @@
     <?php 
     $menuId = $menu['id'];
     $subMenus = $this->Utama_model->getDatas('sub_menus', ['menu_id' => $menuId]);
-
-    // Looping Sub Menu
-    foreach ($subMenus as $subMenu) :
-    ?>
-    <!-- Nav Item -->
-    <li class="nav-item <?= ($title == $subMenu['title'] ? 'active' : ''); ?>">
-        <a class="nav-link py-2" href="<?= filter_output(base_url($subMenu['url'])); ?>">
-            <i class="<?= filter_output($subMenu['icon']); ?>"></i>
-            <span><?= filter_output($subMenu['title']); ?></span>
-        </a>
-    </li>
-    <?php endforeach; ?>
+    // var_dump($subMenus);
+    if(isset($subMenus['status']) && $subMenus['status'] === FALSE) :
+        else :
+            // Looping Sub Menu
+            foreach ($subMenus as $subMenu) :
+            ?>
+            <!-- Nav Item -->
+            <li class="nav-item <?= ($title == $subMenu['title'] ? 'active' : ''); ?>">
+                <a class="nav-link py-2" href="<?= filter_output(base_url($subMenu['url'])); ?>">
+                    <i class="<?= filter_output($subMenu['icon']); ?>"></i>
+                    <span><?= filter_output($subMenu['title']); ?></span>
+                </a>
+            </li>
+            <?php endforeach; 
+    endif; ?>
 
 <!-- Divider -->
 <hr class="sidebar-divider mb-2">

@@ -35,6 +35,15 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
+                    <?php if(validation_errors()) : ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Data Gagal Diinput!</strong>
+                            <?= validation_errors('<div>', '</div>'); ?>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <?php endif; ?>
                     <?= $this->session->flashdata('pesan'); ?>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
@@ -42,6 +51,7 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Menu</th>
+                                    <th scope="col">Urutan</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
@@ -51,6 +61,7 @@
                                 <tr>
                                     <th scope="row"><?= $no; ?></th>
                                     <td><?= filter_output($menu['menu']); ?></td>
+                                    <td><?= filter_output($menu['urutan']); ?></td>
                                     <td>
                                         <a href="<?= base_url('menu/editMenu/'.$menu['id']); ?>" class="badge badge-primary"><i class="fas fa-fw fa-edit"></i> Edit</a> | 
                                         <a href="" data-name="<?= $menu['menu']; ?>" data-href="<?= base_url('menu/deleteMenu/' . $menu['id']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusMenu" class="badge badge-danger"><i class="fas fa-fw fa-trash"></i> Hapus</a>

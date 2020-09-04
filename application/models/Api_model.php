@@ -30,18 +30,20 @@ class Api_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
-    public function getJoinDatas($select, $from, $join, $on, $where, $id=NULL)
+    public function getJoinDatas($select, $from, $join, $on, $where, $id=NULL, $order=NULL, $by=NULL)
     {
         if ($id === NULL) {
             $this->db->select($select);
             $this->db->from($from);
             $this->db->join($join, $on);
+            $this->db->order_by($order, $by);
             return $this->db->get()->result_array();
         } else {
             $this->db->select($select);
             $this->db->from($from);
             $this->db->join($join, $on);
             $this->db->where($where);
+            $this->db->order_by($order, $by);
             return $this->db->get()->result_array();
         }
     }

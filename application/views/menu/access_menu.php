@@ -16,7 +16,7 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Daftar Menu</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Daftar Akses Menu</h6>
                     <!-- Dropdown -->
                     <!-- <div class="dropdown no-arrow">
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
@@ -54,8 +54,8 @@
                                     <td><?= filter_output($access_menu['role']); ?></td>
                                     <td><?= filter_output($access_menu['menu']); ?></td>
                                     <td>
-                                        <a href="<?= base_url('menu/editMenu/'.$access_menu['id']); ?>" class="badge badge-primary"><i class="fas fa-fw fa-edit"></i> Edit</a> | 
-                                        <a href="" data-name="<?= $access_menu['menu']; ?>" data-href="<?= base_url('menu/deleteMenu/' . $access_menu['id']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusMenu" class="badge badge-danger"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                                        <a href="<?= base_url('menu/editAccessMenu/'.$access_menu['id']); ?>" class="badge badge-primary"><i class="fas fa-fw fa-edit"></i> Edit</a> | 
+                                        <a href="" data-name="<?= $access_menu['menu']; ?>" data-href="<?= base_url('menu/deleteAccessMenu/' . $access_menu['id']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusAksesMenu" class="badge badge-danger"><i class="fas fa-fw fa-trash"></i> Hapus</a>
                                     </td>
                                 </tr>
                                 <?php $no++; endforeach; ?>

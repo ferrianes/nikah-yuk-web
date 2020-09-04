@@ -13,5 +13,9 @@ $(function() {
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
         $(this).find('#nama-menu-modal').html($.sanitize($(e.relatedTarget).data('name')));
     });
+    $('#modalKonfirmasiHapusAksesMenu').on('show.bs.modal', function(e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        $(this).find('#nama-menu-modal').html($.sanitize($(e.relatedTarget).data('name')));
+    });
 });
 

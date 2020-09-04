@@ -101,7 +101,7 @@ class Api extends RestController {
     {
         // menus_by_access_menu from a data store e.g. database
         $level_id = $this->get('level_id');
-        $menus_by_access_menu = $this->Api_model->getJoinDatas('admin_menu.id, menu', 'admin_menu', 'admin_access_menu', 'admin_menu.id = admin_access_menu.menu_id', 'admin_access_menu.level_id = '.$level_id, $level_id);
+        $menus_by_access_menu = $this->Api_model->getJoinDatas('admin_menu.id, menu', 'admin_menu', 'admin_access_menu', 'admin_menu.id = admin_access_menu.menu_id', 'admin_access_menu.level_id = '.$level_id, $level_id, 'admin_menu.urutan', 'ASC');
         // Check if the menus_by_access_menu data store contains access_menu
         if ( $menus_by_access_menu )
         {
@@ -157,7 +157,10 @@ class Api extends RestController {
     {
         // access_menus from a data store e.g. database
         $id = $this->get('id');
-        $access_menus = $this->Api_model->getDatas('admin_access_menu', ['id' => $id], $id);
+        $menu_id = $this->get('menu_id');
+        $cek = is_null($id) ? $menu_id : $id;
+        $where = is_null($id) ? 'menu_id' : 'id';
+        $access_menus = $this->Api_model->getDatas('admin_access_menu', [$where => $cek], $cek);
         // Check if the access_menus data store contains access_menu
         if ( $access_menus )
         {
@@ -167,7 +170,7 @@ class Api extends RestController {
         else
         {
             // Set the response and exit
-            if ($level_id === NULL) {
+            if ($id === NULL) {
                 $this->response( [
                     'status' => false,
                     'message' => 'Akses Menu Admin kosong'
@@ -211,7 +214,10 @@ class Api extends RestController {
 
     public function menus_post()
     {
-        $data = ['menu' => $this->post('menu')];
+        $data = [
+            'menu' => $this->post('menu'),
+            'urutan' => $this->post('urutan')
+        ];
 
         if ($this->Api_model->insertData('admin_menu', $data) > 0) {
             $this->response(['message' => 'Data berhasil diinput'], 200);
@@ -234,6 +240,37 @@ class Api extends RestController {
         }
     }
 
+    public function access_menus_raw_put()
+    {
+        $data = [
+            'level_id' => $this->put('level_id'),
+            'menu_id' => $this->put('menu_id')
+        ];
+        $where = ['id' => $this->put('id')];
+
+        if ($this->Api_model->updateData('admin_access_menu', $data, $where) > 0) {
+            $this->response(['message' => 'Data berhasil diubah'], 200);
+        } else {
+            $this->response(['message' => 'Data gagal diubah'], 400);
+        }
+    }
+
+    public function access_menus_raw_delete()
+    {
+        $id = $this->delete('id');
+
+        if ($id === NULL) {
+            $this->response(['message' => 'Masukkan id!'], 400);
+        } else {
+            if ($this->Api_model->deleteData('admin_access_menu', $id) > 0) {
+                $this->response(['message' => 'Data berhasil dihapus'], 200);
+            } else {
+                $this->response(['message' => 'Id tidak ditemukan'], 400);
+            }
+        }
+
+    }
+
     public function menus_delete()
     {
         $id = $this->delete('id');
@@ -252,7 +289,10 @@ class Api extends RestController {
 
     public function menus_put()
     {
-        $data = ['menu' => $this->put('menu')];
+        $data = [
+            'menu' => $this->put('menu'),
+            'urutan' => $this->put('urutan')
+        ];
         $where = ['id' => $this->put('id')];
 
         if ($this->Api_model->updateData('admin_menu', $data, $where) > 0) {
