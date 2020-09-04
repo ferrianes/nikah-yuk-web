@@ -12,38 +12,24 @@
 <!-- Divider -->
 <hr class="sidebar-divider">
 
-<!-- Query Menu -->
-<?php
-$level_id = $this->session->userdata('level');
-$queryMenu = "SELECT `admin_menu`.`id`, `menu` 
-                FROM `admin_menu` JOIN `admin_access_menu` 
-                    ON  `admin_menu`.`id` = `admin_access_menu`.`menu_id`
-                WHERE `admin_access_menu`.`level_id` = $level_id
-            ORDER BY `admin_access_menu`.`menu_id` ASC
-            ";
-
-$menus = $this->db->query($queryMenu)->result_array();
-?>
-
 <!-- Looping Menu -->
-<?php foreach ($menus as $menu) : ?>
+<?php foreach ($menus_by_access_menu as $menu) : ?>
 
 <!-- Heading -->
 <div class="sidebar-heading">
     <?= filter_output($menu['menu']); ?>
 </div>
-
+    <!-- Ambil Data Dari Menu Id -->
     <?php 
     $menuId = $menu['id'];
-    $querySubMenu = "SELECT * FROM `admin_sub_menu` WHERE `menu_id` = $menuId AND `is_active` = 1";
-    $subMenus = $this->db->query($querySubMenu)->result_array();
+    $subMenus = $this->Utama_model->getDatas('sub_menus', ['menu_id' => $menuId]);
 
     // Looping Sub Menu
     foreach ($subMenus as $subMenu) :
     ?>
     <!-- Nav Item -->
     <li class="nav-item <?= ($title == $subMenu['title'] ? 'active' : ''); ?>">
-        <a class="nav-link" href="<?= filter_output(base_url($subMenu['url'])); ?>">
+        <a class="nav-link py-2" href="<?= filter_output(base_url($subMenu['url'])); ?>">
             <i class="<?= filter_output($subMenu['icon']); ?>"></i>
             <span><?= filter_output($subMenu['title']); ?></span>
         </a>
@@ -51,7 +37,7 @@ $menus = $this->db->query($queryMenu)->result_array();
     <?php endforeach; ?>
 
 <!-- Divider -->
-<hr class="sidebar-divider">
+<hr class="sidebar-divider mb-2">
 
 <?php endforeach; ?>
 

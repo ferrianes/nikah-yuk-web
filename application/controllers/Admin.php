@@ -5,6 +5,7 @@ class Admin extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('Utama_model');
         if (!$this->session->userdata['email']) {
             redirect('auth');            
         }
@@ -13,7 +14,8 @@ class Admin extends CI_Controller {
     public function index()
     {
         $data['title'] = 'Dashboard';
-        $data['admin'] = $this->db->get_where('admin', ['email' => $this->session->userdata('email')])->row_array();
+        $data['admin'] = $this->Utama_model->getDatas('admins', ['email' => $this->session->userdata('email')])[0];
+        $data['menus_by_access_menu'] = $this->Utama_model->getDatas('menus_by_access_menu', ['level_id' => $this->session->userdata('level')]);
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar' ,$data);

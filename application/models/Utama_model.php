@@ -13,9 +13,9 @@ class Utama_model extends CI_Model {
         ]);
     }
 
-    public function getDatas($uri, $where = NULL, $id = NULL)
+    public function getDatas($uri, $where = NULL)
     {
-        if ($where === NULL && $id === NULL) {
+        if ($where === NULL) {
             $response = $this->_client->request('GET', $uri, [
                 'query' => [
                     'token' => 'Da0sxRC4'
@@ -23,21 +23,18 @@ class Utama_model extends CI_Model {
             ]);
             return json_decode($response->getBody()->getContents(), true);
         } else {
+            $where += ['token' => 'Da0sxRC4'];
             $response = $this->_client->request('GET', $uri, [
-                'query' => [
-                    'token' => 'Da0sxRC4',
-                    $where => $id
-                ]
+                'query' => $where
             ]);
             return json_decode($response->getBody()->getContents(), true);
         }
     }
 
-    public function insertData($uri)
+    public function insertData($uri, $data)
     {
-        $data = [
-            'token' => 'Da0sxRC4',
-            'menu' => $this->input->post('menu', TRUE)
+        $data += [
+            'token' => 'Da0sxRC4'
         ];
         $response = $this->_client->request('POST', $uri, [
             'form_params' => $data
@@ -45,11 +42,10 @@ class Utama_model extends CI_Model {
         return json_decode($response->getBody()->getContents(), true);
     }
 
-    public function deleteData($uri)
+    public function deleteData($uri, $data)
     {
-        $data = [
-            'token' => 'Da0sxRC4',
-            'id' => $this->uri->segment(3)
+        $data += [
+            'token' => 'Da0sxRC4'
         ];
         $response = $this->_client->request('DELETE', $uri, [
             'form_params' => $data
@@ -57,12 +53,10 @@ class Utama_model extends CI_Model {
         return json_decode($response->getBody()->getContents(), true);
     }
 
-    public function updateData($uri)
+    public function updateData($uri, $data)
     {
-        $data = [
-            'token' => 'Da0sxRC4',
-            'menu' => $this->input->post('menu', TRUE),
-            'id' => $this->uri->segment(3)
+        $data += [
+            'token' => 'Da0sxRC4'
         ];
         $response = $this->_client->request('PUT', $uri, [
             'form_params' => $data

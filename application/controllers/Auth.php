@@ -30,7 +30,7 @@ class Auth extends CI_Controller {
     }
 
     private function _login() {
-        $email = htmlspecialchars($this->input->post('email', true));
+        $email = $this->input->post('email', true);
         $password = $this->input->post('password', true);
 
         $admin = $this->db->get_where('admin', ['email' => $email])->row_array();
