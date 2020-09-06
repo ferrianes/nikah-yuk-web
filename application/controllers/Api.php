@@ -96,6 +96,34 @@ class Api extends RestController {
         }
     }
 
+    public function kategoris_get()
+    {
+        // kategoris from a data store e.g. database
+        $id = $this->get('id');
+        $kategoris = $this->Api_model->getDatas('kategori', ['id' => $id], $id);
+        // Check if the kategoris data store contains kategoris
+        if ( $kategoris )
+        {
+            // Set the response and exit
+            $this->response($kategoris, 200);
+        }
+        else
+        {
+            // Set the response and exit
+            if ($id === NULL) {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Kategori kosong'
+                ], 404 );
+            } else {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Kategori tidak ditemukan'
+                ], 404 );
+            }
+        }
+    }
+
     // Buat Sidebar
     public function menus_by_access_menu_get()
     {
@@ -212,6 +240,34 @@ class Api extends RestController {
         }
     }
 
+    public function products_get()
+    {
+        // products from a data store e.g. database
+        $id = $this->get('id');
+        $products = $this->Api_model->getDatas('produk', ['id' => $id], $id);
+        // Check if the products data store contains products
+        if ( $products )
+        {
+            // Set the response and exit
+            $this->response($products, 200);
+        }
+        else
+        {
+            // Set the response and exit
+            if ($id === NULL) {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Menu kosong'
+                ], 404 );
+            } else {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Menu tidak ditemukan'
+                ], 404 );
+            }
+        }
+    }
+
     public function menus_post()
     {
         $data = [
@@ -223,6 +279,50 @@ class Api extends RestController {
             $this->response(['message' => 'Data berhasil diinput'], 200);
         } else {
             $this->response(['message' => 'Data gagal diinput'], 400);
+        }
+    }
+    
+
+    public function products_post()
+    {
+        $config = array(
+            'upload_path' => './assets/img/api/products/',
+            'allowed_types' => "gif|jpg|png|jpeg|pdf",
+            'overwrite' => TRUE,
+            'max_size' => "2048000",
+            'max_height' => "768",
+            'max_width' => "1024"
+        );
+        
+        $this->load->library('upload',$config);
+        if($this->upload->do_upload('gambar'))
+        {
+            $image = $this->upload->data(); 
+            $data = [
+                'id_kategori' => $this->post('id_kategori'),
+                'tgl_input' => date("Y-m-d"),
+                'nama' => $this->post('nama'),
+                'deskripsi' => $this->post('deskripsi'),
+                'harga' => $this->post('harga'),
+                'stok' => $this->post('stok'),
+                'gambar' => $image['file_name'],
+                'diorder' => $this->post('diorder'),
+                'diskon' => $this->post('diskon')
+            ];
+            
+            if ($this->Api_model->insertData('produk', $data) > 0) {
+                $this->response(['message' => 'Data berhasil diinput'], 200);
+            } else {
+                $this->response(['message' => 'Data gagal diinput'], 400);
+            }
+        }
+        else
+        {
+            $error = [
+                'error' => $this->upload->display_errors('', ''),
+                'status' => FALSE
+            ];
+            $this->response($error, 400);
         }
     }
 

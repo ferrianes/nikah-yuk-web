@@ -144,3 +144,92 @@
     </div>
 </div>
 <?php endif; ?>
+
+<?php if ($title == 'Produk Management') : ?>
+<!-- Modal Akses Menu Baru -->
+<form method="post" action="<?= base_url('menu/access_menu') ?>">
+<div class="modal fade" id="modalTambahProduk" tabindex="-1" aria-labelledby="modalTambahProdukLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark" id="modalTambahProdukLabel">Tambah Produk Baru</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-dark">
+                <div class="form-group">
+                    <label for="nama">Nama Produk</label>
+                    <input type="text" name="nama" id="nama" class="form-control" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="kategori">Kategori</label>
+                    <select class="form-control" id="kategori" name="id_kategori">
+                        <option value="" disabled selected>Pilih Kategori</option>
+                        <?php 
+                            $kategoris = $this->Utama_model->getDatas('kategoris');
+                            foreach($kategoris as $kategori) :
+                                echo '<option value="'. $kategori['id'] .'">'. $kategori['nama'] .'</option>';
+                            endforeach;
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="deskripsi">Deskripsi</label>
+                    <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="harga">Harga</label>
+                    <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                        <div class="input-group-text">Rp.</div>
+                        </div>
+                        <input type="text" class="form-control" id="harga" name="harga">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="stok">Stok</label>
+                    <input type="text" name="stok" id="stok" class="form-control" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="stok">Foto</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="gambar">
+                        <label class="custom-file-label" for="gambar">Choose file</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary">Tambah</button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+<!-- Modal Hapus Menu Baru -->
+<div class="modal fade" id="modalKonfirmasiHapusAksesMenu" tabindex="-1" aria-labelledby="modalKonfirmasiHapusAksesMenuLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="modalKonfirmasiHapusAksesMenuLabel">Hapus Akses Menu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="<?= base_url('menu') ?>">
+                <div class="modal-body text-dark">
+                    <p>Anda yakin untuk menghapus Menu <strong><span id='nama-menu-modal'></span></strong>? </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <a href="" class="btn btn-danger btn-ok">Hapus</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
