@@ -44,6 +44,24 @@ class Utama_model extends CI_Model {
         return json_decode($response->getBody()->getContents(), true);
     }
 
+    public function uploadData($uri, $data)
+    {
+        // $data += [
+        //     'token' => 'Da0sxRC4'
+        // ];
+        // var_dump($data);die;
+        $response = $this->_client->request('POST', $uri, [
+            'multipart' => [
+                $data
+            ],
+            'headers' => array(
+                'token' => 'Da0sxRC4',
+            )
+        ]);
+        var_dump($response->getBody()->getContents());die;
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
     public function deleteData($uri, $data)
     {
         $data += [

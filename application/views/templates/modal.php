@@ -147,7 +147,7 @@
 
 <?php if ($title == 'Produk Management') : ?>
 <!-- Modal Akses Menu Baru -->
-<form method="post" action="<?= base_url('menu/access_menu') ?>">
+<form method="post" action="<?= base_url('product') ?>" enctype="multipart/form-data">
 <div class="modal fade" id="modalTambahProduk" tabindex="-1" aria-labelledby="modalTambahProdukLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -183,7 +183,7 @@
                     <label for="harga">Harga</label>
                     <div class="input-group mb-2 mr-sm-2">
                         <div class="input-group-prepend">
-                        <div class="input-group-text">Rp.</div>
+                        <div class="input-group-text">Rp</div>
                         </div>
                         <input type="text" class="form-control" id="harga" name="harga">
                     </div>
@@ -193,11 +193,12 @@
                     <input type="text" name="stok" id="stok" class="form-control" placeholder="">
                 </div>
                 <div class="form-group">
-                    <label for="stok">Foto</label>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="gambar">
-                        <label class="custom-file-label" for="gambar">Choose file</label>
-                    </div>
+                    <label for="gambar">Thumbnail</label>
+                    <input type="file" class="form-control-file" id="gambar" name="gambar">
+                </div>
+                <div class="form-group">
+                    <label for="galeri">Galeri/Foto</label>
+                    <input type="file" class="form-control-file" id="galeri" name="galeri[]" multiple>
                 </div>
             </div>
             <div class="modal-footer">

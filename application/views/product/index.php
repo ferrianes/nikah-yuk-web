@@ -67,7 +67,7 @@
                                     <td><?= filter_output($product['stok']); ?></td>
                                     <td><?= filter_output($product['diorder']); ?></td>
                                     <td>
-                                        <a href="<?= base_url('product/editproduct/'.$product['id']); ?>" class="badge badge-info"><i class="fas fa-fw fa-info"></i> Detail</a> |
+                                        <a href="<?= base_url('product/detailproduct/'.$product['id']); ?>" class="badge badge-info"><i class="fas fa-fw fa-info"></i> Detail</a> |
                                         <a href="<?= base_url('product/editproduct/'.$product['id']); ?>" class="badge badge-primary"><i class="fas fa-fw fa-edit"></i> Edit</a> | 
                                         <a href="" data-name="<?= $product['nama']; ?>" data-href="<?= base_url('product/deleteproduct/' . $product['id']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusproduct" class="badge badge-danger"><i class="fas fa-fw fa-trash"></i> Hapus</a>
                                     </td>
