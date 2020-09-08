@@ -5,7 +5,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Produk Management</h1>
         <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
-            data-target="#modalTambahProduk"><i class="fas fa-edit fa-fw text-white-50"></i> Ubah Produk</button>
+            data-target="#modalEditProduk"><i class="fas fa-edit fa-fw text-white-50"></i> Ubah Produk</button>
     </div>
 
     <!-- Content Row -->
@@ -77,15 +77,22 @@
                         </div>
                     </div>
                     <hr class="sidebar-divider mb-2">
-                    <h2 class="text-center mt-2 text-uppercase text-dark">Galeri</h2>
+                    <h2 class="text-center mt-2 text-uppercase text-dark">Galeri <button class="btn btn-sm btn-primary float-right" data-toggle="modal"  data-target="#modalTambahProduk"><i class="fas fa-edit fa-fw text-white-50"></i> Ubah Produk</button></h2>
                     <div class="row justify-content-center">
                         <?php if (!isset($produks_gambar['status']) OR !$produks_gambar['status'] == false) : ?>
-                        <?php foreach($produks_gambar as $produk_gambar) : ?>
-                            <div class="col-md-4 text-center">
-                            <img class="product-img img-thumbnail" src="<?= base_url('assets/img/api/products/') . $produk_gambar['gambar'] ?>" alt="">
-                        </div>
-                        <?php endforeach; ?>
-                        <?php endif; ?>
+                            <?php foreach($produks_gambar as $produk_gambar) : ?>
+                                <div class="col-md-4 text-center">
+                                    <div class="img-container">
+                                        <img class="product-img img-thumbnail" src="<?= base_url('assets/img/api/products/') . $produk_gambar['gambar'] ?>" alt="">
+                                        <div class="middle">
+                                            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modalTambahProduk"><i class="fas fa-trash fa-fw"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; 
+                        else :
+                            echo 'Foto tidak ditemukan';
+                        endif; ?>
                     </div>
                 </div>
             </div>

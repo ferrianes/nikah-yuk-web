@@ -233,4 +233,69 @@
         </div>
     </div>
 </div>
+    <?php if ($this->uri->segment(2) == 'detailproduct') : ?>
+        <!-- Modal Akses Menu Baru -->
+        <form method="post" action="<?= base_url('product/editproduct/' . $produk['id']) ?>" enctype="multipart/form-data">
+            <div class="modal fade" id="modalEditProduk" tabindex="-1" aria-labelledby="modalEditProdukLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-dark" id="modalEditProdukLabel">Tambah Produk Baru</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-dark">
+                            <div class="form-group">
+                                <label for="nama">Nama Produk</label>
+                                <input type="text" name="nama" id="nama" class="form-control" value="<?= $produk['nama']; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="kategori">Kategori</label>
+                                <select class="form-control" id="kategori" name="id_kategori">
+                                    <option value="" disabled selected>Pilih Kategori</option>
+                                    <?php 
+                                        $kategoris = $this->Utama_model->getDatas('kategoris');
+                                        foreach($kategoris as $kategori) :
+                                            echo '<option value="'. $kategori['id'] .'">'. $kategori['nama'] .'</option>';
+                                        endforeach;
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="deskripsi">Deskripsi</label>
+                                <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3"><?= $produk['deskripsi']; ?></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="harga">Harga</label>
+                                <div class="input-group mb-2 mr-sm-2">
+                                    <div class="input-group-prepend">
+                                    <div class="input-group-text">Rp</div>
+                                    </div>
+                                    <input type="text" class="form-control" id="harga" name="harga" value="<?= $produk['harga']; ?>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="stok">Stok</label>
+                                <input type="text" name="stok" id="stok" class="form-control" value="<?= $produk['stok']; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="gambar">Thumbnail</label>
+                                <input type="file" class="form-control-file" id="gambar" name="gambar">
+                            </div>
+                            <div class="form-group">
+                                <label for="galeri">Galeri/Foto</label>
+                                <input type="file" class="form-control-file" id="galeri" name="galeri[]" multiple>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Tambah</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    <?php endif; ?>
 <?php endif; ?>
