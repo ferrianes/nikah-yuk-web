@@ -41,6 +41,7 @@ class Utama_model extends CI_Model {
         $response = $this->_client->request('POST', $uri, [
             'form_params' => $data
         ]);
+        // var_dump($response->getBody()->getContents());die;
         return json_decode($response->getBody()->getContents(), true);
     }
 
@@ -51,14 +52,12 @@ class Utama_model extends CI_Model {
         // ];
         // var_dump($data);die;
         $response = $this->_client->request('POST', $uri, [
-            'multipart' => [
-                $data
-            ],
-            'headers' => array(
-                'token' => 'Da0sxRC4',
-            )
+            'multipart' => $data,
+            'headers' => [
+                'token' => 'Da0sxRC4'
+            ]
         ]);
-        var_dump($response->getBody()->getContents());die;
+        // var_dump($response->getBody()->getContents());die;
         return json_decode($response->getBody()->getContents(), true);
     }
 

@@ -61,22 +61,35 @@ class Product extends CI_Controller {
             $this->load->view('templates/modal');
             $this->load->view('templates/footer2');
         } else {
-            // $data = [
-            //     'nama' => $this->input->post('nama', TRUE),
-            //     'deskripsi' => $this->input->post('deskripsi', TRUE),
-            //     'harga' => $this->input->post('harga', TRUE),
-            //     'stok' => $this->input->post('stok', TRUE),
-            //     'diorder' => $this->input->post('diorder', TRUE),
-            //     'diskon' => $this->input->post('diskon', TRUE)
-            // ];
+            $data = [
+                'id_kategori' => $this->input->post('id_kategori', TRUE),
+                'nama' => $this->input->post('nama', TRUE),
+                'deskripsi' => $this->input->post('deskripsi', TRUE),
+                'harga' => $this->input->post('harga', TRUE),
+                'stok' => $this->input->post('stok', TRUE),
+                'diorder' => $this->input->post('diorder', TRUE),
+                'diskon' => $this->input->post('diskon', TRUE)
+            ];
             // $this->Utama_model->insertData('products', $data);
             // var_dump($_FILES);die;
-            $datas = [
-                'name' => 'FileContents',
-                'contents' => fopen($_FILES['gambar']['tmp_name'], 'r'),
-                'filename' => $_FILES['gambar']['name']
+            $products = $this->Utama_model->insertData('products', $data);
+            $data_image = [
+                [
+                    'name' => 'FileContents',
+                    'contents' => fopen($_FILES['gambar']['tmp_name'], 'r'),
+                    'filename' => $_FILES['gambar']['name']
+                ],
+                [
+                    'name' => 'thumbnail',
+                    'contents' => 1
+                ],
+                [
+                    'name' => 'produk_id',
+                    'contents' => $products['last_id']
+                ]
             ];
-            $this->Utama_model->uploadData('products_gambar', $datas);
+            $this->Utama_model->uploadData('products_gambar', $data_image);
+            // var_dump($this->db->insert_id());die;
 
             $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> ditambah.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             redirect('product');

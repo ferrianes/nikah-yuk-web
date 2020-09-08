@@ -79,11 +79,13 @@
                     <hr class="sidebar-divider mb-2">
                     <h2 class="text-center mt-2 text-uppercase text-dark">Galeri</h2>
                     <div class="row justify-content-center">
+                        <?php if (!isset($produks_gambar['status']) OR !$produks_gambar['status'] == false) : ?>
                         <?php foreach($produks_gambar as $produk_gambar) : ?>
                             <div class="col-md-4 text-center">
                             <img class="product-img img-thumbnail" src="<?= base_url('assets/img/api/products/') . $produk_gambar['gambar'] ?>" alt="">
                         </div>
-                            <?php endforeach; ?>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

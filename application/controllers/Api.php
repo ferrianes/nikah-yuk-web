@@ -349,49 +349,36 @@ class Api extends RestController {
 
     public function products_post()
     {
-        $config = array(
-            'upload_path' => './assets/img/api/products/',
-            'allowed_types' => "gif|jpg|png|jpeg|pdf",
-            'overwrite' => TRUE,
-            'max_size' => "2048000",
-            'max_height' => "768",
-            'max_width' => "1024"
-        );
+        $data = [
+            'id_kategori' => $this->post('id_kategori'),
+            'tgl_input' => date("Y-m-d"),
+            'nama' => $this->post('nama'),
+            'deskripsi' => $this->post('deskripsi'),
+            'harga' => $this->post('harga'),
+            'stok' => $this->post('stok'),
+            'diorder' => 0,
+            'diskon' => 0
+        ];
+        // var_dump($data['diskon']);die;
         
-        $this->load->library('upload',$config);
-        if($this->upload->do_upload('gambar'))
-        {
-            $image = $this->upload->data(); 
-            $data = [
-                'id_kategori' => $this->post('id_kategori'),
-                'tgl_input' => date("Y-m-d"),
-                'nama' => $this->post('nama'),
-                'deskripsi' => $this->post('deskripsi'),
-                'harga' => $this->post('harga'),
-                'stok' => $this->post('stok'),
-                'gambar' => $image['file_name'],
-                'diorder' => $this->post('diorder'),
-                'diskon' => $this->post('diskon')
-            ];
-            
-            if ($this->Api_model->insertData('produk', $data) > 0) {
-                $this->response(['message' => 'Data berhasil diinput'], 200);
-            } else {
-                $this->response(['message' => 'Data gagal diinput'], 400);
-            }
-        }
-        else
-        {
-            $error = [
-                'error' => $this->upload->display_errors('', ''),
-                'status' => FALSE
-            ];
-            $this->response($error, 400);
+        if ($this->Api_model->insertData('produk', $data) > 0) {
+            $this->response([
+                'last_id' => $this->db->insert_id(),
+                'message' => 'Data berhasil diinput'
+            ], 200);
+        } else {
+            $this->response(['message' => 'Data gagal diinput'], 400);
         }
     }
 
     public function products_gambar_post()
     {
+        $produk_id = $this->post('produk_id');
+        if ($this->post('thumbnail')) {
+            $thumbnail = 1;
+        } else {
+            $thumbnail = 0;
+        }
         $config = array(
             'upload_path' => './assets/img/api/products/',
             'allowed_types' => "gif|jpg|png|jpeg|pdf",
@@ -409,17 +396,23 @@ class Api extends RestController {
         {
             $image = $this->upload->data(); 
             $data = [
-                'produk_id' => 2,
+                'produk_id' => $produk_id,
                 'gambar' => $image['file_name'],
-                'deskripsi' => 'asal',
-                'thumbnail' => 0
+                'thumbnail' => $thumbnail
             ];
             // echo 'tes';die;
             // var_dump($data);die;
-            if ($this->Api_model->insertData('produk', $data) > 0) {
-                $this->response(['message' => 'Data berhasil diinput'], 200);
+            if ($this->Api_model->insertData('produk_gambar', $data) > 0) {
+                $this->response([
+                    'last_id' => $this->db->insert_id(),
+                    'status' => 200,
+                    'message' => 'Data berhasil diinput'
+                ], 200);
             } else {
-                $this->response(['message' => 'Data gagal diinput'], 400);
+                $this->response([
+                    'status' => 400,
+                    'message' => 'Data gagal diinput',
+                ], 400);
             }
         }
         else
