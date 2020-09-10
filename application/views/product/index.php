@@ -51,6 +51,7 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Produk</th>
+                                    <th scope="col">Kategori</th>
                                     <th scope="col">Harga</th>
                                     <th scope="col">Stok</th>
                                     <th scope="col">Diorder</th>
@@ -59,10 +60,14 @@
                             </thead>
                             <tbody>
                                 <!-- Looping product -->
-                                <?php $no = 1; foreach ($products as $product) : ?>
+                                <?php 
+                                $no = 1; foreach ($products as $product) : 
+                                        $kategori = $this->Utama_model->getDatas('kategoris', ['id' => $product['id_kategori'], $product['id_kategori']])[0];  
+                                ?>
                                 <tr>
                                     <th scope="row"><?= $no; ?></th>
                                     <td><?= filter_output($product['nama']); ?></td>
+                                    <td><?= filter_output($kategori['nama']); ?></td>
                                     <td><?= filter_output($product['harga']); ?></td>
                                     <td><?= filter_output($product['stok']); ?></td>
                                     <td><?= filter_output($product['diorder']); ?></td>

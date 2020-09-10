@@ -39,6 +39,16 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
+                <?php if(validation_errors()) : ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Data Gagal Diinput!</strong>
+                        <?= validation_errors('<div>', '</div>'); ?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                <?php endif; ?>
+                <?= $this->session->flashdata('pesan'); ?>
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
                             <img src="<?= base_url('assets/img/api/products/' . $thumbnail['gambar']) ?>" class="img-thumbnail" alt="">
@@ -48,6 +58,11 @@
                                 <li class="list-group-item">
                                     <h5 class="text-dark">Nama Produk</h5>
                                     <?= $produk['nama'] ?>
+                                </li>
+                                <li class="list-group-item">
+                                    <h5 class="text-dark">Kategori</h5>
+                                    <?php $kategori = $this->Utama_model->getDatas('kategoris', ['id' => $produk['id_kategori'], $produk['id_kategori']])[0];  ?>
+                                    <?= $kategori['nama'] ?>
                                 </li>
                                 <li class="list-group-item">
                                     <h5 class="text-dark">Deskripsi</h5>
@@ -77,15 +92,23 @@
                         </div>
                     </div>
                     <hr class="sidebar-divider mb-2">
-                    <h2 class="text-center mt-2 text-uppercase text-dark">Galeri <button class="btn btn-sm btn-primary float-right" data-toggle="modal"  data-target="#modalTambahProduk"><i class="fas fa-edit fa-fw text-white-50"></i> Ubah Produk</button></h2>
+                    <div class="row justify-content-end">
+                        <div class="col-12 col-md-4">
+                            <h2 class="text-center mt-2 text-uppercase text-dark">Galeri</h2>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <button class="btn btn-sm btn-primary text-center float-right mt-md-2" data-toggle="modal"  data-target="#modalTambahGaleri"><i class="fas fa-plus-square fa-fw text-white-50"></i> Tambah Galeri</button>
+                        </div>
+                    </div>
+                    
                     <div class="row justify-content-center">
                         <?php if (!isset($produks_gambar['status']) OR !$produks_gambar['status'] == false) : ?>
                             <?php foreach($produks_gambar as $produk_gambar) : ?>
-                                <div class="col-md-4 text-center">
+                                <div class="col-md-4 text-center mt-2">
                                     <div class="img-container">
                                         <img class="product-img img-thumbnail" src="<?= base_url('assets/img/api/products/') . $produk_gambar['gambar'] ?>" alt="">
                                         <div class="middle">
-                                            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modalTambahProduk"><i class="fas fa-trash fa-fw"></i></button>
+                                            <a href="" data-href="<?= base_url('product/deletegaleri/' . $produk_gambar['id'] . '/' . $produk['id']) ?>" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modalKonfirmasiHapusGaleri"><i class="fas fa-trash fa-fw"></i></a>
                                         </div>
                                     </div>
                                 </div>

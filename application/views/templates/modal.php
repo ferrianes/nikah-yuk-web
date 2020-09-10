@@ -193,12 +193,16 @@
                     <input type="text" name="stok" id="stok" class="form-control" placeholder="">
                 </div>
                 <div class="form-group">
-                    <label for="gambar">Thumbnail</label>
-                    <input type="file" class="form-control-file" id="gambar" name="gambar">
+                    <label for="diorder">Diorder</label>
+                    <input type="text" name="diorder" id="diorder" class="form-control" value="0">
                 </div>
                 <div class="form-group">
-                    <label for="galeri">Galeri/Foto</label>
-                    <input type="file" class="form-control-file" id="galeri" name="galeri[]" multiple>
+                    <label for="diskon">Diskon</label>
+                    <input type="text" name="diskon" id="diskon" class="form-control" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="gambar">Thumbnail</label>
+                    <input type="file" class="form-control-file" id="gambar" name="gambar">
                 </div>
             </div>
             <div class="modal-footer">
@@ -233,8 +237,8 @@
         </div>
     </div>
 </div>
-    <?php if ($this->uri->segment(2) == 'detailproduct') : ?>
-        <!-- Modal Akses Menu Baru -->
+    <?php if ($this->uri->segment(2) == 'detailproduct' OR $this->uri->segment(2) == 'editproduct') : ?>
+        <!-- Modal Edit Produk -->
         <form method="post" action="<?= base_url('product/editproduct/' . $produk['id']) ?>" enctype="multipart/form-data">
             <div class="modal fade" id="modalEditProduk" tabindex="-1" aria-labelledby="modalEditProdukLabel"
                 aria-hidden="true">
@@ -254,13 +258,12 @@
                             <div class="form-group">
                                 <label for="kategori">Kategori</label>
                                 <select class="form-control" id="kategori" name="id_kategori">
-                                    <option value="" disabled selected>Pilih Kategori</option>
+                                    <option value="" disabled>Pilih Kategori</option>
                                     <?php 
                                         $kategoris = $this->Utama_model->getDatas('kategoris');
-                                        foreach($kategoris as $kategori) :
-                                            echo '<option value="'. $kategori['id'] .'">'. $kategori['nama'] .'</option>';
-                                        endforeach;
-                                    ?>
+                                        foreach($kategoris as $kategori) : ?>
+                                            <option value="<?= $kategori['id'] ?>" <?= $kategori['id'] == $produk['id_kategori'] ? 'selected' : '' ?>><?= $kategori['nama'] ?></option>';
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -281,11 +284,67 @@
                                 <input type="text" name="stok" id="stok" class="form-control" value="<?= $produk['stok']; ?>">
                             </div>
                             <div class="form-group">
-                                <label for="gambar">Thumbnail</label>
-                                <input type="file" class="form-control-file" id="gambar" name="gambar">
+                                <label for="diorder">Diorder</label>
+                                <input type="text" name="diorder" id="diorder" class="form-control" value="<?= $produk['diorder']; ?>">
                             </div>
                             <div class="form-group">
-                                <label for="galeri">Galeri/Foto</label>
+                                <label for="diskon">Diskon</label>
+                                <input type="text" name="diskon" id="diskon" class="form-control" value="<?= $produk['diskon']; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="gambar">Thumbnail</label>
+                                <input type="file" class="form-control-file" id="gambar" name="gambar">
+                                <input type="hidden" name="gambar_lama" value="<?= $thumbnail['id']; ?>">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Modal Hapus Galeri -->
+        <div class="modal fade" id="modalKonfirmasiHapusGaleri" tabindex="-1" aria-labelledby="modalKonfirmasiHapusGaleriLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-danger" id="modalKonfirmasiHapusGaleriLabel">Hapus Foto</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" action="<?= base_url('menu') ?>">
+                        <div class="modal-body text-dark">
+                            <p>Anda yakin untuk menghapus data ini? </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <a href="" class="btn btn-danger btn-ok">Hapus</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Tambah Galeri -->
+        <form method="post" action="<?= base_url('product/tambahgaleri/' . $produk['id']) ?>" enctype="multipart/form-data">
+            <div class="modal fade" id="modalTambahGaleri" tabindex="-1" aria-labelledby="modalTambahGaleriLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-dark" id="modalTambahGaleriLabel">Tambah Galeri</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-dark">
+                            <div class="form-group">
+                                <label for="galeri">Pilih 1 atau beberapa foto</label>
                                 <input type="file" class="form-control-file" id="galeri" name="galeri[]" multiple>
                             </div>
                         </div>

@@ -359,7 +359,6 @@ class Api extends RestController {
             'diorder' => 0,
             'diskon' => 0
         ];
-        // var_dump($data['diskon']);die;
         
         if ($this->Api_model->insertData('produk', $data) > 0) {
             $this->response([
@@ -371,57 +370,112 @@ class Api extends RestController {
         }
     }
 
-    public function products_gambar_post()
+    public function products_put()
     {
-        $produk_id = $this->post('produk_id');
-        if ($this->post('thumbnail')) {
-            $thumbnail = 1;
-        } else {
-            $thumbnail = 0;
-        }
-        $config = array(
-            'upload_path' => './assets/img/api/products/',
-            'allowed_types' => "gif|jpg|png|jpeg|pdf",
-            'overwrite' => TRUE,
-            'max_size' => "2048000"
-            // 'max_height' => "768",
-            // 'max_width' => "1024"
-        );
+        $data = [
+            'id_kategori' => $this->put('id_kategori'),
+            'tgl_input' => date("Y-m-d"),
+            'nama' => $this->put('nama'),
+            'deskripsi' => $this->put('deskripsi'),
+            'harga' => $this->put('harga'),
+            'stok' => $this->put('stok'),
+            'diorder' => $this->put('diorder'),
+            'diskon' => $this->put('diskon')
+        ];
+
         
-        // $this->load->library('upload',$config);
-        // $galeri = [];
-        // var_dump($_FILES['FileContents']['type']);die;
-        $this->load->library('upload',$config);
-        if($this->upload->do_upload('FileContents'))
-        {
-            $image = $this->upload->data(); 
-            $data = [
-                'produk_id' => $produk_id,
-                'gambar' => $image['file_name'],
-                'thumbnail' => $thumbnail
-            ];
-            // echo 'tes';die;
-            // var_dump($data);die;
-            if ($this->Api_model->insertData('produk_gambar', $data) > 0) {
-                $this->response([
-                    'last_id' => $this->db->insert_id(),
-                    'status' => 200,
-                    'message' => 'Data berhasil diinput'
-                ], 200);
-            } else {
-                $this->response([
-                    'status' => 400,
-                    'message' => 'Data gagal diinput',
-                ], 400);
-            }
+        $where = ['id' => $this->put('id')];
+        // var_dump($where);die;
+        
+        if ($this->Api_model->updateData('produk', $data, $where) != -1 ) {
+            $this->response([
+                'message' => 'Data berhasil diubah'
+            ], 200);
+        } else {
+            $this->response(['message' => 'Data gagal diubah'], 400);
         }
-        else
-        {
-            $error = [
-                'error' => $this->upload->display_errors('', ''),
-                'status' => FALSE
-            ];
-            $this->response($error, 400);
+    }
+
+    public function produk_gambar_put()
+    {
+        $id_lama = $this->put('id');
+        $id_baru = $this->put('id_baru');
+        $data = [
+            'id' => $id_lama
+        ];
+        
+        $where = ['id' => $id_baru];
+
+        if ($this->Api_model->updateData('produk_gambar', $data, $where) > 0) {
+            $this->response(['message' => 'Data berhasil diubah'], 200);
+        } else {
+            $this->response(['message' => 'Data gagal diubah'], 400);
+        }
+    }
+
+    public function produk_gambar_post()
+    {
+        $galeries = $_FILES;
+        $produk_id = $this->post('produk_id');
+        $thumbnail = $this->post('thumbnail');
+        // set cek ke 0 agar kalo file yang diupload besar akan Gagal
+        $cek = 0;
+
+        $config = [
+            'upload_path' => './assets/img/api/products/',
+            'allowed_types' => "gif|jpg|png|jpeg",
+            'overwrite' => TRUE,
+            'max_size' => "8000",
+            'encrypt_name' => TRUE
+        ];
+
+        $this->load->library('upload',$config);
+        $key = 0;
+        foreach ($galeries as $galeri) {
+            if($this->upload->do_upload('Contents-'.$key))
+            {
+                $image = $this->upload->data();
+
+                //Compress Image
+                $config['image_library']='gd2';
+                $config['source_image']='./assets/img/api/products/'.$image['file_name'];
+                $config['create_thumb']= FALSE;
+                $config['maintain_ratio']= TRUE;
+                $config['quality']= '50%';
+                $config['width']= 500;
+                $config['new_image']= './assets/img/api/products/'.$image['file_name'];
+                $this->load->library('image_lib', $config);
+                $this->image_lib->resize();
+                
+                $data = [
+                    'produk_id' => $produk_id,
+                    'gambar' => $image['file_name'],
+                    'thumbnail' => $thumbnail
+                ];
+                $cek = $this->Api_model->insertData('produk_gambar', $data);
+                if (!$cek > 0) {
+                    break;
+                }
+            } else {
+                $error = [
+                    'message' => $this->upload->display_errors('', '') . ' - (' . $galeri['name'] . ')',
+                    'status' => 400
+                ];
+                $this->response($error, 400);
+            }
+            $key++;
+        }
+        if ($cek > 0) {
+            $this->response([
+                'last_id' => $this->db->insert_id(),
+                'status' => 200,
+                'message' => 'Data berhasil diinput'
+            ], 200);
+        } else {
+            $this->response([
+                'status' => 400,
+                'message' => 'Data gagal diinput',
+            ], 400);
         }
     }
 
@@ -499,5 +553,23 @@ class Api extends RestController {
         } else {
             $this->response(['message' => 'Data gagal diubah'], 400);
         }
+    }
+
+    public function galeri_delete()
+    {
+        $id = $this->delete('id');
+        $galeri = $this->Api_model->getDatas('produk_gambar', ['id' => $id], $id)[0];
+        if ($id === NULL) {
+            $this->response(['message' => 'Masukkan id!'], 400);
+        } else {
+            if ($this->Api_model->deleteData('produk_gambar', $id) > 0) {
+                $filename = explode(".", $galeri['gambar'])[0];
+                array_map('unlink', glob(FCPATH."assets/img/api/products/$filename.*"));
+                $this->response(['message' => 'Data berhasil dihapus'], 200);
+            } else {
+                $this->response(['message' => 'Id tidak ditemukan'], 400);
+            }
+        }
+
     }
 }

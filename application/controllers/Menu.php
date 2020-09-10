@@ -217,17 +217,10 @@ class Menu extends CI_Controller {
     public function deleteAccessMenu()
     {
         $data = ['id' => $this->uri->segment(3)];
-        // $cek = $this->Utama_model->getDatas('access_menus_raw', ['menu_id' => $this->uri->segment(3)]);
-        // cek apakah ada data menu di table access menu
-        // if (!array_key_exists("status", $cek)) {
-        //     $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Data <strong>Gagal</strong> dihapus<br>Karena masih adanya data di tabel access menu<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-        //     redirect('menu');
-        // } else {
-            $this->Utama_model->deleteData('access_menus_raw', $data);
-    
-            $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> dihapus.<br>Silahkan tambahkan submenu di menu submenu<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-            redirect('menu/access_menu');
-        // }
+        $this->Utama_model->deleteData('access_menus_raw', $data);
+
+        $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> dihapus.<br>Silahkan tambahkan submenu di menu submenu<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+        redirect('menu/access_menu');
     }
 
 }

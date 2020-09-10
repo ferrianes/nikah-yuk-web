@@ -47,18 +47,18 @@ class Utama_model extends CI_Model {
 
     public function uploadData($uri, $data)
     {
-        // $data += [
-        //     'token' => 'Da0sxRC4'
-        // ];
-        // var_dump($data);die;
-        $response = $this->_client->request('POST', $uri, [
-            'multipart' => $data,
-            'headers' => [
-                'token' => 'Da0sxRC4'
-            ]
-        ]);
-        // var_dump($response->getBody()->getContents());die;
-        return json_decode($response->getBody()->getContents(), true);
+        try {
+            $response = $this->_client->request('POST', $uri, [
+                'multipart' => $data,
+                'headers' => [
+                    'token' => 'Da0sxRC4'
+                ]
+            ]);
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse();
+            return json_decode($response->getBody()->getContents(), true);
+        }
     }
 
     public function deleteData($uri, $data)
@@ -80,6 +80,7 @@ class Utama_model extends CI_Model {
         $response = $this->_client->request('PUT', $uri, [
             'form_params' => $data
         ]);
+        // var_dump($response->getBody()->getContents());die;
         return json_decode($response->getBody()->getContents(), true);
     }
 }
