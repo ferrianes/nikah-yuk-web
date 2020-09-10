@@ -215,25 +215,23 @@
 </form>
 
 <!-- Modal Hapus Menu Baru -->
-<div class="modal fade" id="modalKonfirmasiHapusAksesMenu" tabindex="-1" aria-labelledby="modalKonfirmasiHapusAksesMenuLabel"
+<div class="modal fade" id="modalKonfirmasiHapusProduk" tabindex="-1" aria-labelledby="modalKonfirmasiHapusProdukLabel"
     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-danger" id="modalKonfirmasiHapusAksesMenuLabel">Hapus Akses Menu</h5>
+                <h5 class="modal-title text-danger" id="modalKonfirmasiHapusProdukLabel">Hapus Produk</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" action="<?= base_url('menu') ?>">
                 <div class="modal-body text-dark">
-                    <p>Anda yakin untuk menghapus Menu <strong><span id='nama-menu-modal'></span></strong>? </p>
+                    <p>Anda yakin untuk menghapus Produk ini? </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                     <a href="" class="btn btn-danger btn-ok">Hapus</a>
                 </div>
-            </form>
         </div>
     </div>
 </div>

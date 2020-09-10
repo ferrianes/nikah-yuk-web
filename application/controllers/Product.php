@@ -257,6 +257,22 @@ class Product extends CI_Controller {
         }
     }
 
+    public function deleteproduct()
+    {
+        $id = $this->uri->segment(3);
+        $galeries = $this->Utama_model->getDatas('galeri', ['produk_id' => $id], $id);
+        if(!isset($galeries['status']) OR $galeries['status'] != false) {
+            foreach ($galeries as $galeri ) {
+                $this->Utama_model->deleteData('galeri', ['id' => $galeri['id']]);
+            }
+        }
+        $data = ['id' => $id];
+        $this->Utama_model->deleteData('products', $data);
+
+        $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> dihapus.<br><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+        redirect('product');
+    }
+
     public function deletegaleri()
     {
         $data = ['id' => $this->uri->segment(3)];

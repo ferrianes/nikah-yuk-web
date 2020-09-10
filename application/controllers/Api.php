@@ -321,12 +321,43 @@ class Api extends RestController {
             if ($id === NULL) {
                 $this->response( [
                     'status' => false,
-                    'message' => 'Menu kosong'
+                    'message' => 'Produk kosong'
                 ], 404 );
             } else {
                 $this->response( [
                     'status' => false,
-                    'message' => 'Menu tidak ditemukan'
+                    'message' => 'Produk tidak ditemukan'
+                ], 404 );
+            }
+        }
+    }
+
+    public function galeri_get()
+    {
+        // galeri from a data store e.g. database
+        $id = $this->get('id');
+        $produk_id = $this->get('produk_id');
+        $cek = is_null($id) ? $produk_id : $id;
+        $where = is_null($id) ? 'produk_id' : 'id';
+        $galeri = $this->Api_model->getDatas('produk_gambar', [$where => $cek], $cek);
+        // Check if the galeri data store contains galeri
+        if ( $galeri )
+        {
+            // Set the response and exit
+            $this->response($galeri, 200);
+        }
+        else
+        {
+            // Set the response and exit
+            if ($id === NULL) {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'galeri kosong'
+                ], 404 );
+            } else {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'galeri tidak ditemukan'
                 ], 404 );
             }
         }
@@ -394,6 +425,22 @@ class Api extends RestController {
         } else {
             $this->response(['message' => 'Data gagal diubah'], 400);
         }
+    }
+
+    public function products_delete()
+    {
+        $id = $this->delete('id');
+
+        if ($id === NULL) {
+            $this->response(['message' => 'Masukkan id!'], 400);
+        } else {
+            if ($this->Api_model->deleteData('produk', $id) > 0) {
+                $this->response(['message' => 'Data berhasil dihapus'], 200);
+            } else {
+                $this->response(['message' => 'Id tidak ditemukan'], 400);
+            }
+        }
+
     }
 
     public function produk_gambar_put()
