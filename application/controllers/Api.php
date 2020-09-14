@@ -332,6 +332,34 @@ class Api extends RestController {
         }
     }
 
+    public function bookings_get()
+    {
+        // bookings from a data store e.g. database
+        $id = $this->get('id');
+        $bookings = $this->Api_model->getDatas('booking', ['id' => $id], $id);
+        // Check if the bookings data store contains bookings
+        if ( $bookings )
+        {
+            // Set the response and exit
+            $this->response($bookings, 200);
+        }
+        else
+        {
+            // Set the response and exit
+            if ($id === NULL) {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Booking kosong'
+                ], 404 );
+            } else {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Booking tidak ditemukan'
+                ], 404 );
+            }
+        }
+    }
+
     public function galeri_get()
     {
         // galeri from a data store e.g. database
