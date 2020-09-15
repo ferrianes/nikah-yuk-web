@@ -124,6 +124,62 @@ class Api extends RestController {
         }
     }
 
+    public function kustomer_get()
+    {
+        // kustomer from a data store e.g. database
+        $id = $this->get('id_kustomer');
+        $kustomer = $this->Api_model->getDatas('kustomer', ['id_kustomer' => $id], $id);
+        // Check if the kustomer data store contains kustomer
+        if ( $kustomer )
+        {
+            // Set the response and exit
+            $this->response($kustomer, 200);
+        }
+        else
+        {
+            // Set the response and exit
+            if ($id === NULL) {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Kustomer kosong'
+                ], 404 );
+            } else {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Kustomer tidak ditemukan'
+                ], 404 );
+            }
+        }
+    }
+
+    public function booking_details_get()
+    {
+        // booking_details from a data store e.g. database
+        $id = $this->get('id_booking');
+        $booking_details = $this->Api_model->getJoinDatas('produk.*', 'booking_detail', 'produk', 'booking_detail.id_produk = produk.id', ['booking_detail.id_booking' => $id], $id);
+        // Check if the booking_details data store contains booking_details
+        if ( $booking_details )
+        {
+            // Set the response and exit
+            $this->response($booking_details, 200);
+        }
+        else
+        {
+            // Set the response and exit
+            if ($id === NULL) {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Detail Booking kosong'
+                ], 404 );
+            } else {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Detail Booking tidak ditemukan'
+                ], 404 );
+            }
+        }
+    }
+
     public function produks_get()
     {
         // produks from a data store e.g. database

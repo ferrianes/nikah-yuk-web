@@ -15,7 +15,7 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Daftar Booking</h6>
+                <h6 class="m-0 font-weight-bold text-primary"><a href="<?= base_url('booking') ?>" style="text-decoration: none;">Daftar Booking</a><i class="fas fa-fw fa-angle-right"></i>Detail Booking</h6><i class="text-primary fas fa-fw fa-info"></i></h6>
                     <!-- Dropdown -->
                     <!-- <div class="dropdown no-arrow">
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
@@ -34,35 +34,28 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
+                    <div class="row">
+                        <p class="col-6 col-md-2 mb-1">Nama Customer</p>
+                        <p class="col-6 mb-1">: <?= $kustomer['nm_lengkap'] ?></p>
+                    </div>
+                    <div class="row">
+                        <p class="col-6 col-md-2">ID Booking</p>
+                        <p class="col-6">: <?= $booking['id_booking'] ?></p>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">ID Booking</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Tanggal Dibooking</th>
-                                    <th scope="col">Tanggal Acara</th>
-                                    <th scope="col">Nama Customer</th>
-                                    <th scope="col">Aksi</th>
+                                    <th scope="col">Nama Produk</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Looping product -->
-                                <?php 
-                                $no = 1; foreach ($bookings as $key => $booking) : 
-                                ?>
-                                <tr>
-                                    <th scope="row"><?= $no; ?></th>
-                                    <td><?= filter_output($booking['id_booking']); ?></td>
-                                    <td><?= filter_output($booking['status']); ?></td>
-                                    <td><?= filter_output($booking['tgl_booking']); ?></td>
-                                    <td><?= filter_output($booking['tgl_acara']); ?></td>
-                                    <td><?= filter_output($kustomer[$key]['nm_lengkap']); ?></td>
-                                    <td>
-                                        <a href="<?= base_url('booking/detailbooking/'.$booking['id_booking']); ?>" class="badge badge-info"><i class="fas fa-fw fa-info"></i> Detail</a>
-                                    </td>
-                                </tr>
+                                <?php $no = 1; foreach ($detail as $d) : ?>
+                                    <tr>
+                                        <th scope="col"><?= $no; ?></th>
+                                        <th scope="col"><?= $d['nama']; ?></th>
+                                    </tr>
                                 <?php $no++; endforeach; ?>
                             </tbody>
                         </table>

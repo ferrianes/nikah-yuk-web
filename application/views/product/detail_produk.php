@@ -17,10 +17,7 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary"><a href="<?= base_url('product') ?>"
-                            style="text-decoration: none;">Daftar Produk</a><i
-                            class="fas fa-fw fa-angle-right"></i>Detail Produk</h6><i
-                        class="text-primary fas fa-fw fa-info"></i></h6>
+                    <h6 class="m-0 font-weight-bold text-primary"><a href="<?= base_url('product') ?>" style="text-decoration: none;">Daftar Produk</a><i class="fas fa-fw fa-angle-right"></i>Detail Produk</h6><i class="text-primary fas fa-fw fa-info"></i></h6>
                     <!-- Dropdown -->
                     <!-- <div class="dropdown no-arrow">
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
