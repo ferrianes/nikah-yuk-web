@@ -93,7 +93,17 @@
                             <?php foreach($produks_gambar as $produk_gambar) : ?>
                                 <div class="col-md-4 text-center mt-2">
                                     <div class="img-container">
-                                        <img class="product-img img-thumbnail" src="<?= base_url('assets/img/api/products/') . $produk_gambar['gambar'] ?>" alt="">
+                                        <?php
+                                        $file_parts = pathinfo($produk_gambar['gambar']);
+								
+                                        if ($file_parts['extension'] == 'mp4' OR $file_parts['extension'] == 'ogg' OR $file_parts['extension'] == 'webm') : ?>
+                                            <video autoplay loop muted class="w-100 thumb-video">
+                                                <source src="<?= base_url('assets/img/api/products/') . $produk_gambar['gambar'] ?>" type="video/<?= $file_parts['extension'] ?>">
+                                                Your browser does not support HTML video.
+                                            </video>
+                                        <?php else : ?>
+                                            <img class="product-img img-thumbnail" src="<?= base_url('assets/img/api/products/') . $produk_gambar['gambar'] ?>" alt="">
+                                        <?php endif;  ?>
                                         <div class="middle">
                                             <a href="" data-href="<?= base_url('product/deletegaleri/' . $produk_gambar['id'] . '/' . $produk['id']) ?>" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modalKonfirmasiHapusGaleri"><i class="fas fa-trash fa-fw"></i></a>
                                         </div>

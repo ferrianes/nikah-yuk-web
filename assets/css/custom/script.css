@@ -9,6 +9,12 @@ img.thumb {
     height: 246px;
     object-fit: cover;
 }
+
+.thumb-video {
+    width: 246px;
+    height: 246px;
+}
+
 .cart-sm {
     position: sticky;
     bottom: 0;
@@ -25,6 +31,11 @@ img.thumb {
         width: 446px;
         height: 446px;
         object-fit: cover;
+    }
+
+    .thumb-video {
+        width: 446px;
+        height: 446px;
     }
 }
 

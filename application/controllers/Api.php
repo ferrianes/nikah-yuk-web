@@ -555,9 +555,9 @@ class Api extends RestController {
 
         $config = [
             'upload_path' => './assets/img/api/products/',
-            'allowed_types' => "gif|jpg|png|jpeg",
+            'allowed_types' => "gif|jpg|png|jpeg|mp4|webm|ogg",
             'overwrite' => TRUE,
-            'max_size' => "8000",
+            'max_size' => "20000",
             'encrypt_name' => TRUE
         ];
 
@@ -567,18 +567,21 @@ class Api extends RestController {
             if($this->upload->do_upload('Contents-'.$key))
             {
                 $image = $this->upload->data();
+                var_dump($image['is_image']);
 
-                //Compress Image
-                $config['image_library']='gd2';
-                $config['source_image']='./assets/img/api/products/'.$image['file_name'];
-                $config['create_thumb']= FALSE;
-                $config['maintain_ratio']= TRUE;
-                $config['quality']= '90%';
-                $config['width']= 500;
-                $config['new_image']= './assets/img/api/products/'.$image['file_name'];
-                $this->load->library('image_lib', $config);
-                $this->image_lib->resize();
-                
+                if ($image['is_image'] === TRUE) {
+                    //Compress Image
+                    $config['image_library']='gd2';
+                    $config['source_image']='./assets/img/api/products/'.$image['file_name'];
+                    $config['create_thumb']= FALSE;
+                    $config['maintain_ratio']= TRUE;
+                    $config['quality']= '70%';
+                    $config['width']= 500;
+                    $config['new_image']= './assets/img/api/products/'.$image['file_name'];
+                    $this->load->library('image_lib', $config);
+                    $this->image_lib->resize();
+                }
+
                 $data = [
                     'produk_id' => $produk_id,
                     'gambar' => $image['file_name'],
@@ -588,6 +591,7 @@ class Api extends RestController {
                 if (!$cek > 0) {
                     break;
                 }
+
             } else {
                 $error = [
                     'message' => $this->upload->display_errors('', '') . ' - (' . $galeri['name'] . ')',
