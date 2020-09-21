@@ -1,4 +1,9 @@
-</div> 
+<footer class="footer mt-auto">
+    <div class="container">
+    <span class="text-muted">By &copy; NikahYuk 2020</span>
+    </div>
+</footer> 
+
 <!--   Core JS Files   -->
 <script src="<?= base_url('assets/js/jquery/jquery.min.js') ?>"></script>
 <script src="<?= base_url(); ?>assets/js/core/popper.min.js" type="text/javascript"></script>

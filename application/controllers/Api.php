@@ -550,6 +550,7 @@ class Api extends RestController {
         $produk_id = $this->post('produk_id');
         $thumbnail = $this->post('thumbnail');
         // set cek ke 0 agar kalo file yang diupload besar akan Gagal
+        // var_dump($galeries);die;
         $cek = 0;
 
         $config = [
@@ -572,7 +573,7 @@ class Api extends RestController {
                 $config['source_image']='./assets/img/api/products/'.$image['file_name'];
                 $config['create_thumb']= FALSE;
                 $config['maintain_ratio']= TRUE;
-                $config['quality']= '50%';
+                $config['quality']= '90%';
                 $config['width']= 500;
                 $config['new_image']= './assets/img/api/products/'.$image['file_name'];
                 $this->load->library('image_lib', $config);

@@ -48,6 +48,7 @@ class Home extends CI_Controller
             $data['produk'] = $this->Utama_model->getDatas('produks', ['id' => $id])[0];
 
             $data['produks_gambar'] = $this->Utama_model->getDatas('produks_gambar', ['produk_id' => $id, 'thumbnail' => 0]);
+            // var_dump($data['produks_gambar']);die;
 
             $data['thumbnail'] = $this->Utama_model->getDatas('produks_gambar', ['produk_id' => $id, 'thumbnail' => 1])[0];
 

@@ -18,21 +18,6 @@
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary"><a href="<?= base_url('product') ?>" style="text-decoration: none;">Daftar Produk</a><i class="fas fa-fw fa-angle-right"></i>Detail Produk</h6><i class="text-primary fas fa-fw fa-info"></i></h6>
-                    <!-- Dropdown -->
-                    <!-- <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                            aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">Dropdown Header:</div>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </div> -->
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -48,7 +33,11 @@
                 <?= $this->session->flashdata('pesan'); ?>
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
-                            <img src="<?= base_url('assets/img/api/products/' . $thumbnail['gambar']) ?>" class="img-thumbnail" alt="">
+                            <?php if ($thumbnail === NULL) : ?>
+                                <img src="<?= base_url('assets/img/api/products/noimage_content.jpg') ?>" class="img-thumbnail" alt="">
+                            <?php else : ?>
+                                <img src="<?= base_url('assets/img/api/products/' . $thumbnail['gambar']) ?>" class="img-thumbnail" alt="">
+                            <?php endif; ?>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <ul class="list-group">
@@ -69,8 +58,9 @@
                                     <h5 class="text-dark">Harga</h5>
                                     <?php 
                                     $crncy = new NumberFormatter( 'id_ID', NumberFormatter::CURRENCY );
-                                    ?>
-                                    <?= $crncy->formatCurrency($produk['harga'], "IDR"); 
+                                    $crncy->setTextAttribute(NumberFormatter::CURRENCY_CODE, 'IDR');
+                                    $crncy->setAttribute(NumberFormatter::FRACTION_DIGITS, 0); 
+                                    echo $crncy->formatCurrency($produk['harga'], "IDR"); 
                                     ?>
                                 </li>
                                 <li class="list-group-item">

@@ -14,9 +14,10 @@
     <link href="<?= base_url(); ?>assets/css/argon-design-system/nucleo-svg.css" rel="stylesheet" />
     <!-- CSS Files -->
     <link href="<?= base_url(); ?>assets/css/argon-design-system/argon-design-system.css?v=1.2.0" rel="stylesheet" />
+    <link href="<?= base_url(); ?>assets/css/custom/script.css" rel="stylesheet" />
 </head> 
 
-<body>    
+<body class="d-flex flex-column min-vh-100">    
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
     <div class="container">
@@ -59,8 +60,8 @@
                         <span class="nav-link-inner--text">Hi, <b><?= $kustomer; ?></b></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
-                        <a class="dropdown-item" href="<?= base_url('customer/myprofil'); ?>">Profilku</a>
-                        <a class="dropdown-item" href="<?= base_url('customer/logout'); ?>">Log out</a>
+                        <a class="dropdown-item" href="<?= base_url('customer/myprofil'); ?>"><span class="fa fa-user-circle mr-2"></span>Profilku</a>
+                        <a class="dropdown-item" href="<?= base_url('customer/logout'); ?>"><span class="fa fa-sign-out-alt mr-2"></span>Log out</a>
                     </div>
                 </li>
                 <?php else : ?>
@@ -88,4 +89,3 @@
         </div>
     </div>
 </nav>
-<div class="container mt-5"> 

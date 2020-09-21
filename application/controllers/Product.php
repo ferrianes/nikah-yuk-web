@@ -87,10 +87,15 @@ class Product extends CI_Controller {
                     'contents' => $products['last_id']
                 ]
             ];
-            $this->Utama_model->uploadData('produk_gambar', $data_image);
+            $status = $this->Utama_model->uploadData('produk_gambar', $data_image);
 
-            $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> ditambah.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-            redirect('product');
+            if ($status['status'] == 400) {
+                $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Thumbnail gagal. '. $status['message'] .'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                redirect('product');
+            } else {
+                $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> ditambah.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                redirect('product');
+            }
         }
     }
 
