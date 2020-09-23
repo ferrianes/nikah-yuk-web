@@ -47,7 +47,7 @@
                         <span class="nav-link-inner--text">Beranda</span>
                     </a>
                 </li>
-                <?php if (!empty($this->session->userdata('email'))) : ?>
+                <?php if (!empty($this->session->email_kustomer)) : ?>
                     <li class="nav-item">
                         <a class="nav-link nav-link-icon" href="<?= base_url('booking/dataBooking'); ?>">
                             <i class="ni ni-cart"></i>
@@ -55,10 +55,10 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link nav-link-icon dropdown-toggle" href="#" id="navbar-default_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="ni ni-circle-08"></i>
-                            <span class="nav-link-inner--text">Hi, <b><?= $kustomer; ?></b></span>
-                        </a>
+                        <span class="nav-link nav-link-icon dropdown-toggle cursor-pointer" href="#" id="navbar-default_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="avatar avatar-xsm rounded-circle" src="<?= base_url('assets/img/api/kustomer/' . $kustomer['image']); ?>" alt="Foto Kustomer">
+                            <span class="nav-link-inner--text">Hi, <b><?= $kustomer['nm_lengkap']; ?></b></span>
+                        </span>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
                             <a class="dropdown-item" href="<?= base_url('kustomer/myprofil'); ?>"><span class="fa fa-user-circle mr-2"></span>Profilku</a>
                             <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal"><span class="fa fa-sign-out-alt mr-2"></span>Log out</a>
@@ -80,7 +80,7 @@
                     <li class="nav-item">
                         <a class="nav-link nav-link-icon" href="#">
                             <i class="ni ni-circle-08"></i>
-                            <span class="nav-link-inner--text">Hi, <b><?= $kustomer; ?></b></span>
+                            <span class="nav-link-inner--text">Hi, <b><?= $kustomer['nm_lengkap']; ?></b></span>
                         </a>
                     </li>
                 <?php endif; ?>

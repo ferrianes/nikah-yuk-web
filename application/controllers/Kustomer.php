@@ -27,7 +27,7 @@ class Kustomer extends CI_Controller
                 //cek password
                 if (password_verify($password, $user['password'])) {
                     $data = [
-                        'email' => $user['email'],
+                        'email_kustomer' => $user['email'],
                         'id_kustomer' => $user['id_kustomer'],
                         'nama' => $user['nm_lengkap'],
                         'status' => 'kustomer'
@@ -121,9 +121,14 @@ class Kustomer extends CI_Controller
         
     }
 
+    public function profilku()
+    {
+        
+    }
+
     public function logout()
     {
-        $this->session->unset_userdata(['email', 'id_kustomer', 'nama', 'status']);
+        $this->session->unset_userdata(['email_kustomer', 'id_kustomer', 'nama', 'status']);
         $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Berhasil Logout!</div>');
         redirect('home');
     }

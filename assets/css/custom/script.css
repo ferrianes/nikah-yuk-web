@@ -26,6 +26,16 @@ img.thumb {
     background-color: #f4f5f7;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.avatar-xsm {
+    width: 28px;
+    height: 28px;
+    font-size: 0.875rem;
+}
+
 @media (min-width: 1200px) { 
     img.thumb {
         width: 446px;
