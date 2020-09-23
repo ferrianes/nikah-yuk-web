@@ -1,6 +1,7 @@
 <footer class="footer mt-auto">
     <div class="container">
-    <span class="text-muted">By &copy; NikahYuk 2020</span>
+        <span class="text-muted">By &copy; NikahYuk 2020</span><br>
+        <small class="text-muted">Icons made by <a class="text-muted font-weight-bold" href="http://www.freepik.com" title="Freepik">Freepik</a> from <a class="text-muted font-weight-bold" href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></small>
     </div>
 </footer> 
 
@@ -19,13 +20,13 @@
 <!-- Control Center for Argon UI Kit: parallax effects, scripts for the example pages etc -->
 <!--  Google Maps Plugin    -->
 <script src="<?= base_url(); ?>assets/js/argon-design-system/argon-design-system.min.js?v=1.2.0" type="text/javascript"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="an onymous"></script> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="an onymous"></script> 
-<!-- Custom scripts for all pages--> 
-<script>     
-$('.alert').alert().delay(3000).slideUp('slow'); 
-</script> 
- 
+<!-- Custom -->
+<script src="<?= base_url('assets/js/custom/script.js') ?>"></script>
+<?php if(isset($modal_active)):?>
+<script>
+    $('#daftarModal').modal('show');
+</script>
+<?php endif; ?>
 </body> 
  
 </html

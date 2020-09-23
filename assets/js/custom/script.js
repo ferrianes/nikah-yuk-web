@@ -4,7 +4,7 @@
 	};
 })(jQuery);
 
-$(function() {
+$(document).ready(function() {
 	// $('#sanitize').click(function() {
 	// 	var $input = $('#input').val();
 	// 	$('#output').text($.sanitize($input));
@@ -22,6 +22,11 @@ $(function() {
     });
     $('#modalKonfirmasiHapusProduk').on('show.bs.modal', function(e) {
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    });
+    $('.alert-message').alert().delay(3000).slideUp('slow');
+
+    $('.navbar-collapse a').click(function(){
+        $(".navbar-collapse").collapse('hide');
     });
 });
 

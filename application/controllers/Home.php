@@ -11,26 +11,25 @@ class Home extends CI_Controller
 
     public function index()
     {
-           $id = $this->uri->segment(3);
-            $data['judul'] = 'Daftar Produk';
-    
-            $data['admin'] = $this->Utama_model->getDatas('admins', ['email' => $this->session->userdata('email')])[0];
+        $data['judul'] = 'Daftar Produk';
 
-            $data['products'] = $this->Utama_model->getDatas('products');
+        $data['products'] = $this->Utama_model->getDatas('products');
 
+        // var_dump($_SESSION);die;
 
         //jika sudah login dan belum login
         if ($this->session->userdata('email')){
-            $kustomer   = $this->db->get_where('kustomer')->row_array();
 
-            $data['kustomer'] = $kustomer['username'];
+            $data['kustomer'] = $this->session->nama;
 
             $this->load->view('templates/templates-user/header', $data);
             $this->load->view('product/daftar_produk', $data);
             $this->load->view('templates/templates-user/modal');
             $this->load->view('templates/templates-user/footer', $data);
         } else {
+
             $data['kustomer'] = 'Pengunjung';
+
             $this->load->view('templates/templates-user/header', $data);
             $this->load->view('product/daftar_produk', $data);
             $this->load->view('templates/templates-user/modal');

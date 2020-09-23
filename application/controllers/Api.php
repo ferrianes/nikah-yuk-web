@@ -128,7 +128,16 @@ class Api extends RestController {
     {
         // kustomer from a data store e.g. database
         $id = $this->get('id_kustomer');
-        $kustomer = $this->Api_model->getDatas('kustomer', ['id_kustomer' => $id], $id);
+        $email = $this->get('email');
+        if (!is_null($id)) {
+            $cek = $id;
+        } else if (!is_null($email)) {
+            $cek = $email;
+        } else {
+            $cek = NULL;
+        }
+        $where = is_null($id) ? 'email' : 'id_kustomer';
+        $kustomer = $this->Api_model->getDatas('kustomer', [$where => $cek], $cek);
         // Check if the kustomer data store contains kustomer
         if ( $kustomer )
         {
@@ -455,6 +464,25 @@ class Api extends RestController {
         ];
 
         if ($this->Api_model->insertData('admin_menu', $data) > 0) {
+            $this->response(['message' => 'Data berhasil diinput'], 200);
+        } else {
+            $this->response(['message' => 'Data gagal diinput'], 400);
+        }
+    }
+
+    public function kustomer_post()
+    {
+        $data = [
+            'nm_lengkap' => $this->post('nm_lengkap'),
+            'alamat' => $this->post('alamat'),
+            'email' => $this->post('email'),
+            'telepon' => $this->post('telepon'),
+            'password' => $this->post('password'),
+            'is_active' => $this->post('is_active'),
+            'tgl_dibuat' => $this->post('tgl_dibuat'),
+        ];
+
+        if ($this->Api_model->insertData('kustomer', $data) > 0) {
             $this->response(['message' => 'Data berhasil diinput'], 200);
         } else {
             $this->response(['message' => 'Data gagal diinput'], 400);

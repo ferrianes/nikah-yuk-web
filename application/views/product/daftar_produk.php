@@ -1,4 +1,5 @@
 <div class="container mt-5">
+<?= $this->session->flashdata('pesan'); ?>
 	<!-- Tampilkan semua produk -->
 	<div class="row">
 		<?php 

@@ -94,6 +94,7 @@
                                 <div class="col-md-4 text-center mt-2">
                                     <div class="img-container">
                                         <?php
+                                        // Cek ekstensi dari galeri
                                         $file_parts = pathinfo($produk_gambar['gambar']);
 								
                                         if ($file_parts['extension'] == 'mp4' OR $file_parts['extension'] == 'ogg' OR $file_parts['extension'] == 'webm') : ?>

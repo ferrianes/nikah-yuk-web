@@ -6,9 +6,7 @@ class Admin extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('Utama_model');
-        if (!$this->session->userdata['email']) {
-            redirect('auth');            
-        }
+        is_logged_in_admin();
     }
 
     public function index()

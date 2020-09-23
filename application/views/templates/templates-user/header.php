@@ -48,41 +48,41 @@
                     </a>
                 </li>
                 <?php if (!empty($this->session->userdata('email'))) : ?>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="<?= base_url('booking/dataBooking'); ?>">
-                        <i class="ni ni-cart"></i>
-                        <span class="nav-link-inner--text">Booking Produk</span>
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link nav-link-icon dropdown-toggle" href="#" id="navbar-default_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="ni ni-circle-08"></i>
-                        <span class="nav-link-inner--text">Hi, <b><?= $kustomer; ?></b></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
-                        <a class="dropdown-item" href="<?= base_url('customer/myprofil'); ?>"><span class="fa fa-user-circle mr-2"></span>Profilku</a>
-                        <a class="dropdown-item" href="<?= base_url('customer/logout'); ?>"><span class="fa fa-sign-out-alt mr-2"></span>Log out</a>
-                    </div>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-icon" href="<?= base_url('booking/dataBooking'); ?>">
+                            <i class="ni ni-cart"></i>
+                            <span class="nav-link-inner--text">Booking Produk</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-link-icon dropdown-toggle" href="#" id="navbar-default_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="ni ni-circle-08"></i>
+                            <span class="nav-link-inner--text">Hi, <b><?= $kustomer; ?></b></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
+                            <a class="dropdown-item" href="<?= base_url('kustomer/myprofil'); ?>"><span class="fa fa-user-circle mr-2"></span>Profilku</a>
+                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal"><span class="fa fa-sign-out-alt mr-2"></span>Log out</a>
+                        </div>
+                    </li>
                 <?php else : ?>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" data-toggle="modal" datatarget="#daftarModal" href="#daftarModal">
-                        <i class="fa fa-user-plus"></i>
-                        <span class="nav-link-inner--text">Daftar</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" data-toggle="modal" datatarget="#loginModal" href="#loginModal">
-                        <i class="fa fa-sign-in-alt"></i>
-                        <span class="nav-link-inner--text">Log in</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="#">
-                        <i class="ni ni-circle-08"></i>
-                        <span class="nav-link-inner--text">Hi, <b><?= $kustomer; ?></b></span>
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-icon" data-toggle="modal" datatarget="#daftarModal" href="#daftarModal">
+                            <i class="fa fa-user-plus"></i>
+                            <span class="nav-link-inner--text">Daftar</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-icon" data-toggle="modal" datatarget="#loginModal" href="#loginModal">
+                            <i class="fa fa-sign-in-alt"></i>
+                            <span class="nav-link-inner--text">Log in</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-icon" href="#">
+                            <i class="ni ni-circle-08"></i>
+                            <span class="nav-link-inner--text">Hi, <b><?= $kustomer; ?></b></span>
+                        </a>
+                    </li>
                 <?php endif; ?>
             </ul>
             

@@ -44,7 +44,8 @@ class Auth extends CI_Controller {
                     // set session
                     $data = [
                         'email' => $admin['email'],
-                        'level' => $admin['level']
+                        'level' => $admin['level'],
+                        'status' => 'admin'
                     ];
 
                     $this->session->set_userdata($data);
@@ -74,7 +75,7 @@ class Auth extends CI_Controller {
 
     public function logout()
     {
-        $this->session->unset_userdata(['email', 'level']);
+        $this->session->unset_userdata(['email', 'level', 'status']);
         $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Berhasil Logout!</div>');
         redirect('auth');
     }

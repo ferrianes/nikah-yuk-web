@@ -22,19 +22,19 @@
 								<img class="d-block w-100 thumb" src="<?= base_url('assets/img/api/products/' . $thumbnail['gambar']) ?>" alt="slide ke-1">
 							</div>
 							<?php $i = 2; foreach ($produks_gambar as $produk_gambar) : ?>
-							<div class="carousel-item">
-								<?php 
-								$file_parts = pathinfo($produk_gambar['gambar']);
-								
-								if ($file_parts['extension'] == 'mp4' OR $file_parts['extension'] == 'ogg' OR $file_parts['extension'] == 'webm') : ?>
-									<video autoplay loop muted class="w-100 thumb-video">
-										<source src="<?= base_url('assets/img/api/products/') . $produk_gambar['gambar'] ?>" type="video/<?= $file_parts['extension'] ?>">
-										Your browser does not support HTML video.
-									</video>
-								<?php else : ?>
-									<img class="d-block w-100 thumb" src="<?= base_url('assets/img/api/products/') . $produk_gambar['gambar'] ?>" alt="slide ke-<?= $i; ?>">
-								<?php endif; ?>
-							</div>
+								<div class="carousel-item">
+									<?php 
+									$file_parts = pathinfo($produk_gambar['gambar']);
+									
+									if ($file_parts['extension'] == 'mp4' OR $file_parts['extension'] == 'ogg' OR $file_parts['extension'] == 'webm') : ?>
+										<video autoplay loop muted class="w-100 thumb-video">
+											<source src="<?= base_url('assets/img/api/products/') . $produk_gambar['gambar'] ?>" type="video/<?= $file_parts['extension'] ?>">
+											Your browser does not support HTML video.
+										</video>
+									<?php else : ?>
+										<img class="d-block w-100 thumb" src="<?= base_url('assets/img/api/products/') . $produk_gambar['gambar'] ?>" alt="slide ke-<?= $i; ?>">
+									<?php endif; ?>
+								</div>
 							<?php $i++; endforeach; ?>
 						</div>
 						<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
