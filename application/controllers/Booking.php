@@ -1,4 +1,5 @@
 <?php
+use Carbon\Carbon;
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Booking extends CI_Controller {
@@ -128,6 +129,9 @@ class Booking extends CI_Controller {
         $data['kustomer'] = $this->Utama_model->getDatas('kustomer', ['email' => $email])[0];
 
         $data['booking_temp'] = $this->Utama_model->getDatas('booking_temp', ['id_kustomer' => $this->session->id_kustomer]);
+
+        $data['carbon'] = new Carbon();
+        // echo $data['carbon'];die;
     
         $this->load->view('templates/templates-user/header', $data);
         $this->load->view('booking/data-booking', $data);
