@@ -129,13 +129,7 @@ class Api extends RestController {
         // kustomer from a data store e.g. database
         $id = $this->get('id_kustomer');
         $email = $this->get('email');
-        if (!is_null($id)) {
-            $cek = $id;
-        } else if (!is_null($email)) {
-            $cek = $email;
-        } else {
-            $cek = NULL;
-        }
+        $cek = !is_null($id) ? $id : ( !is_null($email) ? $email : NULL );
         $where = is_null($id) ? 'email' : 'id_kustomer';
         $kustomer = $this->Api_model->getDatas('kustomer', [$where => $cek], $cek);
         // Check if the kustomer data store contains kustomer
@@ -147,7 +141,7 @@ class Api extends RestController {
         else
         {
             // Set the response and exit
-            if ($id === NULL) {
+            if ($cek === NULL) {
                 $this->response( [
                     'status' => false,
                     'message' => 'Kustomer kosong'
@@ -212,6 +206,39 @@ class Api extends RestController {
                 $this->response( [
                     'status' => false,
                     'message' => 'Produk tidak ditemukan'
+                ], 404 );
+            }
+        }
+    }
+
+    public function booking_temp_get()
+    {
+        // booking_temp from a data store e.g. database
+        $id = $this->get('id');
+        $id_kustomer = $this->get('id_kustomer');
+
+        $cek = !is_null($id) ? $id : ( !is_null($id_kustomer) ? $id_kustomer : NULL );
+        $where = is_null($id) ? 'id_kustomer' : 'id';
+
+        $booking_temp = $this->Api_model->getDatas('booking_temp', [$where => $cek], $cek);
+        // Check if the booking_temp data store contains booking_temp
+        if ( $booking_temp )
+        {
+            // Set the response and exit
+            $this->response($booking_temp, 200);
+        }
+        else
+        {
+            // Set the response and exit
+            if ($cek === NULL) {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Booking temp kosong'
+                ], 404 );
+            } else {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Booking temp tidak ditemukan'
                 ], 404 );
             }
         }
@@ -572,6 +599,83 @@ class Api extends RestController {
         }
     }
 
+    public function kustomer_put()
+    {
+        $data = [
+            'nm_lengkap' => $this->put('nm_lengkap'),
+            'alamat' => $this->put('alamat'),
+            'email' => $this->put('email'),
+            'telepon' => $this->put('telepon'),
+            'image' => $this->put('image')
+        ];
+        
+        $where = ['id_kustomer' => $this->put('id_kustomer')];
+        
+        if ($this->Api_model->updateData('kustomer', $data, $where) != -1 ) {
+            $this->response([
+                'message' => 'Data berhasil diubah'
+            ], 200);
+        } else {
+            $this->response(['message' => 'Data gagal diubah'], 400);
+        }
+    }
+
+    public function kustomer_foto_post()
+    {
+        $foto = $_FILES;
+        $gambar_lama = $this->post('gambar_lama');
+
+        if ($gambar_lama === NULL OR empty($foto)) {
+            $this->response(['message' => 'Masukkan nama gambar lama atau isi gambar!'], 400);
+        } else {
+            $config = [
+                'upload_path' => './assets/img/api/kustomer/',
+                'allowed_types' => "gif|jpg|png|jpeg",
+                'overwrite' => TRUE,
+                'max_size' => "4000",
+                'encrypt_name' => TRUE
+            ];
+    
+            $this->load->library('upload',$config);
+            if($this->upload->do_upload('Contents-0'))
+            {
+                $image = $this->upload->data();
+    
+                if ($image['is_image'] === TRUE) {
+                    //Compress Image
+                    $config['image_library']='gd2';
+                    $config['source_image']='./assets/img/api/kustomer/'.$image['file_name'];
+                    $config['create_thumb']= FALSE;
+                    $config['maintain_ratio']= TRUE;
+                    $config['quality']= '70%';
+                    $config['width']= 200;
+                    $config['new_image']= './assets/img/api/kustomer/'.$image['file_name'];
+                    $this->load->library('image_lib', $config);
+                    $this->image_lib->resize();
+                }
+
+                // Kalo gambarnya bukan default maka hapus
+                if ($gambar_lama != 'default-photo.png') {
+                    $filename = explode(".", $gambar_lama)[0];
+                    array_map('unlink', glob(FCPATH."assets/img/api/kustomer/$filename.*"));
+                }
+    
+                $this->response([
+                    'status' => 200,
+                    'message' => 'Gambar berhasil diubah',
+                    'nama-baru' => $image['file_name']
+                ], 200);
+    
+            } else {
+                $error = [
+                    'message' => $this->upload->display_errors('', '') . ' - (' . $foto['Contents-0']['name'] . ')',
+                    'status' => 400
+                ];
+                $this->response($error, 400);
+            }
+        }
+    }
+
     public function produk_gambar_post()
     {
         $galeries = $_FILES;
@@ -595,7 +699,6 @@ class Api extends RestController {
             if($this->upload->do_upload('Contents-'.$key))
             {
                 $image = $this->upload->data();
-                var_dump($image['is_image']);
 
                 if ($image['is_image'] === TRUE) {
                     //Compress Image
@@ -640,6 +743,23 @@ class Api extends RestController {
                 'status' => 400,
                 'message' => 'Data gagal diinput',
             ], 400);
+        }
+    }
+
+    public function booking_temp_post()
+    {
+        $data = [
+            'tgl_acara' => $this->post('tgl_acara'),
+            'id_kustomer' => $this->post('id_kustomer'),
+            'id_produk' => $this->post('id_produk'),
+            'tgl_booking' => date("Y-m-d"),
+            'jam_booking' => date('H:i:s')
+        ];
+
+        if ($this->Api_model->insertData('booking_temp', $data) > 0) {
+            $this->response(['message' => 'Data berhasil diinput'], 200);
+        } else {
+            $this->response(['message' => 'Data gagal diinput'], 400);
         }
     }
 

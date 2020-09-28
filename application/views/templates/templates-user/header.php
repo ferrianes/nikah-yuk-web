@@ -51,7 +51,7 @@
                     <li class="nav-item">
                         <a class="nav-link nav-link-icon" href="<?= base_url('booking/dataBooking'); ?>">
                             <i class="ni ni-cart"></i>
-                            <span class="nav-link-inner--text">Booking Produk</span>
+                            <span class="nav-link-inner--text">Booking Produk <span class="badge badge-default"><?= count($booking_temp) ?></span></span>
                         </a>
                     </li>
                     <li class="nav-item dropdown">
@@ -60,7 +60,7 @@
                             <span class="nav-link-inner--text">Hi, <b><?= $kustomer['nm_lengkap']; ?></b></span>
                         </span>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
-                            <a class="dropdown-item" href="<?= base_url('kustomer/myprofil'); ?>"><span class="fa fa-user-circle mr-2"></span>Profilku</a>
+                            <a class="dropdown-item" href="<?= base_url('kustomer/profilku'); ?>"><span class="fa fa-user-circle mr-2"></span>Profilku</a>
                             <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal"><span class="fa fa-sign-out-alt mr-2"></span>Log out</a>
                         </div>
                     </li>

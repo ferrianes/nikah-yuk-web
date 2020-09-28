@@ -68,11 +68,11 @@
 				<li class="list-group-item">
 					<h5 class="text-dark">Harga</h5>
 					<?php 
-                                    $crncy = new NumberFormatter( 'id_ID', NumberFormatter::CURRENCY );
-                                    $crncy->setTextAttribute(NumberFormatter::CURRENCY_CODE, 'IDR');
-                                    $crncy->setAttribute(NumberFormatter::FRACTION_DIGITS, 0); 
-                                    echo $crncy->formatCurrency($produk['harga'], "IDR"); 
-                                    ?>
+						$crncy = new NumberFormatter( 'id_ID', NumberFormatter::CURRENCY );
+						$crncy->setTextAttribute(NumberFormatter::CURRENCY_CODE, 'IDR');
+						$crncy->setAttribute(NumberFormatter::FRACTION_DIGITS, 0); 
+						echo $crncy->formatCurrency($produk['harga'], "IDR"); 
+					?>
 				</li>
 				<li class="list-group-item">
 					<h5 class="text-dark">Stok</h5>

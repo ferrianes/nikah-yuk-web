@@ -2,7 +2,7 @@
 
 function is_logged_in_admin() {
     $ci = get_instance();
-    if (!$ci->session->has_userdata('status') OR $ci->session->userdata('status') != 'admin') {
+    if (!$ci->session->has_userdata('admin') OR $ci->session->userdata('admin') == FALSE) {
         redirect('auth');
     } else {
         $level = $ci->session->userdata('level');

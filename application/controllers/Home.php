@@ -14,12 +14,14 @@ class Home extends CI_Controller
         $data['judul'] = 'Daftar Produk';
 
         $data['products'] = $this->Utama_model->getDatas('products');
+        // var_dump($_SESSION);die;
 
         //jika sudah login dan belum login
-        if ($this->session->userdata('status') == 'kustomer'){
+        if ($this->session->userdata('kustomer') == TRUE){
             
             $email = $this->session->email_kustomer;
             $data['kustomer'] = $this->Utama_model->getDatas('kustomer', ['email' => $email])[0];
+            $data['booking_temp'] = $this->Utama_model->getDatas('booking_temp', ['id_kustomer' => $this->session->id_kustomer]);
 
             $this->load->view('templates/templates-user/header', $data);
             $this->load->view('product/daftar_produk', $data);
@@ -47,8 +49,10 @@ class Home extends CI_Controller
 
         $data['thumbnail'] = $this->Utama_model->getDatas('produks_gambar', ['produk_id' => $id, 'thumbnail' => 1])[0];
          //jika sudah login dan belum login
-        if ($this->session->userdata('email')){
-            $data['kustomer'] = $this->session->nama;
+        if ($this->session->userdata('kustomer') == TRUE){
+            $email = $this->session->email_kustomer;
+            $data['kustomer'] = $this->Utama_model->getDatas('kustomer', ['email' => $email])[0];
+            $data['booking_temp'] = $this->Utama_model->getDatas('booking_temp', ['id_kustomer' => $this->session->id_kustomer]);
 
             $this->load->view('templates/templates-user/header', $data);
             $this->load->view('product/detail-produk', $data);
