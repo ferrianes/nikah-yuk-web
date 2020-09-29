@@ -17,6 +17,7 @@
 <script src="<?= base_url(); ?>assets/js/plugins/moment.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/plugins/datetimepicker.js" type="text/javascript"></script>
 <script src="<?= base_url(); ?>assets/js/plugins/bootstrap-datepicker.min.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
 <!-- Control Center for Argon UI Kit: parallax effects, scripts for the example pages etc -->
 <!--  Google Maps Plugin    -->
 <script src="<?= base_url(); ?>assets/js/argon-design-system/argon-design-system.min.js?v=1.2.0" type="text/javascript"></script>

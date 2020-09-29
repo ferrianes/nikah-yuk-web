@@ -53,6 +53,16 @@
 							<?php endforeach; ?>
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-lg-3">
+							<a href="#" type="submit" class="btn btn-success"><i
+								class="fab fa-fw fa-whatsapp mr-2"></i>Minta Persetujuan Via Whatsapp (ANDROID)</a>
+						</div>
+						<div class="col-lg-3">
+							<a href="#" type="submit" class="btn btn-success"><i
+								class="fab fa-fw fa-whatsapp mr-2"></i>Minta Persetujuan Via Whatsapp (PC)</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

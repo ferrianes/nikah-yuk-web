@@ -48,9 +48,10 @@ $(document).ready(function () {
 	// Datepicker
 	flatpickr('.flatpickr', {
     altInput: true,
-    altFormat: "F j, Y",
+    altFormat: "l, j F Y",
     dateFormat: "Y-m-d",
-    minDate: "today",
+	minDate: "today",
+	"locale": "id",
     onOpen: function() {
       if ($(".tgl-acara").hasClass('has-danger')) {
         $(".input-group-text").removeClass('border border-warning rounded-left border-right-0')
