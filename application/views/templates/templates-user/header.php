@@ -19,9 +19,9 @@
 
 <body class="d-flex flex-column min-vh-100">    
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+<nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom">
     <div class="container">
-        <a class="navbar-brand" href="<?= base_url('home/index'); ?>">NIKAHYUK</a>
+    <a class="navbar-brand" href="<?= base_url('home/index'); ?>">NIKAHYUK</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -88,4 +88,14 @@
             
         </div>
     </div>
-</nav>
+  </nav>
+  <section class="section-profile-cover section-shaped my-0">
+      <!-- Circles background -->
+      <img class="bg-image" src="<?= base_url('assets/img/app/home-banner.jpg') ?>" style="width: 100%;">
+      <!-- SVG separator -->
+      <div class="separator separator-bottom separator-skew">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-secondary" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+      </div>
+    </section>
