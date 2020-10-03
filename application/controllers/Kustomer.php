@@ -34,18 +34,18 @@ class Kustomer extends CI_Controller
                     ];
 
                     $this->session->set_userdata($data);
-                    $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Anda Berhasil Login!</div>');
+                    $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-success alert-message text-center" role="alert">Kamu berhasil Login</div></div>');
                     redirect('home');
                 } else {
-                    $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-message" role="alert">Password Salah!!!</div>');
+                    $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-danger alert-message text-center" role="alert">Email atau Password tidak benar</div></div>');
                     redirect('home');
                 }
             } else {
-                $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-message" role="alert">Akun belum diaktifasi</div>');
+                $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-danger alert-message text-center" role="alert">Akun belum diaktifasi</div></div>');
                 redirect('home');
             }
         } else {
-            $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-message" role="alert">Email tidak terdaftar atau tidak valid</div>');
+            $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-danger alert-message text-center" role="alert">Email tidak terdaftar atau tidak valid</div></div>');
             redirect('home');
         }
     }
@@ -102,7 +102,7 @@ class Kustomer extends CI_Controller
                 'tgl_dibuat' => date("Y-m-d")
             ];
             $this->Utama_model->insertData('kustomer', $data);
-            $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Selamat!! akun anda sudah dibuat.</div>');
+            $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-success alert-message text-center" role="alert">Selamat akun kamu sudah berhasil dibuar</div></div>');
             redirect('home');
         } else {
             $data['judul'] = 'Daftar Produk';
@@ -251,7 +251,7 @@ class Kustomer extends CI_Controller
     public function logout()
     {
         $this->session->unset_userdata(['email_kustomer', 'id_kustomer', 'nama', 'kustomer']);
-        $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Berhasil Logout!</div>');
+        $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-success alert-message text-center" role="alert">Kamu berhasil Logout</div></div>');
         redirect('home');
     }
 

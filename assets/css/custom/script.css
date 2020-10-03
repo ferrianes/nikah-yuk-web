@@ -37,6 +37,12 @@ img.thumb {
 	font-size: 0.875rem;
 }
 
+@media (min-width: 992px) {
+	.mt--540 {
+		margin-top: -540px !important;
+	}
+}
+
 @media (min-width: 1200px) {
 	img.thumb {
 		width: 446px;
@@ -47,6 +53,17 @@ img.thumb {
 	.thumb-video {
 		width: 446px;
 		height: 446px;
+	}
+}
+
+/* Small devices (landscape phones, less than 768px) /  Small Only */
+@media (max-width: 767.98px) { 
+	.h-sm-only-auto {
+		height: auto !important;
+	}
+
+	.w-sm-only-auto {
+		width: auto !important;
 	}
 }
 
@@ -108,4 +125,20 @@ img.thumb {
 
 .input-group-text.disabled {
     background-color: #e9ecef;
+}
+
+.montserrat {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 200;
+	font-size: 2.5rem;
+}
+
+.shape > .bg-image {
+	object-fit: cover;
+    height: 600px;
+    width: 100%;
+}
+
+.profile-page .card-product {
+    margin-top: -380px;
 }

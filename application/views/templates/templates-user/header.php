@@ -9,6 +9,7 @@
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
     <link href="<?= base_url('assets/vendor/fontawesome-free/css/all.min.css')?>" rel="stylesheet" type="text/css">  
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- Nucleo Icons -->
     <link href="<?= base_url(); ?>assets/css/argon-design-system/nucleo-icons.css" rel="stylesheet" />
     <link href="<?= base_url(); ?>assets/css/argon-design-system/nucleo-svg.css" rel="stylesheet" />
@@ -17,7 +18,7 @@
     <link href="<?= base_url(); ?>assets/css/custom/script.css" rel="stylesheet" />
 </head> 
 
-<body class="d-flex flex-column min-vh-100">    
+<body class="d-flex flex-column min-vh-100 <?= $judul == 'Daftar Produk' ? 'profile-page' : ''; ?>">    
 
 <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom">
     <div class="container">
@@ -45,6 +46,12 @@
                     <a class="nav-link nav-link-icon" href="<?= base_url('home/index'); ?>">
                         <i class="fa fa-home"></i>
                         <span class="nav-link-inner--text">Beranda</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-icon" href="<?= base_url('home/daftarproduk'); ?>">
+                        <i class="ni ni-bag-17"></i>
+                        <span class="nav-link-inner--text">Produk</span>
                     </a>
                 </li>
                 <?php if (!empty($this->session->email_kustomer)) : ?>
@@ -88,14 +95,38 @@
             
         </div>
     </div>
-  </nav>
-  <section class="section-profile-cover section-shaped my-0">
-      <!-- Circles background -->
-      <img class="bg-image" src="<?= base_url('assets/img/app/home-banner.jpg') ?>" style="width: 100%;">
-      <!-- SVG separator -->
-      <div class="separator separator-bottom separator-skew">
-        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
-          <polygon class="fill-secondary" points="2560 0 2560 100 0 100"></polygon>
-        </svg>
-      </div>
-    </section>
+</nav>
+<section class="section section-profile-cover section-shaped my-0 <?= $judul == 'Welcome' ? 'h-sm-only-auto' : ''; ?>">
+    <div class="shape">
+        <!-- Circles background -->
+        <img class="bg-image" src="<?= base_url('assets/img/app/home-banner.jpg') ?>">
+    </div>
+    <?php if ($judul == 'Welcome') : ?>
+    <div class="page-header">
+        <div class="container shape-container d-flex align-items-center py-lg">
+            <div class="col px-0">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-lg-6 text-center">
+    					<h1 class="text-white display-1">Cinta Sejati</h1>
+    					<h2 class="display-4 font-weight-normal text-white">Baru Dimulai Setelah Pernikahan</h2>
+    					<div class="btn-wrapper mt-4">
+    						<a href="<?= base_url('home/daftarproduk') ?>"
+    							class="btn btn-warning btn-icon mt-3 mb-sm-0">
+    							<span class="btn-inner--icon"><i class="fas fa-fw fa-chevron-right"></i></span>
+    							<span class="btn-inner--text">Lihat Produk</span>
+    						</a>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    <?php endif; ?>
+	<!-- SVG separator -->
+	<div class="separator separator-bottom separator-skew">
+		<svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+			xmlns="http://www.w3.org/2000/svg">
+			<polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+		</svg>
+	</div>
+</section>

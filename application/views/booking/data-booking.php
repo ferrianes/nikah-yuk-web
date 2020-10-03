@@ -1,12 +1,11 @@
 <?php use Carbon\Carbon; ?>
-<div class="container mt-5">
-	<?= $this->session->flashdata('pesan'); ?>
-	<!-- Data Kustomer -->
-	<div class="row">
-		<div class="col">
-			<div class="card shadow">
-				<div class="card-body">
-					<h5 class="card-title">Daftar Produk di Keranjangmu</h5>
+<section class="section bg-white">
+	<div class="container-fluid">
+        <div class="card card-product shadow mt--540">
+          <div class="p-4">
+			<!-- Tampilkan semua produk -->
+			<div class="container">
+			<h2 class="text-center mb-4">Daftar Produk di Keranjangmu</h2>
 					<div class="row">
 						<div class="col-12 col-lg-7">
 							<?php 
@@ -63,8 +62,8 @@
 								class="fab fa-fw fa-whatsapp mr-2"></i>Minta Persetujuan Via Whatsapp (PC)</a>
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
+			</div>  
+          </div>
+        </div>
 	</div>
-</div>
+</section>
