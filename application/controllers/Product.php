@@ -122,6 +122,13 @@ class Product extends CI_Controller {
             $data['thumbnail'] = $this->Utama_model->getDatas('produks_gambar', ['produk_id' => $id, 'thumbnail' => 1])[0];
 
             $data['menus_by_access_menu'] = $this->Utama_model->getDatas('menus_by_access_menu', ['level_id' => $this->session->userdata('level')]);
+
+            if ($this->session->userdata('kustomer') == TRUE){
+                $email = $this->session->email_kustomer;
+                $data['kustomer'] = $this->Utama_model->getDatas('kustomer', ['email' => $email])[0];
+            } else {
+                $data['kustomer']['nm_lengkap'] = 'Pengunjung';
+            }
     
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
