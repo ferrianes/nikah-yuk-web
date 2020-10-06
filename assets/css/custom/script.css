@@ -142,3 +142,7 @@ img.thumb {
 .profile-page .card-product {
     margin-top: -380px;
 }
+
+.navbar-brand img {
+	height: 50px;
+}

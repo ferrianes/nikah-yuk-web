@@ -22,7 +22,9 @@
 
 <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom">
     <div class="container">
-    <a class="navbar-brand" href="<?= base_url('home/index'); ?>">NIKAHYUK</a>
+    <a class="navbar-brand" href="<?= base_url('home/index'); ?>">
+        <img src="<?= base_url('assets/img/app/icon.png') ?>">
+    </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
