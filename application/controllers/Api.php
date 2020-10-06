@@ -211,6 +211,34 @@ class Api extends RestController {
         }
     }
 
+    public function sub_menu_get()
+    {
+        // sub_menu from a data store e.g. database
+        $id = $this->get('id');
+        $sub_menu = $this->Api_model->getJoinDatas('admin_sub_menu.*, admin_menu.menu', 'admin_sub_menu', 'admin_menu', 'admin_sub_menu.menu_id = admin_menu.id', ['admin_sub_menu.id' => $id], $id);
+        // Check if the sub_menu data store contains sub_menu
+        if ( $sub_menu )
+        {
+            // Set the response and exit
+            $this->response($sub_menu, 200);
+        }
+        else
+        {
+            // Set the response and exit
+            if ($id === NULL) {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Submenu kosong'
+                ], 404 );
+            } else {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Submenu tidak ditemukan'
+                ], 404 );
+            }
+        }
+    }
+
     public function booking_temp_get()
     {
         // booking_temp from a data store e.g. database

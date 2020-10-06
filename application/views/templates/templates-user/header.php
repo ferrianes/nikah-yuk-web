@@ -50,11 +50,21 @@
                         <span class="nav-link-inner--text">Beranda</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="<?= base_url('home/daftarproduk'); ?>">
-                        <i class="ni ni-bag-17"></i>
-                        <span class="nav-link-inner--text">Produk</span>
-                    </a>
+                <li class="nav-item dropdown">
+                	<span class="nav-link nav-link-icon dropdown-toggle cursor-pointer" href="#"
+                		id="navbar-default_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true"
+                		aria-expanded="false">
+                		<i class="ni ni-bag-17"></i>
+                		<span class="nav-link-inner--text">Produk</span>
+                	</span>
+                	<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
+                		<a class="dropdown-item" href="<?= base_url('home/daftarproduk'); ?>"><span
+                				class="fa fa-gift mr-2"></span>Kado Pernikahan</a>
+                		<a class="dropdown-item" href="<?= base_url('home/daftarproduk'); ?>"><span
+                				class="fa fa-hand-holding-heart mr-2"></span>Paket Pernikahan</a>
+                		<a class="dropdown-item" href="<?= base_url('home/daftarproduk'); ?>"><span
+                				class="fa fa-store mr-2"></span>Vendor Penikahan</a>
+                	</div>
                 </li>
                 <?php if (!empty($this->session->email_kustomer)) : ?>
                     <li class="nav-item">

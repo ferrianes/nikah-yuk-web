@@ -30,7 +30,7 @@ class Api_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
-    public function getJoinDatas($select, $from, $join, $on, $where, $id=NULL, $order=NULL, $by=NULL)
+    public function getJoinDatas($select, $from, $join, $on, $where=NULL, $id=NULL, $order=NULL, $by=NULL)
     {
         if ($id === NULL) {
             $this->db->select($select);
