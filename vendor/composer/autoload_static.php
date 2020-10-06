@@ -44,6 +44,7 @@ class ComposerStaticInita4e928bc1aec2d71163988eda97e7f7e
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
             'Prophecy\\' => 9,
+            'PhpOption\\' => 10,
         ),
         'G' => 
         array (
@@ -53,6 +54,7 @@ class ComposerStaticInita4e928bc1aec2d71163988eda97e7f7e
         ),
         'D' => 
         array (
+            'Dotenv\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
         ),
@@ -113,6 +115,10 @@ class ComposerStaticInita4e928bc1aec2d71163988eda97e7f7e
         array (
             0 => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy',
         ),
+        'PhpOption\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+        ),
         'GuzzleHttp\\Psr7\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
@@ -124,6 +130,10 @@ class ComposerStaticInita4e928bc1aec2d71163988eda97e7f7e
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
+        'Dotenv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
         'Doctrine\\Instantiator\\' => 
         array (
