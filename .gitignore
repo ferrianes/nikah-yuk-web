@@ -17,6 +17,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 
 #Config File
 .env
+application/.env
 
 # IDE Files
 #-------------------------
