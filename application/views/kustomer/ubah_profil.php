@@ -1,11 +1,10 @@
-<div class="container my-5">
-	<?= $this->session->flashdata('pesan'); ?>
-	<!-- Data Kustomer -->
-	<div class="row">
-		<div class="col">
-			<div class="card shadow bg-secondary">
-				<div class="card-body">
-					<h5 class="card-title">Profilku</h5>
+<section class="section bg-white">
+	<div class="container-fluid">
+		<div class="card card-product shadow mt--540">
+			<div class="p-4">
+				<div class="container">
+					<?= $this->session->flashdata('pesan'); ?>
+					<h2 class="text-center mb-4">Edit Profil</h2>
 					<form action="<?= base_url('kustomer/ubahprofil') ?>" method="post" enctype="multipart/form-data">
 						<div class="row">
 							<div class="col-12 col-md-4 col-lg-3 text-center">
@@ -97,4 +96,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</section>
