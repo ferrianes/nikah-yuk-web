@@ -88,7 +88,7 @@ class Home extends CI_Controller
             $this->load->view('templates/templates-user/modal');
             $this->load->view('templates/templates-user/footer', $data);
         } else {
-            $data['kustomer'] = 'Pengunjung';
+            $data['kustomer']['nm_lengkap'] = 'Pengunjung';
             $this->load->view('templates/templates-user/header', $data);
             $this->load->view('product/detail-produk', $data);
             $this->load->view('templates/templates-user/modal');
