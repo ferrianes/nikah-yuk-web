@@ -4,6 +4,7 @@
           <div class="p-4">
 			<!-- Tampilkan semua produk -->
 			<div class="container">
+				<?= $this->session->flashdata('pesan'); ?>
 				<h2 class="text-center mb-4">Detail Produk</h2>
 				<div class="row">
 					<div class="col-md-6 col-sm-12">
