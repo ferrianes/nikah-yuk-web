@@ -884,4 +884,21 @@ class Api extends RestController {
         }
 
     }
+
+    public function sub_menu_post()
+    {
+        $data = [
+            'menu_id' => $this->post('menu_id'),
+            'title' => $this->post('title'),
+            'url' => $this->post('url'),
+            'icon' => $this->post('icon'),
+            'is_active' => $this->post('is_active'),
+        ];
+
+        if ($this->Api_model->insertData('admin_sub_menu', $data) > 0) {
+            $this->response(['message' => 'Data berhasil diinput'], 200);
+        } else {
+            $this->response(['message' => 'Data gagal diinput'], 400);
+        }
+    }
 }

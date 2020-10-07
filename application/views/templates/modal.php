@@ -356,3 +356,88 @@
         </form>
     <?php endif; ?>
 <?php endif; ?>
+
+<?php if ($title == 'Sub Menu Management') : ?>
+<!-- Modal Menu Baru -->
+<div class="modal fade" id="modalTambahSubmenuBaru" tabindex="-1" aria-labelledby="modalTambahSubmenuBaruLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark" id="modalTambahSubmenuBaruLabel">Tambah Submenu Baru</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="<?= base_url('menu/submenu') ?>">
+                <div class="modal-body text-dark">
+                    <div class="form-group">
+                        <input type="text" name="title" class="form-control" placeholder="Nama Submenu...">
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="menu_id">
+                            <option disabled selected>Pilih Menu</option>
+                            <?php 
+                                $menus = $this->Utama_model->getDatas('menus');
+                                foreach($menus as $menu) :
+                                    echo '<option value="'. $menu['id'] .'">'. $menu['menu'] .'</option>';
+                                endforeach;
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="url" class="form-control" placeholder="Url..">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="icon" class="form-control" placeholder="Icon..">
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-6">Apakah Submenu aktif?</label>
+                        <div class="col">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="is_active" id="inlineRadio1"
+                                    value="1">
+                                <label class="form-check-label" for="inlineRadio1">Aktif</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="is_active" id="inlineRadio2"
+                                    value="0">
+                                <label class="form-check-label" for="inlineRadio2">Tidak</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Hapus Menu Baru -->
+<div class="modal fade" id="modalKonfirmasiHapusMenu" tabindex="-1" aria-labelledby="modalKonfirmasiHapusMenuLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="modalKonfirmasiHapusMenuLabel">Hapus Menu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="<?= base_url('menu') ?>">
+                <div class="modal-body text-dark">
+                    <p>Anda yakin untuk menghapus Menu <strong><span id='nama-menu-modal'></span></strong>? </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <a href="" class="btn btn-danger btn-ok">Hapus</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

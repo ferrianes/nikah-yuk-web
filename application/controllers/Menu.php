@@ -165,8 +165,14 @@ class Menu extends CI_Controller {
         $this->form_validation->set_rules('menu_id', 'Menu', 'required|trim', [
             'required' => 'Menu Harus diisi!!!'
         ]);
-        $this->form_validation->set_rules('level_id', 'Level', 'required|trim', [
-            'required' => 'Level Harus diisi!!!'
+        $this->form_validation->set_rules('title', 'Judul Submenu', 'required|trim', [
+            'required' => 'Judul Harus diisi!!!'
+        ]);
+        $this->form_validation->set_rules('url', 'URL', 'required|trim', [
+            'required' => 'URL Harus diisi!!!'
+        ]);
+        $this->form_validation->set_rules('icon', 'Icon', 'required|trim', [
+            'required' => 'Icon Harus diisi!!!'
         ]);
 
         if ($this->form_validation->run() === FALSE) {
@@ -187,27 +193,24 @@ class Menu extends CI_Controller {
             $this->load->view('templates/modal', $data['title']);
             $this->load->view('templates/footer2');
         } else {
-            $level_id = $this->input->post('level_id', true);
             $menu_id = $this->input->post('menu_id', true);
+            $title = $this->input->post('title', true);
+            $url = $this->input->post('url', true);
+            $icon = $this->input->post('icon', true);
+            $is_active = $this->input->post('is_active', true);
 
-            $access_menu_cek = $this->Utama_model->getDatas('access_menus_raw');
-
-            //validasi apabila data sudah ada
-            foreach($access_menu_cek as $amc) {
-                if ($level_id === $amc['level_id'] && $menu_id === $amc['menu_id']) {
-                    $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-message" role="alert">Akses Menu Sudah Ada!</div>');
-                    redirect('menu/access_menu');
-                }
-            }
             $data = [
-                'level_id' => $level_id,
-                'menu_id' => $menu_id
+                'menu_id' => $menu_id,
+                'title' => $title,
+                'url' => $url,
+                'icon' => $icon,
+                'is_active' => $is_active
             ];
 
-            $this->Utama_model->insertData('access_menus_raw', $data);
+            $this->Utama_model->insertData('sub_menu', $data);
 
             $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> ditambah.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-            redirect('menu/access_menu');
+            redirect('menu/submenu');
         }
     }
 
