@@ -33,10 +33,10 @@
                 <?= $this->session->flashdata('pesan'); ?>
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
-                            <?php if ($thumbnail === NULL) : ?>
+                            <?php if (isset($thumbnail['status']) AND $thumbnail['status'] === FALSE) : ?>
                                 <img src="<?= base_url('assets/img/api/products/noimage_content.jpg') ?>" class="img-thumbnail" alt="">
                             <?php else : ?>
-                                <img src="<?= base_url('assets/img/api/products/' . $thumbnail['gambar']) ?>" class="img-thumbnail" alt="">
+                                <img src="<?= base_url('assets/img/api/products/' . $thumbnail[0]['gambar']) ?>" class="img-thumbnail" alt="">
                             <?php endif; ?>
                         </div>
                         <div class="col-md-6 col-sm-12">
