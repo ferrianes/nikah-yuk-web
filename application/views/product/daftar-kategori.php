@@ -3,8 +3,8 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Produk Management</h1>
-        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#modalTambahProduk"><i class="fas fa-plus-square fa-fw text-white-50"></i> Tambah Produk Baru</button>
+        <h1 class="h3 mb-0 text-gray-800">Kategori Management</h1>
+        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#modalTambahProduk"><i class="fas fa-plus-square fa-fw text-white-50"></i> Tambah Kategori Baru</button>
     </div>
 
     <!-- Content Row -->
@@ -35,30 +35,22 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Produk</th>
                                     <th scope="col">Kategori</th>
-                                    <th scope="col">Harga</th>
-                                    <th scope="col">Stok</th>
-                                    <th scope="col">Diorder</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- Looping product -->
                                 <?php 
-                                $no = 1; foreach ($products as $product) : 
-                                        $kategori = $this->Utama_model->getDatas('kategoris', ['id' => $product['id_kategori'], $product['id_kategori']])[0];  
+                                $no = 1; 
+                                foreach ($kategoris as $kategori) :  
                                 ?>
                                 <tr>
                                     <th scope="row"><?= $no; ?></th>
-                                    <td><?= filter_output($product['nama']); ?></td>
                                     <td><?= filter_output($kategori['nama']); ?></td>
-                                    <td><?= filter_output($product['harga']); ?></td>
-                                    <td><?= filter_output($product['stok']); ?></td>
-                                    <td><?= filter_output($product['diorder']); ?></td>
                                     <td>
-                                        <a href="<?= base_url('product/detailproduct/'.$product['id']); ?>" class="badge badge-info"><i class="fas fa-fw fa-info"></i> Detail</a> |
-                                        <a href="" data-name="<?= $product['nama']; ?>" data-href="<?= base_url('product/deleteproduct/' . $product['id']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusProduk" class="badge badge-danger"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                                        <a href="<?= base_url('kategori/detailkategori/'.$kategori['id']); ?>" class="badge badge-info"><i class="fas fa-fw fa-info"></i> Detail</a> |
+                                        <a href="" data-name="<?= $kategori['nama']; ?>" data-href="<?= base_url('kategori/deletekategori/' . $kategori['id']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusProduk" class="badge badge-danger"><i class="fas fa-fw fa-trash"></i> Hapus</a>
                                     </td>
                                 </tr>
                                 <?php $no++; endforeach; ?>

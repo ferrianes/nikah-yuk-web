@@ -323,4 +323,66 @@ class Product extends CI_Controller {
 
     }
 
+    public function kategori()
+    {
+        // Validasi
+        $this->form_validation->set_rules('nama', 'Nama', 'required|trim', [
+            'required' => 'Nama Harus diisi!!!'
+        ]);
+
+        if ($this->form_validation->run() === FALSE) {
+            $data['title'] = 'Kategori Management';
+    
+            $data['admin'] = $this->Utama_model->getDatas('admins', ['email' => $this->session->userdata('email')])[0];
+    
+            $data['kategoris'] = $this->Utama_model->getDatas('kategoris');
+
+            $data['menus_by_access_menu'] = $this->Utama_model->getDatas('menus_by_access_menu', ['level_id' => $this->session->userdata('level')]);
+    
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('product/daftar-kategori', $data);
+            $this->load->view('templates/footer');
+            $this->load->view('templates/modal');
+            $this->load->view('templates/footer2');
+        } else {
+            $data = [
+                'id_kategori' => $this->input->post('id_kategori', TRUE),
+                'nama' => $this->input->post('nama', TRUE),
+                'deskripsi' => $this->input->post('deskripsi', TRUE),
+                'harga' => $this->input->post('harga', TRUE),
+                'stok' => $this->input->post('stok', TRUE),
+                'diorder' => $this->input->post('diorder', TRUE),
+                'diskon' => $this->input->post('diskon', TRUE)
+            ];
+
+            $products = $this->Utama_model->insertData('products', $data);
+            $data_image = [
+                [
+                    'name' => 'Contents-0',
+                    'contents' => fopen($_FILES['gambar']['tmp_name'], 'r'),
+                    'filename' => $_FILES['gambar']['name']
+                ],
+                [
+                    'name' => 'thumbnail',
+                    'contents' => 1
+                ],
+                [
+                    'name' => 'produk_id',
+                    'contents' => $products['last_id']
+                ]
+            ];
+            $status = $this->Utama_model->uploadData('produk_gambar', $data_image);
+
+            if ($status['status'] == 400) {
+                $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Thumbnail gagal. '. $status['message'] .'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                redirect('product');
+            } else {
+                $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> ditambah.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                redirect('product');
+            }
+        }
+    }
+
 }
