@@ -41,7 +41,6 @@ class Utama_model extends CI_Model {
         $response = $this->_client->request('POST', $uri, [
             'form_params' => $data
         ]);
-        // var_dump($response->getBody()->getContents());die;
         return json_decode($response->getBody()->getContents(), true);
     }
 

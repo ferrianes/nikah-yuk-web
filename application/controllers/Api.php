@@ -561,10 +561,14 @@ class Api extends RestController {
         if ($this->Api_model->insertData('produk', $data) > 0) {
             $this->response([
                 'last_id' => $this->db->insert_id(),
-                'message' => 'Data berhasil diinput'
+                'message' => 'Data berhasil diinput',
+                'status' => 200
             ], 200);
         } else {
-            $this->response(['message' => 'Data gagal diinput'], 400);
+            $this->response([
+                'message' => 'Data gagal diinput',
+                'status' => 400
+            ], 400);
         }
     }
 
@@ -710,7 +714,6 @@ class Api extends RestController {
         $produk_id = $this->post('produk_id');
         $thumbnail = $this->post('thumbnail');
         // set cek ke 0 agar kalo file yang diupload besar akan Gagal
-        // var_dump($galeries);die;
         $cek = 0;
 
         $config = [

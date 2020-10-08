@@ -72,29 +72,40 @@ class Product extends CI_Controller {
             ];
 
             $products = $this->Utama_model->insertData('products', $data);
-            $data_image = [
-                [
-                    'name' => 'Contents-0',
-                    'contents' => fopen($_FILES['gambar']['tmp_name'], 'r'),
-                    'filename' => $_FILES['gambar']['name']
-                ],
-                [
-                    'name' => 'thumbnail',
-                    'contents' => 1
-                ],
-                [
-                    'name' => 'produk_id',
-                    'contents' => $products['last_id']
-                ]
-            ];
-            $status = $this->Utama_model->uploadData('produk_gambar', $data_image);
 
-            if ($status['status'] == 400) {
-                $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Thumbnail gagal. '. $status['message'] .'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            if ($products['status'] === 400) {
+                $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">'. $products['message'] .'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 redirect('product');
             } else {
-                $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> ditambah.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-                redirect('product');
+                if (is_uploaded_file($_FILES['gambar']['tmp_name'])) {
+                    $data_image = [
+                        [
+                            'name' => 'Contents-0',
+                            'contents' => fopen($_FILES['gambar']['tmp_name'], 'r'),
+                            'filename' => $_FILES['gambar']['name']
+                        ],
+                        [
+                            'name' => 'thumbnail',
+                            'contents' => 1
+                        ],
+                        [
+                            'name' => 'produk_id',
+                            'contents' => $products['last_id']
+                        ]
+                    ];
+                    $status = $this->Utama_model->uploadData('produk_gambar', $data_image);
+        
+                    if ($status['status'] == 400) {
+                        $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Thumbnail gagal. '. $status['message'] .'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                        redirect('product');
+                    } else {
+                        $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> ditambah.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                        redirect('product');
+                    }
+                } else {
+                    $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> ditambah.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                    redirect('product');
+                }
             }
         }
     }
