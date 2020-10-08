@@ -892,13 +892,46 @@ class Api extends RestController {
             'title' => $this->post('title'),
             'url' => $this->post('url'),
             'icon' => $this->post('icon'),
-            'is_active' => $this->post('is_active'),
+            'is_active' => $this->post('is_active')
         ];
 
         if ($this->Api_model->insertData('admin_sub_menu', $data) > 0) {
             $this->response(['message' => 'Data berhasil diinput'], 200);
         } else {
             $this->response(['message' => 'Data gagal diinput'], 400);
+        }
+    }
+
+    public function sub_menu_put()
+    {
+        $data = [
+            'menu_id' => $this->put('menu_id'),
+            'title' => $this->put('title'),
+            'url' => $this->put('url'),
+            'icon' => $this->put('icon'),
+            'is_active' => $this->put('is_active')
+        ];
+        $where = ['id' => $this->put('id')];
+
+        if ($this->Api_model->updateData('admin_sub_menu', $data, $where) > 0) {
+            $this->response(['message' => 'Data berhasil diubah'], 200);
+        } else {
+            $this->response(['message' => 'Data gagal diubah'], 400);
+        }
+    }
+
+    public function sub_menu_delete()
+    {
+        $id = $this->delete('id');
+
+        if ($id === NULL) {
+            $this->response(['message' => 'Masukkan id!'], 400);
+        } else {
+            if ($this->Api_model->deleteData('admin_sub_menu', $id) > 0) {
+                $this->response(['message' => 'Data berhasil dihapus'], 200);
+            } else {
+                $this->response(['message' => 'Id tidak ditemukan'], 400);
+            }
         }
     }
 }

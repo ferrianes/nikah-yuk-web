@@ -43,8 +43,8 @@
                                     <td><?= filter_output($submenu['url']); ?></td>
                                     <td><?= filter_output($submenu['icon']); ?></td>
                                     <td>
-                                        <a href="<?= base_url('menu/editAccessMenu/'.$submenu['id']); ?>" class="badge badge-primary"><i class="fas fa-fw fa-edit"></i> Edit</a> | 
-                                        <a href="" data-name="<?= $submenu['menu']; ?>" data-href="<?= base_url('menu/deleteAccessMenu/' . $submenu['id']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusAksesMenu" class="badge badge-danger"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                                        <a href="<?= base_url('menu/editsubmenu/'.$submenu['id']); ?>" class="badge badge-primary"><i class="fas fa-fw fa-edit"></i> Edit</a> | 
+                                        <a href="" data-name="<?= $submenu['menu']; ?>" data-href="<?= base_url('menu/deleteSubmenu/' . $submenu['id']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusSubmenu" class="badge badge-danger"><i class="fas fa-fw fa-trash"></i> Hapus</a>
                                     </td>
                                 </tr>
                                 <?php $no++; endforeach; ?>

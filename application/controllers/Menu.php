@@ -267,6 +267,62 @@ class Menu extends CI_Controller {
         }
     }
 
+    public function editSubmenu()
+    {
+        // Validasi Menu
+        $this->form_validation->set_rules('menu_id', 'Menu', 'required|trim', [
+            'required' => 'Menu Harus diisi!!!'
+        ]);
+        $this->form_validation->set_rules('title', 'Judul Submenu', 'required|trim', [
+            'required' => 'Judul Harus diisi!!!'
+        ]);
+        $this->form_validation->set_rules('url', 'URL', 'required|trim', [
+            'required' => 'URL Harus diisi!!!'
+        ]);
+        $this->form_validation->set_rules('icon', 'Icon', 'required|trim', [
+            'required' => 'Icon Harus diisi!!!'
+        ]);
+
+        if ($this->form_validation->run() === FALSE) {
+            $data['title'] = 'Sub Menu Management';
+            $id = $this->uri->segment(3);
+    
+            $data['admin'] = $this->Utama_model->getDatas('admins', ['email' => $this->session->userdata('email')])[0];
+
+            $data['submenu'] = $this->Utama_model->getDatas('sub_menu', ['id' => $id])[0];
+
+            $data['menus_by_access_menu'] = $this->Utama_model->getDatas('menus_by_access_menu', ['level_id' => $this->session->userdata('level')]);
+    
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('menu/edit_sub_menu', $data);
+            $this->load->view('templates/footer');
+            $this->load->view('templates/modal');
+            $this->load->view('templates/footer2');
+        } else {
+            $menu_id = $this->input->post('menu_id', true);
+            $title = $this->input->post('title', true);
+            $url = $this->input->post('url', true);
+            $icon = $this->input->post('icon', true);
+            $is_active = $this->input->post('is_active', true);
+
+            $data = [
+                'menu_id' => $menu_id,
+                'title' => $title,
+                'url' => $url,
+                'icon' => $icon,
+                'is_active' => $is_active,
+                'id' => $this->uri->segment(3)
+            ];
+
+            $this->Utama_model->updateData('sub_menu', $data);
+
+            $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> diubah.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            redirect('menu/submenu');
+        }
+    }
+
     public function deleteAccessMenu()
     {
         $data = ['id' => $this->uri->segment(3)];
@@ -274,6 +330,15 @@ class Menu extends CI_Controller {
 
         $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> dihapus.<br>Silahkan tambahkan submenu di menu submenu<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         redirect('menu/access_menu');
+    }
+
+    public function deleteSubmenu()
+    {
+        $data = ['id' => $this->uri->segment(3)];
+        $this->Utama_model->deleteData('sub_menu', $data);
+
+        $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> dihapus.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+        redirect('menu/submenu');
     }
 
 }

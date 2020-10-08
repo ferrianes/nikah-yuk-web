@@ -19,21 +19,6 @@
                             style="text-decoration: none;">Daftar Akses Menu</a><i
                             class="fas fa-fw fa-angle-right"></i>Edit Akses Menu</h6><i
                         class="text-primary fas fa-fw fa-edit"></i>
-                    <!-- Dropdown -->
-                    <!-- <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                            aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">Dropdown Header:</div>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </div> -->
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">

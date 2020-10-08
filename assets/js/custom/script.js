@@ -23,6 +23,9 @@ $(document).ready(function () {
 	$('#modalKonfirmasiHapusProduk').on('show.bs.modal', function (e) {
 		$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
 	});
+	$('#modalKonfirmasiHapusSubmenu').on('show.bs.modal', function (e) {
+		$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+	});
 	$('.alert-message').alert().delay(3000).slideUp('slow');
 
 	$('.navbar-collapse a').click(function () {
