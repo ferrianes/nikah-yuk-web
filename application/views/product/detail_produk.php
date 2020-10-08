@@ -33,10 +33,15 @@
                 <?= $this->session->flashdata('pesan'); ?>
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
-                            <?php if (isset($thumbnail['status']) AND $thumbnail['status'] === FALSE) : ?>
+                            <?php if (isset ($thumbnail['status']) && $thumbnail['status'] === FALSE) : ?>
                                 <img src="<?= base_url('assets/img/api/products/noimage_content.jpg') ?>" class="img-thumbnail" alt="">
                             <?php else : ?>
-                                <img src="<?= base_url('assets/img/api/products/' . $thumbnail[0]['gambar']) ?>" class="img-thumbnail" alt="">
+                                <div class="img-container">
+                                    <img src="<?= base_url('assets/img/api/products/' . $thumbnail[0]['gambar']) ?>" class="img-thumbnail" alt="">
+                                    <div class="middle">
+                                        <a href="" data-href="<?= base_url('product/deletegaleri/' . $thumbnail[0]['id'] . '/' . $produk['id']) ?>" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modalKonfirmasiHapusGaleri"><i class="fas fa-trash fa-fw"></i></a>
+                                    </div>
+                                </div>
                             <?php endif; ?>
                         </div>
                         <div class="col-md-6 col-sm-12">

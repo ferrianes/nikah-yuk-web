@@ -112,59 +112,26 @@ class Product extends CI_Controller {
 
     public function detailProduct()
     {
-        // Validasi Menu
-        $this->form_validation->set_rules('menu_id', 'Menu', 'required|trim', [
-            'required' => 'Menu Harus diisi!!!'
-        ]);
-        $this->form_validation->set_rules('level_id', 'Level', 'required|trim', [
-            'required' => 'Level Harus diisi!!!'
-        ]);
+        $id = $this->uri->segment(3);
+        $data['title'] = 'Produk Management';
 
-        if ($this->form_validation->run() === FALSE) {
-            $id = $this->uri->segment(3);
-            $data['title'] = 'Produk Management';
-    
-            $data['admin'] = $this->Utama_model->getDatas('admins', ['email' => $this->session->userdata('email')])[0];
+        $data['admin'] = $this->Utama_model->getDatas('admins', ['email' => $this->session->userdata('email')])[0];
 
-            $data['produk'] = $this->Utama_model->getDatas('produks', ['id' => $id])[0];
+        $data['produk'] = $this->Utama_model->getDatas('produks', ['id' => $id])[0];
 
-            $data['produks_gambar'] = $this->Utama_model->getDatas('produks_gambar', ['produk_id' => $id, 'thumbnail' => 0]);
+        $data['produks_gambar'] = $this->Utama_model->getDatas('produks_gambar', ['produk_id' => $id, 'thumbnail' => 0]);
 
-            $data['thumbnail'] = $this->Utama_model->getDatas('produks_gambar', ['produk_id' => $id, 'thumbnail' => 1]);
+        $data['thumbnail'] = $this->Utama_model->getDatas('produks_gambar', ['produk_id' => $id, 'thumbnail' => 1]);
 
-            $data['menus_by_access_menu'] = $this->Utama_model->getDatas('menus_by_access_menu', ['level_id' => $this->session->userdata('level')]);
-    
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('product/detail_produk', $data);
-            $this->load->view('templates/footer');
-            $this->load->view('templates/modal', $data['title']);
-            $this->load->view('templates/footer2');
-        } else {
-            $level_id = $this->input->post('level_id', true);
-            $menu_id = $this->input->post('menu_id', true);
+        $data['menus_by_access_menu'] = $this->Utama_model->getDatas('menus_by_access_menu', ['level_id' => $this->session->userdata('level')]);
 
-            $access_menu_cek = $this->Utama_model->getDatas('access_menus_raw');
-
-            foreach($access_menu_cek as $amc) {
-                if ($level_id === $amc['level_id'] && $menu_id === $amc['menu_id']) {
-                    $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-message" role="alert">Akses Menu Sudah Ada!</div>');
-                    redirect('menu/access_menu');
-                }
-            }
-
-            $data = [
-                'level_id' => $level_id,
-                'menu_id' => $menu_id,
-                'id' => $this->uri->segment(3)
-            ];
-
-            $this->Utama_model->updateData('access_menus_raw', $data);
-
-            $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> diubah.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-            redirect('menu/access_menu');
-        }
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('product/detail_produk', $data);
+        $this->load->view('templates/footer');
+        $this->load->view('templates/modal', $data['title']);
+        $this->load->view('templates/footer2');
     }
 
     public function editproduct()

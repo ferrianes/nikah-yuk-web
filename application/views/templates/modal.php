@@ -292,7 +292,9 @@
                             <div class="form-group">
                                 <label for="gambar">Thumbnail</label>
                                 <input type="file" class="form-control-file" id="gambar" name="gambar">
-                                <input type="hidden" name="gambar_lama" value="<?= $thumbnail['id']; ?>">
+                                <?php if (isset($thumbnail['id'])) : ?>
+                                    <input type="hidden" name="gambar_lama" value="<?= $thumbnail['id']; ?>">
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="modal-footer">
