@@ -259,7 +259,7 @@ class Product extends CI_Controller {
             redirect('product');
         } else if ($delete['status'] == 500) {
             if ($delete[0]['code'] === 1451) {
-                $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Data <strong>Gagal</strong> dihapus. Karena masih adanya produk di booking kustomer.<br>Fix : Selesaikan atau hapus baris tabel booking detail yang berkaitan dengan produk yang ingin dihapus.<br><br>Full error : ' . $delete[0]['message'] . '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Data <strong>Gagal</strong> dihapus. Karena masih adanya produk di booking kustomer.<br>Fix : Selesaikan atau hapus data booking detail yang berkaitan dengan produk yang ingin dihapus.<br><br>Full error : ' . $delete[0]['message'] . '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 redirect('product');
             }
         } else {
