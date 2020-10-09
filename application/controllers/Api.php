@@ -605,10 +605,24 @@ class Api extends RestController {
         if ($id === NULL) {
             $this->response(['message' => 'Masukkan id!'], 400);
         } else {
-            if ($this->Api_model->deleteData('produk', $id) > 0) {
-                $this->response(['message' => 'Data berhasil dihapus'], 200);
+            $delete = $this->Api_model->deleteData('produk', $id);
+            if ($delete == -1) {
+                $this->response([
+                    'message' => 'Data gagal dihapus.',
+                    'status' => 500,
+                    $this->db->error()
+                ], 500);
+            }
+            else if ($delete > 0) {
+                $this->response([
+                    'message' => 'Data berhasil dihapus',
+                    'status' => 200
+                ], 200);
             } else {
-                $this->response(['message' => 'Id tidak ditemukan'], 400);
+                $this->response([
+                    'message' => 'Id tidak ditemukan',
+                    'status' => 400
+                ], 400);
             }
         }
 

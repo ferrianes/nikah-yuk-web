@@ -62,13 +62,18 @@ class Utama_model extends CI_Model {
 
     public function deleteData($uri, $data)
     {
-        $data += [
-            'token' => 'Da0sxRC4'
-        ];
-        $response = $this->_client->request('DELETE', $uri, [
-            'form_params' => $data
-        ]);
-        return json_decode($response->getBody()->getContents(), true);
+        try {
+            $data += [
+                'token' => 'Da0sxRC4'
+            ];
+            $response = $this->_client->request('DELETE', $uri, [
+                'form_params' => $data
+            ]);
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (GuzzleHttp\Exception\BadResponseException $e) {
+            $response = $e->getResponse();
+            return json_decode($response->getBody()->getContents(), true);
+        }
     }
 
     public function updateData($uri, $data)

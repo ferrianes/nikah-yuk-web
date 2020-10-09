@@ -250,10 +250,23 @@ class Product extends CI_Controller {
             }
         }
         $data = ['id' => $id];
-        $this->Utama_model->deleteData('products', $data);
 
-        $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> dihapus.<br><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-        redirect('product');
+        //cek response dari server
+        $delete = $this->Utama_model->deleteData('products', $data);
+
+        if ($delete['status'] == 200) {
+            $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> dihapus.<br><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            redirect('product');
+        } else if ($delete['status'] == 500) {
+            if ($delete[0]['code'] === 1451) {
+                $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Data <strong>Gagal</strong> dihapus. Karena masih adanya produk di booking kustomer.<br>Fix : Selesaikan atau hapus baris tabel booking detail yang berkaitan dengan produk yang ingin dihapus.<br><br>Full error : ' . $delete[0]['message'] . '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                redirect('product');
+            }
+        } else {
+            $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">'. $delete['message'] .'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            redirect('product');
+        }
+
     }
 
     public function deletegaleri()
