@@ -98,27 +98,58 @@ class Kustomer extends CI_Controller
                 'email' => $this->input->post('email', true),
                 'telepon' => $this->input->post('telepon', true),
                 'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-                'is_active' => 1,
+                'is_active' => 0,
                 'tgl_dibuat' => date("Y-m-d")
             ];
-            $this->Utama_model->insertData('kustomer', $data);
-            $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-success alert-message text-center" role="alert">Selamat akun kamu sudah berhasil dibuar</div></div>');
+            // $this->Utama_model->insertData('kustomer', $data);
+
+            $this->_sendEmail();
+
+            $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-success alert-message text-center" role="alert">Selamat akun kamu sudah berhasil dibuat. Silahkan aktifasi melalui email kamu.</div></div>');
             redirect('home');
         } else {
             $data['judul'] = 'Daftar Produk';
 
             $data['products'] = $this->Utama_model->getDatas('products');
 
-            $data['kustomer'] = 'Pengunjung';
+            $data['kustomer']['nm_lengkap'] = 'Pengunjung';
 
             $data['modal_active'] = TRUE;
 
             $this->load->view('templates/templates-user/header', $data);
-            $this->load->view('product/daftar_produk', $data);
+            $this->load->view('product/landing-page', $data);
             $this->load->view('templates/templates-user/modal', $data);
             $this->load->view('templates/templates-user/footer', $data);
         }
         
+    }
+    
+    private function _sendEmail()
+    {
+        $config = [
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_user' => 'riandesu27@gmail.com',
+            'smtp_pass' => 'iamcold27',
+            'smtp_port' => 465,
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n"
+        ];
+
+        $this->load->library('email', $config);
+
+        $this->email->from('riandesu27@gmail.com', 'Nikah Yuk App');
+        $this->email->to('ferrian27@gmail.com');
+        $this->email->subject('Testing');
+        $this->email->message('Hello');
+        
+        if ($this->email->send()) {
+            return true;
+        } else {
+            echo $this->email->print_debugger();
+            die;
+        }
     }
 
     public function profilku()
