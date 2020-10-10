@@ -14,7 +14,14 @@ class Home extends CI_Controller
         $data['judul'] = 'Welcome';
 
         $data['products'] = $this->Utama_model->getDatas('products');
-        // var_dump($_SESSION);die;
+        
+        // sort by diorder DESC
+        usort($data['products'], function($a, $b) {
+            return -($a['diorder'] <=> $b['diorder']);
+        });
+
+        // Limit to 2 Data
+        $data['products'] = array_slice($data['products'], 0, 2);
 
         //jika sudah login dan belum login
         if ($this->session->userdata('kustomer') == TRUE){
