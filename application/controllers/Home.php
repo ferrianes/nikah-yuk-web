@@ -13,15 +13,15 @@ class Home extends CI_Controller
     {
         $data['judul'] = 'Welcome';
 
-        $data['products'] = $this->Utama_model->getDatas('products');
+        $data['produk'] = $this->Utama_model->getDatas('produk');
         
         // sort by diorder DESC
-        usort($data['products'], function($a, $b) {
+        usort($data['produk'], function($a, $b) {
             return -($a['diorder'] <=> $b['diorder']);
         });
 
         // Limit to 2 Data
-        $data['products'] = array_slice($data['products'], 0, 2);
+        $data['produk'] = array_slice($data['produk'], 0, 2);
 
         //jika sudah login dan belum login
         if ($this->session->userdata('kustomer') == TRUE){
@@ -50,7 +50,45 @@ class Home extends CI_Controller
         $data['judul'] = 'Daftar Produk';
 
         $data['products'] = $this->Utama_model->getDatas('products');
-        // var_dump($_SESSION);die;
+
+        $kategori = $this->uri->segment(3);
+        // var_dump($data['products']);die;
+
+        $filterBy = 'CarEnquiry'; // or Finance etc.
+
+        $new = array_filter($arr, function ($var) use ($filterBy) {
+            return ($var['name'] == $filterBy);
+        });
+
+        // switch ($kategori) {
+        //     case 'kado-pernikahan':
+        //         // Filter produk kado pernikahan
+        //         $a = array_filter($data['products'], function($k) {
+        //             return ($k['id_kategori'] == '1');
+        //         });
+        //         var_dump($a);die;
+        //         break;
+
+        //     case 'paket-pernikahan':
+        //         // Filter produk kado pernikahan
+        //         $a = array_filter($data['products'], function($k) {
+        //             return ($k['id_kategori'] == '2');
+        //         });
+        //         var_dump($a);die;
+        //         break;
+
+        //     case 'vendor-pernikahan':
+        //         // Filter produk kado pernikahan
+        //         $a = array_filter($data['products'], function($k) {
+        //             return ($k['id_kategori'] == '3');
+        //         });
+        //         var_dump($a);die;
+        //         break;
+            
+        //     default:
+        //         # code...
+        //         break;
+        // }
 
         //jika sudah login dan belum login
         if ($this->session->userdata('kustomer') == TRUE){

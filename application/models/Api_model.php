@@ -3,12 +3,12 @@ defined('BASEPATH') or exit('No direct script allowed');
 
 class Api_model extends CI_Model {
 
-    public function getDatas($table, $where, $id = NULL)
+    public function getDatas($table, $where)
     {
-        if ($id === NULL) {
-            return $this->db->get($table)->result_array();
-        } else {
+        if (is_array($where)) {
             return $this->db->get_where($table, $where)->result_array();
+        } else {
+            return $this->db->get($table)->result_array();
         }
     }
 

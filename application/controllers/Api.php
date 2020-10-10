@@ -100,7 +100,13 @@ class Api extends RestController {
     {
         // kategoris from a data store e.g. database
         $id = $this->get('id');
-        $kategoris = $this->Api_model->getDatas('kategori', ['id' => $id], $id);
+        if (array_key_exists('id', $this->get())) {
+            $where = ['id' => $this->get('id')];
+        } else if (array_key_exists('')) {
+            # code...
+        }
+        var_dump(array_key_exists('id', $this->get()));die;
+        $kategoris = $this->Api_model->getDatas('kategori', $where, $id);
         // Check if the kategoris data store contains kategoris
         if ( $kategoris )
         {
@@ -127,11 +133,14 @@ class Api extends RestController {
     public function kustomer_get()
     {
         // kustomer from a data store e.g. database
-        $id = $this->get('id_kustomer');
-        $email = $this->get('email');
-        $cek = !is_null($id) ? $id : ( !is_null($email) ? $email : NULL );
-        $where = is_null($id) ? 'email' : 'id_kustomer';
-        $kustomer = $this->Api_model->getDatas('kustomer', [$where => $cek], $cek);
+        if (array_key_exists('id_kustomer', $this->get())) {
+            $where = ['id_kustomer' => $this->get('id_kustomer')];
+        } else if (array_key_exists('email', $this->get())) {
+            $where = ['email' => $this->get('email')];
+        } else {
+            $where = NULL;
+        }
+        $kustomer = $this->Api_model->getDatas('kustomer', $where);
         // Check if the kustomer data store contains kustomer
         if ( $kustomer )
         {
@@ -141,7 +150,7 @@ class Api extends RestController {
         else
         {
             // Set the response and exit
-            if ($cek === NULL) {
+            if ($where === NULL) {
                 $this->response( [
                     'status' => false,
                     'message' => 'Kustomer kosong'
@@ -272,29 +281,35 @@ class Api extends RestController {
         }
     }
 
-    public function produks_gambar_get()
+    public function produk_gambar_get()
     {
-        // produks_gambar from a data store e.g. database
-        $id = $this->get('id');
-        $produk_id = $this->get('produk_id');
-        $thumbnail = $this->get('thumbnail');
-        $cek = is_null($id) ? $produk_id : $id;
-        $where = is_null($id) ? 'produk_id' : 'id';
-        if (is_null($thumbnail)) {
-            $produks_gambar = $this->Api_model->getDatas('produk_gambar', [$where => $cek], $cek);
+        if (array_key_exists('id', $this->get())) {
+            $where = ['id' => $this->get('id')];
+        } else if (array_key_exists('produk_id', $this->get()) && array_key_exists('thumbnail', $this->get())) {
+            $where = [
+                'produk_id' => $this->get('produk_id'),
+                'thumbnail' => $this->get('thumbnail')
+            ];
+        } else if (array_key_exists('id', $this->get()) && array_key_exists('thumbnail', $this->get())) {
+            $where = [
+                'id' => $this->get('id'),
+                'thumbnail' => $this->get('thumbnail')
+            ];
         } else {
-            $produks_gambar = $this->Api_model->getDatas('produk_gambar', [$where => $cek, 'thumbnail' => $thumbnail], $cek);
+            $where = NULL;
         }
-        // Check if the produks_gambar data store contains produks_gambar
-        if ( $produks_gambar )
+        $produk_gambar = $this->Api_model->getDatas('produk_gambar', $where);
+
+        // Check if the produk_gambar data store contains produk_gambar
+        if ( $produk_gambar )
         {
             // Set the response and exit
-            $this->response($produks_gambar, 200);
+            $this->response($produk_gambar, 200);
         }
         else
         {
             // Set the response and exit
-            if ($id === NULL) {
+            if ($where === NULL) {
                 $this->response( [
                     'status' => false,
                     'message' => 'Produk kosong'
@@ -424,21 +439,23 @@ class Api extends RestController {
         }
     }
 
-    public function products_get()
+    public function produk_get()
     {
-        // products from a data store e.g. database
-        $id = $this->get('id');
-        $products = $this->Api_model->getDatas('produk', ['id' => $id], $id);
-        // Check if the products data store contains products
-        if ( $products )
+        if (array_key_exists('id', $this->get())) {
+            $where = ['id' => $this->get('id')];
+        } else {
+            $where = NULL;
+        }
+        $produk = $this->Api_model->getDatas('produk', $where);
+        if ($produk)
         {
             // Set the response and exit
-            $this->response($products, 200);
+            $this->response($produk, 200);
         }
         else
         {
             // Set the response and exit
-            if ($id === NULL) {
+            if ($where === NULL) {
                 $this->response( [
                     'status' => false,
                     'message' => 'Produk kosong'

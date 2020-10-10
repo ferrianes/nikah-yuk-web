@@ -58,11 +58,11 @@
                 		<span class="nav-link-inner--text">Produk</span>
                 	</span>
                 	<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
-                		<a class="dropdown-item" href="<?= base_url('home/daftarproduk'); ?>"><span
+                		<a class="dropdown-item" href="<?= base_url('home/daftarproduk/kado-pernikahan'); ?>"><span
                 				class="fa fa-gift mr-2"></span>Kado Pernikahan</a>
-                		<a class="dropdown-item" href="<?= base_url('home/daftarproduk'); ?>"><span
+                		<a class="dropdown-item" href="<?= base_url('home/daftarproduk/paket-pernikahan'); ?>"><span
                 				class="fa fa-hand-holding-heart mr-2"></span>Paket Pernikahan</a>
-                		<a class="dropdown-item" href="<?= base_url('home/daftarproduk'); ?>"><span
+                		<a class="dropdown-item" href="<?= base_url('home/daftarproduk/vendor-pernikahan'); ?>"><span
                 				class="fa fa-store mr-2"></span>Vendor Penikahan</a>
                 	</div>
                 </li>

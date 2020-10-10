@@ -66,17 +66,17 @@
                 <h2 class="text-center mb-4">Best Products</h2>
                 <div class="row">
                     <?php 
-                    // Looping Products
-                    foreach ($products as $p) : 
+                    // Looping produk
+                    foreach ($produk as $p) : 
     
-                    $thumbnail = $this->Utama_model->getDatas('produks_gambar', ['produk_id' => $p['id'], 'thumbnail' => 1]); 
+                    $thumbnail = $this->Utama_model->getDatas('produk_gambar', ['produk_id' => $p['id'], 'thumbnail' => 1]); 
                     ?>
                     <div class="col-md-6 mb-3 d-flex">
                         <div class="card shadow flex-fill">
-                            <?php if (isset($thumbnail['status']) AND $thumbnail['status'] == FALSE) : ?>
-                                <img src="<?php echo base_url('assets/img/api/products/noimage_content.jpg')?>" class="card-img-top">
+                            <?php if (isset($thumbnail['status']) && $thumbnail['status'] == FALSE) : ?>
+                                <img src="<?php echo base_url('assets/img/api/produk/noimage_content.jpg')?>" class="card-img-top">
                             <?php else : ?>
-                                <img src="<?php echo base_url('assets/img/api/products/' . $thumbnail[0]['gambar'])?>"
+                                <img src="<?php echo base_url('assets/img/api/produk/' . $thumbnail[0]['gambar'])?>"
                                 class="card-img-top">
                             <?php endif; ?>
                             <div class="card-body pt-2">

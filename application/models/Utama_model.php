@@ -17,17 +17,19 @@ class Utama_model extends CI_Model {
     {
         if ($where === NULL) {
             $response = $this->_client->request('GET', $uri, [
-                'query' => [
+                'headers' => [
                     'token' => 'Da0sxRC4'
                 ],
-                'http_errors' => false
+                'http_errors' => FALSE
             ]);
             return json_decode($response->getBody()->getContents(), true);
         } else {
-            $where += ['token' => 'Da0sxRC4'];
             $response = $this->_client->request('GET', $uri, [
+                'headers' => [
+                    'token' => 'Da0sxRC4'
+                ],
                 'query' => $where,
-                'http_errors' => false
+                'http_errors' => FALSE
             ]);
             return json_decode($response->getBody()->getContents(), true);
         }
