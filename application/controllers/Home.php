@@ -14,6 +14,8 @@ class Home extends CI_Controller
         $data['judul'] = 'Welcome';
 
         $data['produk'] = $this->Utama_model->getDatas('produk');
+
+        $data['kategori'] = $this->Utama_model->getDatas('kategori');
         
         // sort by diorder DESC
         usort($data['produk'], function($a, $b) {
@@ -51,46 +53,46 @@ class Home extends CI_Controller
     {
         $data['judul'] = 'Daftar Produk';
 
-        $data['products'] = $this->Utama_model->getDatas('products');
+        $data['produk'] = $this->Utama_model->getDatas('produk');
 
         $kategori = $this->uri->segment(3);
         // var_dump($data['products']);die;
 
-        $filterBy = 'CarEnquiry'; // or Finance etc.
+        // $filterBy = 'CarEnquiry'; // or Finance etc.
 
-        $new = array_filter($arr, function ($var) use ($filterBy) {
-            return ($var['name'] == $filterBy);
-        });
+        // $new = array_filter($arr, function ($var) use ($filterBy) {
+        //     return ($var['name'] == $filterBy);
+        // });
 
-        // switch ($kategori) {
-        //     case 'kado-pernikahan':
-        //         // Filter produk kado pernikahan
-        //         $a = array_filter($data['products'], function($k) {
-        //             return ($k['id_kategori'] == '1');
-        //         });
-        //         var_dump($a);die;
-        //         break;
+        switch ($kategori) {
+            case 'kado-pernikahan':
+                // Filter produk kado pernikahan
+                $a = array_filter($data['products'], function($k) {
+                    return ($k['id_kategori'] == '1');
+                });
+                var_dump($a);die;
+                break;
 
-        //     case 'paket-pernikahan':
-        //         // Filter produk kado pernikahan
-        //         $a = array_filter($data['products'], function($k) {
-        //             return ($k['id_kategori'] == '2');
-        //         });
-        //         var_dump($a);die;
-        //         break;
+            case 'paket-pernikahan':
+                // Filter produk kado pernikahan
+                $a = array_filter($data['products'], function($k) {
+                    return ($k['id_kategori'] == '2');
+                });
+                var_dump($a);die;
+                break;
 
-        //     case 'vendor-pernikahan':
-        //         // Filter produk kado pernikahan
-        //         $a = array_filter($data['products'], function($k) {
-        //             return ($k['id_kategori'] == '3');
-        //         });
-        //         var_dump($a);die;
-        //         break;
+            case 'vendor-pernikahan':
+                // Filter produk kado pernikahan
+                $a = array_filter($data['products'], function($k) {
+                    return ($k['id_kategori'] == '3');
+                });
+                var_dump($a);die;
+                break;
             
-        //     default:
-        //         # code...
-        //         break;
-        // }
+            default:
+                # code...
+                break;
+        }
 
         //jika sudah login dan belum login
         if ($this->session->userdata('kustomer') == TRUE){

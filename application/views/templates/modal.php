@@ -235,9 +235,9 @@
         </div>
     </div>
 </div>
-    <?php if ($this->uri->segment(2) == 'detailproduct' OR $this->uri->segment(2) == 'editproduct') : ?>
+    <?php if ($this->uri->segment(3)) : ?>
         <!-- Modal Edit Produk -->
-        <form method="post" action="<?= base_url('product/editproduct/' . $produk['id']) ?>" enctype="multipart/form-data">
+        <form method="post" action="<?= base_url('admin/editproduk/' . $produk['id']) ?>" enctype="multipart/form-data">
             <div class="modal fade" id="modalEditProduk" tabindex="-1" aria-labelledby="modalEditProdukLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -258,8 +258,8 @@
                                 <select class="form-control" id="kategori" name="id_kategori">
                                     <option value="" disabled>Pilih Kategori</option>
                                     <?php 
-                                        $kategoris = $this->Utama_model->getDatas('kategoris');
-                                        foreach($kategoris as $kategori) : ?>
+                                        $kategori = $this->Utama_model->getDatas('kategori');
+                                        foreach($kategori as $kategori) : ?>
                                             <option value="<?= $kategori['id'] ?>" <?= $kategori['id'] == $produk['id_kategori'] ? 'selected' : '' ?>><?= $kategori['nama'] ?></option>';
                                     <?php endforeach; ?>
                                 </select>
@@ -292,8 +292,8 @@
                             <div class="form-group">
                                 <label for="gambar">Thumbnail</label>
                                 <input type="file" class="form-control-file" id="gambar" name="gambar">
-                                <?php if (isset($thumbnail['id'])) : ?>
-                                    <input type="hidden" name="gambar_lama" value="<?= $thumbnail['id']; ?>">
+                                <?php if (isset($thumbnail[0]['id'])) : ?>
+                                    <input type="hidden" name="gambar_lama" value="<?= $thumbnail[0]['id']; ?>">
                                 <?php endif; ?>
                             </div>
                         </div>

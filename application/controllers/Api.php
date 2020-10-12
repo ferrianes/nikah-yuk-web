@@ -40,21 +40,25 @@ class Api extends RestController {
         }
     }
 
-    public function admins_get()
+    public function admin_get()
     {
         // admins from a data store e.g. database
-        $id = $this->get('email'); 
-        $admins = $this->Api_model->getDatas('admin', ['email' => $id], $id);
-        // Check if the admins data store contains admins
-        if ( $admins )
+        if (array_key_exists('email', $this->get())) {
+            $where = ['email' => $this->get('email')]; 
+        } else {
+            $where = NULL;
+        }
+        $admin = $this->Api_model->getDatas('admin', $where);
+        // Check if the admin data store contains admin
+        if ( $admin )
         {
             // Set the response and exit
-            $this->response($admins, 200);
+            $this->response($admin, 200);
         }
         else
         {
             // Set the response and exit
-            if ($id === NULL) {
+            if ($where === NULL) {
                 $this->response( [
                     'status' => false,
                     'message' => 'Admin kosong'
@@ -91,40 +95,6 @@ class Api extends RestController {
                 $this->response( [
                     'status' => false,
                     'message' => 'Menu tidak ditemukan'
-                ], 404 );
-            }
-        }
-    }
-
-    public function kategoris_get()
-    {
-        // kategoris from a data store e.g. database
-        $id = $this->get('id');
-        if (array_key_exists('id', $this->get())) {
-            $where = ['id' => $this->get('id')];
-        } else if (array_key_exists('')) {
-            # code...
-        }
-        var_dump(array_key_exists('id', $this->get()));die;
-        $kategoris = $this->Api_model->getDatas('kategori', $where, $id);
-        // Check if the kategoris data store contains kategoris
-        if ( $kategoris )
-        {
-            // Set the response and exit
-            $this->response($kategoris, 200);
-        }
-        else
-        {
-            // Set the response and exit
-            if ($id === NULL) {
-                $this->response( [
-                    'status' => false,
-                    'message' => 'Kategori kosong'
-                ], 404 );
-            } else {
-                $this->response( [
-                    'status' => false,
-                    'message' => 'Kategori tidak ditemukan'
                 ], 404 );
             }
         }
@@ -221,34 +191,6 @@ class Api extends RestController {
                 $this->response( [
                     'status' => false,
                     'message' => 'Detail Booking tidak ditemukan'
-                ], 404 );
-            }
-        }
-    }
-
-    public function produks_get()
-    {
-        // produks from a data store e.g. database
-        $id = $this->get('id');
-        $produks = $this->Api_model->getDatas('produk', ['id' => $id], $id);
-        // Check if the produks data store contains produks
-        if ( $produks )
-        {
-            // Set the response and exit
-            $this->response($produks, 200);
-        }
-        else
-        {
-            // Set the response and exit
-            if ($id === NULL) {
-                $this->response( [
-                    'status' => false,
-                    'message' => 'Produk kosong'
-                ], 404 );
-            } else {
-                $this->response( [
-                    'status' => false,
-                    'message' => 'Produk tidak ditemukan'
                 ], 404 );
             }
         }
@@ -367,7 +309,14 @@ class Api extends RestController {
     {
         // menus_by_access_menu from a data store e.g. database
         $level_id = $this->get('level_id');
-        $menus_by_access_menu = $this->Api_model->getJoinDatas('admin_menu.id, menu', 'admin_menu', 'admin_access_menu', 'admin_menu.id = admin_access_menu.menu_id', 'admin_access_menu.level_id = '.$level_id, $level_id, 'admin_menu.urutan', 'ASC');
+        $menus_by_access_menu = $this->Api_model->getJoinDatas(
+            'admin_menu.id, menu', // Select 
+            'admin_menu', // From
+            'admin_access_menu', // Join
+            'admin_menu.id = admin_access_menu.menu_id', // On 
+            'admin_access_menu.level_id = '.$level_id, $level_id, // Where 
+            'admin_menu.urutan', 'ASC' // Order by
+        );
         // Check if the menus_by_access_menu data store contains access_menu
         if ( $menus_by_access_menu )
         {
@@ -508,6 +457,36 @@ class Api extends RestController {
         }
     }
 
+    public function kategori_get()
+    {
+        if (array_key_exists('id', $this->get())) {
+            $where = ['id' => $this->get('id')];
+        } else {
+            $where = NULL;
+        }
+        $kategori = $this->Api_model->getDatas('kategori', $where);
+        if ($kategori)
+        {
+            // Set the response and exit
+            $this->response($kategori, 200);
+        }
+        else
+        {
+            // Set the response and exit
+            if ($where === NULL) {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'kategori kosong'
+                ], 404 );
+            } else {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'kategori tidak ditemukan'
+                ], 404 );
+            }
+        }
+    }
+
     public function bookings_get()
     {
         // bookings from a data store e.g. database
@@ -601,7 +580,7 @@ class Api extends RestController {
     }
     
 
-    public function products_post()
+    public function produk_post()
     {
         $data = [
             'id_kategori' => $this->post('id_kategori'),
@@ -649,7 +628,7 @@ class Api extends RestController {
         }
     }
 
-    public function products_put()
+    public function produk_put()
     {
         $data = [
             'id_kategori' => $this->put('id_kategori'),
@@ -664,7 +643,6 @@ class Api extends RestController {
 
         
         $where = ['id' => $this->put('id')];
-        // var_dump($where);die;
         
         if ($this->Api_model->updateData('produk', $data, $where) != -1 ) {
             $this->response([
@@ -815,7 +793,7 @@ class Api extends RestController {
         $cek = 0;
 
         $config = [
-            'upload_path' => './assets/img/api/products/',
+            'upload_path' => './assets/img/api/produk/',
             'allowed_types' => "gif|jpg|png|jpeg|mp4|webm|ogg",
             'overwrite' => TRUE,
             'max_size' => "20000",
@@ -832,12 +810,12 @@ class Api extends RestController {
                 if ($image['is_image'] === TRUE) {
                     //Compress Image
                     $config['image_library']='gd2';
-                    $config['source_image']='./assets/img/api/products/'.$image['file_name'];
+                    $config['source_image']='./assets/img/api/produk/'.$image['file_name'];
                     $config['create_thumb']= FALSE;
                     $config['maintain_ratio']= TRUE;
                     $config['quality']= '70%';
                     $config['width']= 500;
-                    $config['new_image']= './assets/img/api/products/'.$image['file_name'];
+                    $config['new_image']= './assets/img/api/produk/'.$image['file_name'];
                     $this->load->library('image_lib', $config);
                     $this->image_lib->resize();
                 }

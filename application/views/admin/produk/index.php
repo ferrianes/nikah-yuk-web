@@ -44,21 +44,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Looping product -->
+                                <!-- Looping p -->
                                 <?php 
-                                $no = 1; foreach ($products as $product) : 
-                                        $kategori = $this->Utama_model->getDatas('kategoris', ['id' => $product['id_kategori'], $product['id_kategori']])[0];  
+                                $no = 1; foreach ($produk as $p) : 
+                                $kategori = $this->Utama_model->getDatas('kategori', ['id' => $p['id_kategori']])[0];  
                                 ?>
                                 <tr>
                                     <th scope="row"><?= $no; ?></th>
-                                    <td><?= filter_output($product['nama']); ?></td>
+                                    <td><?= filter_output($p['nama']); ?></td>
                                     <td><?= filter_output($kategori['nama']); ?></td>
-                                    <td><?= filter_output($product['harga']); ?></td>
-                                    <td><?= filter_output($product['stok']); ?></td>
-                                    <td><?= filter_output($product['diorder']); ?></td>
+                                    <td><?= filter_output($p['harga']); ?></td>
+                                    <td><?= filter_output($p['stok']); ?></td>
+                                    <td><?= filter_output($p['diorder']); ?></td>
                                     <td>
-                                        <a href="<?= base_url('product/detailproduct/'.$product['id']); ?>" class="badge badge-info"><i class="fas fa-fw fa-info"></i> Detail</a> |
-                                        <a href="" data-name="<?= $product['nama']; ?>" data-href="<?= base_url('product/deleteproduct/' . $product['id']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusProduk" class="badge badge-danger"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                                        <a href="<?= base_url('admin/daftarproduk/'.$p['id']); ?>" class="badge badge-info"><i class="fas fa-fw fa-info"></i> Detail</a> |
+                                        <a href="" data-name="<?= $p['nama']; ?>" data-href="<?= base_url('admin/deleteproduk/' . $p['id']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusProduk" class="badge badge-danger"><i class="fas fa-fw fa-trash"></i> Hapus</a>
                                     </td>
                                 </tr>
                                 <?php $no++; endforeach; ?>

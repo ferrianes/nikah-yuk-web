@@ -17,29 +17,20 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary"><a href="<?= base_url('product') ?>" style="text-decoration: none;">Daftar Produk</a><i class="fas fa-fw fa-angle-right"></i>Detail Produk</h6><i class="text-primary fas fa-fw fa-info"></i></h6>
+                    <h6 class="m-0 font-weight-bold text-primary"><a href="<?= base_url('admin/daftarproduk') ?>" style="text-decoration: none;">Daftar Produk</a><i class="fas fa-fw fa-angle-right"></i>Detail Produk</h6><i class="text-primary fas fa-fw fa-info"></i></h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                <?php if(validation_errors()) : ?>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Data Gagal Diinput!</strong>
-                        <?= validation_errors('<div>', '</div>'); ?>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                <?php endif; ?>
                 <?= $this->session->flashdata('pesan'); ?>
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
                             <?php if (isset ($thumbnail['status']) && $thumbnail['status'] === FALSE) : ?>
-                                <img src="<?= base_url('assets/img/api/products/noimage_content.jpg') ?>" class="img-thumbnail" alt="">
+                                <img src="<?= base_url('assets/img/api/produk/noimage_content.jpg') ?>" class="img-thumbnail" alt="">
                             <?php else : ?>
                                 <div class="img-container">
-                                    <img src="<?= base_url('assets/img/api/products/' . $thumbnail[0]['gambar']) ?>" class="img-thumbnail" alt="">
+                                    <img src="<?= base_url('assets/img/api/produk/' . $thumbnail[0]['gambar']) ?>" class="img-thumbnail" alt="">
                                     <div class="middle">
-                                        <a href="" data-href="<?= base_url('product/deletegaleri/' . $thumbnail[0]['id'] . '/' . $produk['id']) ?>" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modalKonfirmasiHapusGaleri"><i class="fas fa-trash fa-fw"></i></a>
+                                        <a href="" data-href="<?= base_url('admin/deletegaleri/' . $thumbnail[0]['id'] . '/' . $produk['id']) ?>" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modalKonfirmasiHapusGaleri"><i class="fas fa-trash fa-fw"></i></a>
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -52,7 +43,7 @@
                                 </li>
                                 <li class="list-group-item">
                                     <h5 class="text-dark">Kategori</h5>
-                                    <?php $kategori = $this->Utama_model->getDatas('kategoris', ['id' => $produk['id_kategori'], $produk['id_kategori']])[0];  ?>
+                                    <?php $kategori = $this->Utama_model->getDatas('kategori', ['id' => $produk['id_kategori']])[0];  ?>
                                     <?= $kategori['nama'] ?>
                                 </li>
                                 <li class="list-group-item">
@@ -94,8 +85,8 @@
                     </div>
                     
                     <div class="row justify-content-center">
-                        <?php if (!isset($produks_gambar['status']) OR !$produks_gambar['status'] == false) : ?>
-                            <?php foreach($produks_gambar as $produk_gambar) : ?>
+                        <?php if (!isset($produk_gambar['status']) OR !$produk_gambar['status'] == false) : ?>
+                            <?php foreach($produk_gambar as $produk_gambar) : ?>
                                 <div class="col-md-4 text-center mt-2">
                                     <div class="img-container">
                                         <?php

@@ -58,12 +58,13 @@
                 		<span class="nav-link-inner--text">Produk</span>
                 	</span>
                 	<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
-                		<a class="dropdown-item" href="<?= base_url('home/daftarproduk'); ?>"><span
-                				class="fa fa-gift mr-2"></span>Kado Pernikahan</a>
-                		<a class="dropdown-item" href="<?= base_url('home/daftarproduk'); ?>"><span
-                				class="fa fa-hand-holding-heart mr-2"></span>Paket Pernikahan</a>
-                		<a class="dropdown-item" href="<?= base_url('home/daftarproduk'); ?>"><span
-                				class="fa fa-store mr-2"></span>Vendor Penikahan</a>
+                        <?php 
+                        foreach ($kategori as $k) : 
+                        $seo = seo_title($k['nama']);
+                        ?>
+                            <a class="dropdown-item" href="<?= base_url("produk/$seo"); ?>"><span
+                                    class="fa <?= $k['icon']; ?> mr-2"></span><?= $k['nama'] ?></a>
+                        <?php endforeach; ?>
                 	</div>
                 </li>
                 <?php if (!empty($this->session->email_kustomer)) : ?>
