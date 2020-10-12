@@ -288,10 +288,15 @@ class Api extends RestController {
         $id = $this->get('id');
         $id_kustomer = $this->get('id_kustomer');
 
-        $cek = !is_null($id) ? $id : ( !is_null($id_kustomer) ? $id_kustomer : NULL );
-        $where = is_null($id) ? 'id_kustomer' : 'id';
+        if (array_key_exists('id', $this->get())) {
+            $where = ['id' => $id];
+        } else if (array_key_exists('id_kustomer', $this->get())) {
+            $where = ['id_kustomer' => $id_kustomer];
+        } else {
+            $where = NULL;
+        }
 
-        $booking_temp = $this->Api_model->getDatas('booking_temp', [$where => $cek], $cek);
+        $booking_temp = $this->Api_model->getDatas('booking_temp', $where);
         // Check if the booking_temp data store contains booking_temp
         if ( $booking_temp )
         {
@@ -301,7 +306,7 @@ class Api extends RestController {
         else
         {
             // Set the response and exit
-            if ($cek === NULL) {
+            if ($where === NULL) {
                 $this->response( [
                     'status' => false,
                     'message' => 'Booking temp kosong'

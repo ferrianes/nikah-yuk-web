@@ -29,7 +29,9 @@ class Home extends CI_Controller
             $email = $this->session->email_kustomer;
             $data['kustomer'] = $this->Utama_model->getDatas('kustomer', ['email' => $email])[0];
             $data['booking_temp'] = $this->Utama_model->getDatas('booking_temp', ['id_kustomer' => $this->session->id_kustomer]);
-
+            if (isset($data['booking_temp']['status']) && $data['booking_temp']['status'] === FALSE) {
+                $data['booking_temp'] = [];
+            }
             $this->load->view('templates/templates-user/header', $data);
             $this->load->view('product/landing-page', $data);
             $this->load->view('templates/templates-user/modal');
