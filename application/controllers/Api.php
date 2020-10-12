@@ -164,6 +164,40 @@ class Api extends RestController {
         }
     }
 
+    public function kustomer_token_get()
+    {
+        // kustomer from a data store e.g. database
+        if (array_key_exists('kustomer_token', $this->get())) {
+            $where = ['token' => $this->get('kustomer_token')];
+        } else if (array_key_exists('email', $this->get())) {
+            $where = ['email' => $this->get('email')];
+        } else {
+            $where = NULL;
+        }
+        $kustomer_token = $this->Api_model->getDatas('kustomer_token', $where);
+        // Check if the kustomer data store contains kustomer
+        if ( $kustomer_token )
+        {
+            // Set the response and exit
+            $this->response($kustomer_token, 200);
+        }
+        else
+        {
+            // Set the response and exit
+            if ($where === NULL) {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Kustomer token kosong'
+                ], 404 );
+            } else {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Kustomer token tidak ditemukan'
+                ], 404 );
+            }
+        }
+    }
+
     public function booking_details_get()
     {
         // booking_details from a data store e.g. database
@@ -589,6 +623,27 @@ class Api extends RestController {
         }
     }
 
+    public function kustomer_token_post()
+    {
+        $data = [
+            'email' => $this->post('email'),
+            'token' => $this->post('kustomer_token'),
+            'tgl_dibuat' => time()
+        ];
+        
+        if ($this->Api_model->insertData('kustomer_token', $data) > 0) {
+            $this->response([
+                'message' => 'Data berhasil diinput',
+                'status' => 200
+            ], 200);
+        } else {
+            $this->response([
+                'message' => 'Data gagal diinput',
+                'status' => 400
+            ], 400);
+        }
+    }
+
     public function products_put()
     {
         $data = [
@@ -622,7 +677,7 @@ class Api extends RestController {
         if ($id === NULL) {
             $this->response(['message' => 'Masukkan id!'], 400);
         } else {
-            $delete = $this->Api_model->deleteData('produk', $id);
+            $delete = $this->Api_model->deleteData('produk', ['id' => $id]);
             if ($delete == -1) {
                 $this->response([
                     'message' => 'Data gagal dihapus.',
@@ -664,17 +719,24 @@ class Api extends RestController {
 
     public function kustomer_put()
     {
-        $data = [
-            'nm_lengkap' => $this->put('nm_lengkap'),
-            'alamat' => $this->put('alamat'),
-            'email' => $this->put('email'),
-            'telepon' => $this->put('telepon'),
-            'image' => $this->put('image')
-        ];
+        // jika client ingin update verifikasi aktif
+        if (array_key_exists('is_active', $this->put()) && array_key_exists('email', $this->put())) {
+            $data = ['is_active' => $this->put('is_active')];
+
+            $where = ['email' => $this->put('email')];
+        } else {
+            $data = [
+                'nm_lengkap' => $this->put('nm_lengkap'),
+                'alamat' => $this->put('alamat'),
+                'email' => $this->put('email'),
+                'telepon' => $this->put('telepon'),
+                'image' => $this->put('image')
+            ];
+            
+            $where = ['id_kustomer' => $this->put('id_kustomer')];
+        }
         
-        $where = ['id_kustomer' => $this->put('id_kustomer')];
-        
-        if ($this->Api_model->updateData('kustomer', $data, $where) != -1 ) {
+        if ($this->Api_model->updateData('kustomer', $data, $where) > 0 ) {
             $this->response([
                 'message' => 'Data berhasil diubah'
             ], 200);
@@ -861,7 +923,7 @@ class Api extends RestController {
         if ($id === NULL) {
             $this->response(['message' => 'Masukkan id!'], 400);
         } else {
-            if ($this->Api_model->deleteData('admin_access_menu', $id) > 0) {
+            if ($this->Api_model->deleteData('admin_access_menu', ['id' => $id]) > 0) {
                 $this->response(['message' => 'Data berhasil dihapus'], 200);
             } else {
                 $this->response(['message' => 'Id tidak ditemukan'], 400);
@@ -877,7 +939,7 @@ class Api extends RestController {
         if ($id === NULL) {
             $this->response(['message' => 'Masukkan id!'], 400);
         } else {
-            if ($this->Api_model->deleteData('admin_menu', $id) > 0) {
+            if ($this->Api_model->deleteData('admin_menu', ['id' => $id]) > 0) {
                 $this->response(['message' => 'Data berhasil dihapus'], 200);
             } else {
                 $this->response(['message' => 'Id tidak ditemukan'], 400);
@@ -908,7 +970,7 @@ class Api extends RestController {
         if ($id === NULL) {
             $this->response(['message' => 'Masukkan id!'], 400);
         } else {
-            if ($this->Api_model->deleteData('produk_gambar', $id) > 0) {
+            if ($this->Api_model->deleteData('produk_gambar', ['id' => $id]) > 0) {
                 $filename = explode(".", $galeri['gambar'])[0];
                 array_map('unlink', glob(FCPATH."assets/img/api/products/$filename.*"));
                 $this->response(['message' => 'Data berhasil dihapus'], 200);
@@ -961,11 +1023,27 @@ class Api extends RestController {
         if ($id === NULL) {
             $this->response(['message' => 'Masukkan id!'], 400);
         } else {
-            if ($this->Api_model->deleteData('admin_sub_menu', $id) > 0) {
+            if ($this->Api_model->deleteData('admin_sub_menu', ['id' => $id]) > 0) {
                 $this->response(['message' => 'Data berhasil dihapus'], 200);
             } else {
                 $this->response(['message' => 'Id tidak ditemukan'], 400);
             }
         }
+    }
+
+    public function kustomer_token_delete()
+    {
+        $email = $this->delete('email');
+
+        if ($email === NULL) {
+            $this->response(['message' => 'Masukkan email!'], 400);
+        } else {
+            if ($this->Api_model->deleteData('kustomer_token', ['email' => $email]) > 0) {
+                $this->response(['message' => 'Data berhasil dihapus'], 200);
+            } else {
+                $this->response(['message' => 'email tidak ditemukan'], 400);
+            }
+        }
+
     }
 }

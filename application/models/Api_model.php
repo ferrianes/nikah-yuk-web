@@ -21,7 +21,7 @@ class Api_model extends CI_Model {
     public function deleteData($table, $id)
     {
         $this->db->db_debug = false;
-        $this->db->delete($table, ['id' => $id]);
+        $this->db->delete($table, $id);
         return $this->db->affected_rows();
     }
 

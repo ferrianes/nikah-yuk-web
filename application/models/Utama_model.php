@@ -37,10 +37,10 @@ class Utama_model extends CI_Model {
 
     public function insertData($uri, $data)
     {
-        $data += [
-            'token' => 'Da0sxRC4'
-        ];
         $response = $this->_client->request('POST', $uri, [
+            'headers' => [
+                'token' => 'Da0sxRC4'
+            ],
             'form_params' => $data
         ]);
         return json_decode($response->getBody()->getContents(), true);
@@ -86,7 +86,6 @@ class Utama_model extends CI_Model {
         $response = $this->_client->request('PUT', $uri, [
             'form_params' => $data
         ]);
-        // var_dump($response->getBody()->getContents());die;
         return json_decode($response->getBody()->getContents(), true);
     }
 }

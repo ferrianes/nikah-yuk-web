@@ -101,9 +101,18 @@ class Kustomer extends CI_Controller
                 'is_active' => 0,
                 'tgl_dibuat' => date("Y-m-d")
             ];
-            // $this->Utama_model->insertData('kustomer', $data);
 
-            $this->_sendEmail();
+            // siapkan token
+            $token = base64_encode(random_bytes(32));
+            $kustomer_token = [
+                'email' => $this->input->post('email', true),
+                'kustomer_token' => $token
+            ];
+
+            $this->Utama_model->insertData('kustomer', $data);
+            $this->Utama_model->insertData('kustomer_token', $kustomer_token);
+
+            $this->_sendEmail($token, 'verify');
 
             $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-success alert-message text-center" role="alert">Selamat akun kamu sudah berhasil dibuat. Silahkan aktifasi melalui email kamu.</div></div>');
             redirect('home');
@@ -124,7 +133,7 @@ class Kustomer extends CI_Controller
         
     }
     
-    private function _sendEmail()
+    private function _sendEmail($token, $type)
     {
         $config = [
             'protocol' => 'smtp',
@@ -140,15 +149,55 @@ class Kustomer extends CI_Controller
         $this->load->library('email', $config);
 
         $this->email->from('riandesu27@gmail.com', 'Nikah Yuk App');
-        $this->email->to('ferrian27@gmail.com');
-        $this->email->subject('Testing');
-        $this->email->message('Hello');
+        $this->email->to($this->input->post('email'));
+
+        if ($type == 'verify') {
+            $this->email->subject('Account Verification');
+            $this->email->message('Click this link to verify you account : <a href="'. base_url() .'kustomer/verify?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">Activate</a>');
+        }
         
         if ($this->email->send()) {
             return true;
         } else {
             echo $this->email->print_debugger();
             die;
+        }
+    }
+
+    public function verify()
+    {
+        $email = $this->input->get('email');
+        $token = $this->input->get('token');
+
+        $kustomer = $this->Utama_model->getDatas('kustomer', ['email' => $email])[0];
+
+        if ($kustomer) {
+            $kustomer_token = $this->Utama_model->getDatas('kustomer_token', ['kustomer_token' => $token])[0];
+
+            if ($kustomer_token) {
+                if (time() - $kustomer_token['tgl_dibuat'] < (60*60*24)) {
+                    $this->Utama_model->updateData('kustomer', [
+                        'is_active' => 1,
+                        'email' => $email 
+                    ]);
+
+                    $this->Utama_model->deleteData('kustomer_token', ['email' => $email]);
+                    $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-success alert-message text-center" role="alert">Account Activation Success! Please login.</div></div>');
+                    redirect('home');
+                } else{
+                    $this->Utama_model->deleteData('kustomer', ['email' => $email]);
+                    $this->Utama_model->deleteData('kustomer_token', ['email' => $email]);
+
+                    $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-danger alert-message text-center" role="alert">Account Activation Failed! Token expired.</div></div>');
+                    redirect('home');
+                }
+            } else {
+                $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-danger alert-message text-center" role="alert">Account Activation Failed! Wrong token.</div></div>');
+                redirect('home');
+            }
+        } else {
+            $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-danger alert-message text-center" role="alert">Account Activation Failed! Wrong email.</div></div>');
+            redirect('home');
         }
     }
 
