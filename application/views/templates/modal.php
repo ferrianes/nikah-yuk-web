@@ -147,7 +147,7 @@
 
 <?php if ($title == 'Produk Management') : ?>
 <!-- Modal Akses Menu Baru -->
-<form method="post" action="<?= base_url('product') ?>" enctype="multipart/form-data">
+<form method="post" action="<?= base_url('admin/daftarproduk') ?>" enctype="multipart/form-data">
 <div class="modal fade" id="modalTambahProduk" tabindex="-1" aria-labelledby="modalTambahProdukLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -168,8 +168,8 @@
                     <select class="form-control" id="kategori" name="id_kategori">
                         <option value="" disabled selected>Pilih Kategori</option>
                         <?php 
-                            $kategoris = $this->Utama_model->getDatas('kategoris');
-                            foreach($kategoris as $kategori) :
+                            $kategori = $this->Utama_model->getDatas('kategori');
+                            foreach($kategori as $kategori) :
                                 echo '<option value="'. $kategori['id'] .'">'. $kategori['nama'] .'</option>';
                             endforeach;
                         ?>
@@ -331,7 +331,7 @@
         </div>
 
         <!-- Modal Tambah Galeri -->
-        <form method="post" action="<?= base_url('product/tambahgaleri/' . $produk['id']) ?>" enctype="multipart/form-data">
+        <form method="post" action="<?= base_url('admin/tambahgaleri/' . $produk['id']) ?>" enctype="multipart/form-data">
             <div class="modal fade" id="modalTambahGaleri" tabindex="-1" aria-labelledby="modalTambahGaleriLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">

@@ -12,7 +12,7 @@ class Admin extends CI_Controller {
     public function index()
     {
         $data['title'] = 'Dashboard';
-        $data['admin'] = $this->Utama_model->getDatas('admins', ['email' => $this->session->userdata('email')])[0];
+        $data['admin'] = $this->Utama_model->getDatas('admin', ['email' => $this->session->userdata('email')])[0];
         $data['menus_by_access_menu'] = $this->Utama_model->getDatas('menus_by_access_menu', ['level_id' => $this->session->userdata('level')]);
 
         $this->load->view('templates/header', $data);
@@ -309,10 +309,10 @@ class Admin extends CI_Controller {
 
         if ($status['status'] == 400) {
             $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-dismissible fade show" role="alert">'. $status['message'] .'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-            redirect('produk/detailproduk/' . $produk_id);
+            redirect('admin/daftarproduk/' . $produk_id);
         } else {
             $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data <strong>Berhasil</strong> ditambah.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-            redirect('produk/detailproduk/' . $produk_id);
+            redirect('admin/daftarproduk/' . $produk_id);
         }
 
     }

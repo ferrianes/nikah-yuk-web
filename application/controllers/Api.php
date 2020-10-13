@@ -653,7 +653,7 @@ class Api extends RestController {
         }
     }
 
-    public function products_delete()
+    public function produk_delete()
     {
         $id = $this->delete('id');
 
@@ -955,7 +955,7 @@ class Api extends RestController {
         } else {
             if ($this->Api_model->deleteData('produk_gambar', ['id' => $id]) > 0) {
                 $filename = explode(".", $galeri['gambar'])[0];
-                array_map('unlink', glob(FCPATH."assets/img/api/products/$filename.*"));
+                array_map('unlink', glob(FCPATH."assets/img/api/produk/$filename.*"));
                 $this->response(['message' => 'Data berhasil dihapus'], 200);
             } else {
                 $this->response(['message' => 'Id tidak ditemukan'], 400);
