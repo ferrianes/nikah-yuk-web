@@ -84,7 +84,8 @@ class Utama_model extends CI_Model {
             'token' => 'Da0sxRC4'
         ];
         $response = $this->_client->request('PUT', $uri, [
-            'form_params' => $data
+            'form_params' => $data,
+            'http_errors' => FALSE
         ]);
         return json_decode($response->getBody()->getContents(), true);
     }

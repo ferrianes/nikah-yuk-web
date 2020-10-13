@@ -24,9 +24,14 @@ class Menu extends CI_Controller {
         if ($this->form_validation->run() === FALSE) {
             $data['title'] = 'Menu Management';
     
-            $data['admin'] = $this->Utama_model->getDatas('admins', ['email' => $this->session->userdata('email')])[0];
+            $data['admin'] = $this->Utama_model->getDatas('admin', ['email' => $this->session->userdata('email')])[0];
     
-            $data['menus'] = $this->Utama_model->getDatas('menus');
+            $data['menu'] = $this->Utama_model->getDatas('menu');
+
+            // sort by urutan DESC
+            usort($data['menu'], function($a, $b) {
+                return $a['urutan'] <=> $b['urutan'];
+            });
 
             $data['menus_by_access_menu'] = $this->Utama_model->getDatas('menus_by_access_menu', ['level_id' => $this->session->userdata('level')]);
     
@@ -71,19 +76,18 @@ class Menu extends CI_Controller {
         $this->form_validation->set_rules('menu', 'Menu', 'required|trim', [
             'required' => 'Menu Harus diisi!!!'
         ]);
-        $this->form_validation->set_rules('urutan', 'Urutan', 'required|trim|numeric|is_unique[admin_menu.urutan]', [
+        $this->form_validation->set_rules('urutan', 'Urutan', 'required|trim|numeric', [
             'required' => 'Urutan Harus diisi!!!',
-            'numeric' => 'Urutan Harus berupa angka!',
-            'is_unique' => 'Urutan yang diinginkan sudah ada'
+            'numeric' => 'Urutan Harus berupa angka!'
         ]);
 
         if ($this->form_validation->run() === FALSE) {
             $data['title'] = 'Menu Management';
             $id = $this->uri->segment(3);
     
-            $data['admin'] = $this->Utama_model->getDatas('admins', ['email' => $this->session->userdata('email')])[0];
+            $data['admin'] = $this->Utama_model->getDatas('admin', ['email' => $this->session->userdata('email')])[0];
     
-            $data['menu'] = $this->Utama_model->getDatas('menus', ['id'=> $id])[0];
+            $data['menu'] = $this->Utama_model->getDatas('menu', ['id'=> $id])[0];
 
             $data['menus_by_access_menu'] = $this->Utama_model->getDatas('menus_by_access_menu', ['level_id' => $this->session->userdata('level')]);
     
@@ -121,7 +125,7 @@ class Menu extends CI_Controller {
         if ($this->form_validation->run() === FALSE) {
             $data['title'] = 'Akses Menu Admin';
     
-            $data['admin'] = $this->Utama_model->getDatas('admins', ['email' => $this->session->userdata('email')])[0];
+            $data['admin'] = $this->Utama_model->getDatas('admin', ['email' => $this->session->userdata('email')])[0];
 
             $data['access_menus'] = $this->Utama_model->getDatas('access_menus');
 
@@ -178,7 +182,7 @@ class Menu extends CI_Controller {
         if ($this->form_validation->run() === FALSE) {
             $data['title'] = 'Sub Menu Management';
     
-            $data['admin'] = $this->Utama_model->getDatas('admins', ['email' => $this->session->userdata('email')])[0];
+            $data['admin'] = $this->Utama_model->getDatas('admin', ['email' => $this->session->userdata('email')])[0];
 
             $data['submenus'] = $this->Utama_model->getDatas('sub_menu');
 
@@ -228,7 +232,7 @@ class Menu extends CI_Controller {
             $id = $this->uri->segment(3);
             $data['title'] = 'Akses Menu Admin';
     
-            $data['admin'] = $this->Utama_model->getDatas('admins', ['email' => $this->session->userdata('email')])[0];
+            $data['admin'] = $this->Utama_model->getDatas('admin', ['email' => $this->session->userdata('email')])[0];
 
             $data['access_menu'] = $this->Utama_model->getDatas('access_menus_raw', ['id' => $id])[0];
 
@@ -287,7 +291,7 @@ class Menu extends CI_Controller {
             $data['title'] = 'Sub Menu Management';
             $id = $this->uri->segment(3);
     
-            $data['admin'] = $this->Utama_model->getDatas('admins', ['email' => $this->session->userdata('email')])[0];
+            $data['admin'] = $this->Utama_model->getDatas('admin', ['email' => $this->session->userdata('email')])[0];
 
             $data['submenu'] = $this->Utama_model->getDatas('sub_menu', ['id' => $id])[0];
 

@@ -23,10 +23,12 @@
                         <div class="form-group">
                             <label for="nama-menu">Nama Menu</label>
                             <input type="text" name="menu" class="form-control" id="nama-menu" value="<?= $menu['menu']; ?>">
+                            <?= form_error('menu', '<small class="form-text text-danger">', '</small>'); ?>
                         </div>
                         <div class="form-group">
                             <label for="urutan">Urutan</label>
                             <input type="text" name="urutan" id="urutan" class="form-control" value="<?= $menu['urutan']; ?>">
+                            <?= form_error('urutan', '<small class="form-text text-danger">', '</small>'); ?>
                         </div>
                         <button type="submit" class="btn btn-primary"><i class="fas fa-fw fa-save"></i> Simpan Perubahan</button>
                     </form>

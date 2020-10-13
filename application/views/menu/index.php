@@ -57,16 +57,16 @@
                             </thead>
                             <tbody>
                                 <!-- Looping Menu -->
-                                <?php $no = 1; foreach ($menus as $menu) : ?>
-                                <tr>
-                                    <th scope="row"><?= $no; ?></th>
-                                    <td><?= filter_output($menu['menu']); ?></td>
-                                    <td><?= filter_output($menu['urutan']); ?></td>
-                                    <td>
-                                        <a href="<?= base_url('menu/editMenu/'.$menu['id']); ?>" class="badge badge-primary"><i class="fas fa-fw fa-edit"></i> Edit</a> | 
-                                        <a href="" data-name="<?= $menu['menu']; ?>" data-href="<?= base_url('menu/deleteMenu/' . $menu['id']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusMenu" class="badge badge-danger"><i class="fas fa-fw fa-trash"></i> Hapus</a>
-                                    </td>
-                                </tr>
+                                <?php $no = 1; foreach ($menu as $menu) : ?>
+                                    <tr>
+                                        <th scope="row"><?= $no; ?></th>
+                                        <td><?= filter_output($menu['menu']); ?></td>
+                                        <td><?= filter_output($menu['urutan']); ?></td>
+                                        <td>
+                                            <a href="<?= base_url('menu/editMenu/'.$menu['id']); ?>" class="badge badge-primary"><i class="fas fa-fw fa-edit"></i> Edit</a> | 
+                                            <a href="" data-name="<?= $menu['menu']; ?>" data-href="<?= base_url('menu/deleteMenu/' . $menu['id']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusMenu" class="badge badge-danger"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                                        </td>
+                                    </tr>
                                 <?php $no++; endforeach; ?>
                             </tbody>
                         </table>

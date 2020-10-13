@@ -91,7 +91,7 @@
                         <label for="role">Role</label>
                         <select class="form-control" id="role" name="level_id">
                             <?php 
-                                $roles = $this->Utama_model->getDatas('levels');
+                                $roles = $this->Utama_model->getDatas('level');
                                 foreach($roles as $role) :
                                     echo '<option value="'. $role['id'] .'">'. $role['role'] .'</option>';
                                 endforeach;
@@ -102,8 +102,8 @@
                         <label for="menu">Menu</label>
                         <select class="form-control" id="menu" name="menu_id">
                             <?php 
-                                $menus = $this->Utama_model->getDatas('menus');
-                                foreach($menus as $menu) :
+                                $menu = $this->Utama_model->getDatas('menu');
+                                foreach($menu as $menu) :
                                     echo '<option value="'. $menu['id'] .'">'. $menu['menu'] .'</option>';
                                 endforeach;
                             ?>
@@ -380,8 +380,8 @@
                         <select class="form-control" name="menu_id">
                             <option disabled selected>Pilih Menu</option>
                             <?php 
-                                $menus = $this->Utama_model->getDatas('menus');
-                                foreach($menus as $menu) :
+                                $menu = $this->Utama_model->getDatas('menu');
+                                foreach($menu as $menu) :
                                     echo '<option value="'. $menu['id'] .'">'. $menu['menu'] .'</option>';
                                 endforeach;
                             ?>

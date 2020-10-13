@@ -27,7 +27,7 @@
                             <label for="role">Role</label>
                             <select class="form-control" id="role" name="level_id">
                                 <?php 
-                                $roles = $this->Utama_model->getDatas('levels');
+                                $roles = $this->Utama_model->getDatas('level');
                                 foreach($roles as $role) : ?>
                                     <option value="<?= $role['id']; ?>" <?= $access_menu['level_id'] === $role['id'] ? 'selected' : '' ?>><?= $role['role']; ?></option>
                                 <?php endforeach; ?>
@@ -37,8 +37,8 @@
                             <label for="menu">Menu</label>
                             <select class="form-control" id="menu" name="menu_id">
                                 <?php 
-                                $menus = $this->Utama_model->getDatas('menus');
-                                foreach($menus as $menu) : ?>
+                                $menu = $this->Utama_model->getDatas('menu');
+                                foreach($menu as $menu) : ?>
                                     <option value="<?= $menu['id']; ?>" <?= $access_menu['menu_id'] === $menu['id'] ? 'selected' : '' ?>><?= $menu['menu']; ?></option>
                                 <?php endforeach; ?>
                             </select>

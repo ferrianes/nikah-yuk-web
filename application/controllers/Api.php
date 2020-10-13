@@ -12,21 +12,25 @@ class Api extends RestController {
         $this->load->model('Api_model');
     }
 
-    public function menus_get()
+    public function menu_get()
     {
         // menus from a data store e.g. database
-        $id = $this->get('id');
-        $menus = $this->Api_model->getDatas('admin_menu', ['id' => $id], $id);
-        // Check if the menus data store contains menus
-        if ( $menus )
+        if (array_key_exists('id', $this->get())) {
+            $where = ['id' => $this->get('id')];
+        } else {
+            $where = NULL;
+        }
+        $menu = $this->Api_model->getDatas('admin_menu', $where);
+        // Check if the menu data store contains menu
+        if ( $menu )
         {
             // Set the response and exit
-            $this->response($menus, 200);
+            $this->response($menu, 200);
         }
         else
         {
             // Set the response and exit
-            if ($id === NULL) {
+            if ($where === NULL) {
                 $this->response( [
                     'status' => false,
                     'message' => 'Menu kosong'
@@ -72,21 +76,24 @@ class Api extends RestController {
         }
     }
 
-    public function levels_get()
+    public function level_get()
     {
-        // levels from a data store e.g. database
-        $id = $this->get('id');
-        $levels = $this->Api_model->getDatas('admin_level', ['id' => $id], $id);
-        // Check if the levels data store contains levels
-        if ( $levels )
+        if (array_key_exists('id', $this->get())) {
+            $where = ['id' => $this->get('id')];
+        } else {
+            $where = NULL;
+        }
+        $level = $this->Api_model->getDatas('admin_level', $where);
+        // Check if the level data store contains level
+        if ( $level )
         {
             // Set the response and exit
-            $this->response($levels, 200);
+            $this->response($level, 200);
         }
         else
         {
             // Set the response and exit
-            if ($id === NULL) {
+            if ($where === NULL) {
                 $this->response( [
                     'status' => false,
                     'message' => 'Menu kosong'
@@ -200,7 +207,13 @@ class Api extends RestController {
     {
         // sub_menu from a data store e.g. database
         $id = $this->get('id');
-        $sub_menu = $this->Api_model->getJoinDatas('admin_sub_menu.*, admin_menu.menu', 'admin_sub_menu', 'admin_menu', 'admin_sub_menu.menu_id = admin_menu.id', ['admin_sub_menu.id' => $id], $id);
+        $sub_menu = $this->Api_model->getJoinDatas(
+            'admin_sub_menu.*, admin_menu.menu', // Select
+            'admin_sub_menu', // From
+            'admin_menu', // Join
+            'admin_sub_menu.menu_id = admin_menu.id', // On 
+            ['admin_sub_menu.id' => $id], $id // Where
+        );
         // Check if the sub_menu data store contains sub_menu
         if ( $sub_menu )
         {
@@ -992,7 +1005,7 @@ class Api extends RestController {
         ];
         $where = ['id' => $this->put('id')];
 
-        if ($this->Api_model->updateData('admin_sub_menu', $data, $where) > 0) {
+        if ($this->Api_model->updateData('admin_sub_menu', $data, $where) <> 0) {
             $this->response(['message' => 'Data berhasil diubah'], 200);
         } else {
             $this->response(['message' => 'Data gagal diubah'], 400);

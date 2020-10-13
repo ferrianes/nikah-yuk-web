@@ -24,8 +24,8 @@
                     		<label for="menu">Menu</label>
                     		<select class="form-control" id="menu" name="menu_id">
                     			<?php 
-                                $menus = $this->Utama_model->getDatas('menus');
-                                foreach($menus as $menu) : ?>
+                                $menu = $this->Utama_model->getDatas('menu');
+                                foreach($menu as $menu) : ?>
                     			<option value="<?= $menu['id']; ?>"
                     				<?= $submenu['menu_id'] === $menu['id'] ? 'selected' : '' ?>>
                     				<?= $menu['menu']; ?></option>
