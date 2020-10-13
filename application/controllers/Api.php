@@ -500,21 +500,24 @@ class Api extends RestController {
         }
     }
 
-    public function bookings_get()
+    public function booking_get()
     {
-        // bookings from a data store e.g. database
-        $id = $this->get('id');
-        $bookings = $this->Api_model->getDatas('booking', ['id' => $id], $id);
-        // Check if the bookings data store contains bookings
-        if ( $bookings )
+        if (array_key_exists('id', $this->get())) {
+            $where = ['id' => $this->get('id')];
+        } else {
+            $where = NULL;
+        }
+        $booking = $this->Api_model->getDatas('booking', $where);
+        // Check if the booking data store contains booking
+        if ( $booking )
         {
             // Set the response and exit
-            $this->response($bookings, 200);
+            $this->response($booking, 200);
         }
         else
         {
             // Set the response and exit
-            if ($id === NULL) {
+            if ($where === NULL) {
                 $this->response( [
                     'status' => false,
                     'message' => 'Booking kosong'

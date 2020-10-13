@@ -43,7 +43,7 @@
                                 <!-- Looping product -->
                                 <?php 
                                 $no = 1; 
-                                foreach ($kategoris as $kategori) :  
+                                foreach ($kategori as $kategori) :  
                                 ?>
                                 <tr>
                                     <th scope="row"><?= $no; ?></th>

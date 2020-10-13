@@ -317,7 +317,7 @@ class Admin extends CI_Controller {
 
     }
 
-    public function kategori()
+    public function kategoriproduk()
     {
         // Validasi
         $this->form_validation->set_rules('nama', 'Nama', 'required|trim', [
@@ -327,16 +327,16 @@ class Admin extends CI_Controller {
         if ($this->form_validation->run() === FALSE) {
             $data['title'] = 'Kategori Management';
     
-            $data['admin'] = $this->Utama_model->getDatas('admins', ['email' => $this->session->userdata('email')])[0];
+            $data['admin'] = $this->Utama_model->getDatas('admin', ['email' => $this->session->userdata('email')])[0];
     
-            $data['kategoris'] = $this->Utama_model->getDatas('kategoris');
+            $data['kategori'] = $this->Utama_model->getDatas('kategori');
 
             $data['menus_by_access_menu'] = $this->Utama_model->getDatas('menus_by_access_menu', ['level_id' => $this->session->userdata('level')]);
     
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('produk/daftar-kategori', $data);
+            $this->load->view('admin/kategori/daftar-kategori', $data);
             $this->load->view('templates/footer');
             $this->load->view('templates/modal');
             $this->load->view('templates/footer2');
@@ -377,5 +377,61 @@ class Admin extends CI_Controller {
                 redirect('admin/daftarproduk');
             }
         }
+    }
+
+    public function booking()
+    {
+        $data['title'] = 'Data Booking';
+    
+        $data['admin'] = $this->Utama_model->getDatas('admin', ['email' => $this->session->userdata('email')])[0];
+
+        $data['booking'] = $this->Utama_model->getDatas('booking');
+        if (isset($data['booking']['status']) && $data['booking']['status'] == FALSE) {
+            $data['booking'] = NULL;
+        } else {
+            $array = [];
+            foreach ($data['booking'] as $key => $value) {  
+                $kustomer = $this->Utama_model->getDatas('kustomer', ['id_kustomer' => $data['booking'][$key]['id_kustomer']])[0];
+                $array[] = [
+                    'nm_lengkap' => $kustomer['nm_lengkap']
+                ];
+            }
+    
+            $data['kustomer'] = $array;
+        }        
+
+        $data['menus_by_access_menu'] = $this->Utama_model->getDatas('menus_by_access_menu', ['level_id' => $this->session->userdata('level')]);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/booking/index', $data);
+        $this->load->view('templates/footer');
+        $this->load->view('templates/modal');
+        $this->load->view('templates/footer2');
+    }
+
+    public function detailbooking()
+    {
+        $data['title'] = 'Data Booking';
+    
+        $data['admin'] = $this->Utama_model->getDatas('admin', ['email' => $this->session->userdata('email')])[0];
+
+        $id = $this->uri->segment(3);
+
+        $data['booking'] = $this->Utama_model->getDatas('booking', ['id_booking' => $id])[0];
+        $data['kustomer'] = $this->Utama_model->getDatas('kustomer', ['id_kustomer' => $data['booking']['id_kustomer']])[0];
+
+        $data['detail'] = $this->Utama_model->getDatas('booking_details', ['id_booking' => $id]);
+
+        $data['menus_by_access_menu'] = $this->Utama_model->getDatas('menus_by_access_menu', ['level_id' => $this->session->userdata('level')]);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/booking/detail_booking', $data);
+        $this->load->view('templates/footer');
+        $this->load->view('templates/modal');
+        $this->load->view('templates/footer2');
     }
 }

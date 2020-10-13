@@ -186,9 +186,13 @@ class Menu extends CI_Controller {
 
             $data['submenus'] = $this->Utama_model->getDatas('sub_menu');
 
+            // sort by menu DESC
+            usort($data['submenus'], function($a, $b) {
+                return $a['menu'] <=> $b['menu'];
+            });
+
             $data['menus_by_access_menu'] = $this->Utama_model->getDatas('menus_by_access_menu', ['level_id' => $this->session->userdata('level')]);
 
-    
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
