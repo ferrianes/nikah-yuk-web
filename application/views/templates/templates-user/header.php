@@ -51,21 +51,19 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                	<span class="nav-link nav-link-icon dropdown-toggle cursor-pointer" href="#"
-                		id="navbar-default_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true"
-                		aria-expanded="false">
-                		<i class="ni ni-bag-17"></i>
-                		<span class="nav-link-inner--text">Produk</span>
-                	</span>
-                	<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
+                    <span class="nav-link nav-link-icon dropdown-toggle cursor-pointer" href="#" id="navbar-default_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="ni ni-bag-17"></i>
+                        <span class="nav-link-inner--text">Produk</span>
+                    </span>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
                         <?php 
                         foreach ($kategori as $k) : 
                         $seo = seo_title($k['nama']);
                         ?>
-                            <a class="dropdown-item" href="<?= base_url("produk/$seo"); ?>"><span
+                            <a class="dropdown-item" href="<?= base_url("produk/kategori/$seo"); ?>"><span
                                     class="fa <?= $k['icon']; ?> mr-2"></span><?= $k['nama'] ?></a>
                         <?php endforeach; ?>
-                	</div>
+                    </div>
                 </li>
                 <?php if (!empty($this->session->email_kustomer)) : ?>
                     <li class="nav-item">

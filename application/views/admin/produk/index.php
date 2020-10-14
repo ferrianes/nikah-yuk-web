@@ -46,13 +46,13 @@
                             <tbody>
                                 <!-- Looping p -->
                                 <?php 
-                                $no = 1; foreach ($produk as $p) : 
-                                $kategori = $this->Utama_model->getDatas('kategori', ['id' => $p['id_kategori']])[0];  
+                                $no = 1; 
+                                foreach ($produk as $p) :
                                 ?>
                                 <tr>
                                     <th scope="row"><?= $no; ?></th>
                                     <td><?= filter_output($p['nama']); ?></td>
-                                    <td><?= filter_output($kategori['nama']); ?></td>
+                                    <td><?= filter_output($p['kategori']); ?></td>
                                     <td><?= filter_output($p['harga']); ?></td>
                                     <td><?= filter_output($p['stok']); ?></td>
                                     <td><?= filter_output($p['diorder']); ?></td>

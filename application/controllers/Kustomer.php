@@ -183,6 +183,7 @@ class Kustomer extends CI_Controller
             $kustomer_token = $this->Utama_model->getDatas('kustomer_token', ['kustomer_token' => $token])[0];
 
             if ($kustomer_token) {
+                // Cek apakah token sudah lebih dari 1 hari
                 if (time() - $kustomer_token['tgl_dibuat'] < (60*60*24)) {
                     $this->Utama_model->updateData('kustomer', [
                         'is_active' => 1,

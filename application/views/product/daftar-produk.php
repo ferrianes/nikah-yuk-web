@@ -6,24 +6,26 @@
 				<div class="container">
 					<?= $this->session->flashdata('pesan'); ?>
 					<h2 class="text-center mb-4">Daftar Produk</h2>
+					<nav aria-label="breadcrumb" role="navigation">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item active" aria-current="page">Produk</li>
+						</ol>
+					</nav>
 					<div class="row">
 						<?php 
 						// Looping produk
-						foreach ($produk as $p) : 
-		
-						$thumbnail = $this->Utama_model->getDatas('produks_gambar', ['produk_id' => $p['id'], 'thumbnail' => 1]); 
+						foreach ($produk as $p) :
 						?>
 						<div class="col-md-3 mb-3 d-flex">
 							<div class="card shadow flex-fill">
-								<?php if (isset($thumbnail['status']) AND $thumbnail['status'] == FALSE) : ?>
-								<img src="<?php echo base_url('assets/img/api/produk/noimage_content.jpg')?>"
-									class="card-img-top">
+								<?php if ($p['gambar'] == NULL) : ?>
+								<img src="<?php echo base_url('assets/img/api/produk/noimage_content.jpg')?>" class="card-img-top">
 								<?php else : ?>
-								<img src="<?php echo base_url('assets/img/api/produk/' . $thumbnail[0]['gambar'])?>"
-									class="card-img-top">
+								<img src="<?php echo base_url('assets/img/api/produk/' . $p['gambar'])?>" class="card-img-top">
 								<?php endif; ?>
 								<div class="card-body pt-2">
 									<h5 class="card-title text-dark mb-0 clamp-2"><?= filter_output($p['nama']); ?></h5>
+									<small class="text-muted"><?= $p['kategori'] ?></small>
 									<p class="card-text mb-1 text-warning font-weight-bold">
 										<?php 
 										// Format harga ke IDR
@@ -49,6 +51,7 @@
 						</div>
 						<?php endforeach; ?>
 					</div>
+					<?= $pagination; ?>
 				</div>  
 			</div>
         </div>

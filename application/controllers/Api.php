@@ -178,8 +178,18 @@ class Api extends RestController {
     public function booking_details_get()
     {
         // booking_details from a data store e.g. database
-        $id = $this->get('id_booking');
-        $booking_details = $this->Api_model->getJoinDatas('produk.*', 'booking_detail', 'produk', 'booking_detail.id_produk = produk.id', ['booking_detail.id_booking' => $id], $id);
+        if (array_key_exists('id_booking', $this->get())) {
+            $where = ['booking_detail.id_booking' => $this->get('id_booking')];
+        } else {
+            $where = NULL;
+        }
+
+        $booking_details = $this->Api_model->getJoinDatas(
+            'produk.*', 
+            'booking_detail', 
+            'produk', 'booking_detail.id_produk = produk.id', 
+            $where
+        );
         // Check if the booking_details data store contains booking_details
         if ( $booking_details )
         {
@@ -205,14 +215,17 @@ class Api extends RestController {
 
     public function sub_menu_get()
     {
-        // sub_menu from a data store e.g. database
+        if (array_key_exists('id', $this->get())) {
+            $where = ['admin_sub_menu.id' => $this->get('id')];
+        } else {
+            $where = NULL;
+        }
         $id = $this->get('id');
         $sub_menu = $this->Api_model->getJoinDatas(
             'admin_sub_menu.*, admin_menu.menu', // Select
             'admin_sub_menu', // From
-            'admin_menu', // Join
-            'admin_sub_menu.menu_id = admin_menu.id', // On 
-            ['admin_sub_menu.id' => $id], $id // Where
+            'admin_menu', 'admin_sub_menu.menu_id = admin_menu.id', // Join On 
+            $where // Where
         );
         // Check if the sub_menu data store contains sub_menu
         if ( $sub_menu )
@@ -320,14 +333,18 @@ class Api extends RestController {
     // Buat Sidebar
     public function menus_by_access_menu_get()
     {
-        // menus_by_access_menu from a data store e.g. database
+        if (array_key_exists('level_id', $this->get())) {
+            $where = ['admin_access_menu.level_id' => $this->get('level_id')];
+        } else {
+            $where = NULL;
+        }
         $level_id = $this->get('level_id');
         $menus_by_access_menu = $this->Api_model->getJoinDatas(
             'admin_menu.id, menu', // Select 
             'admin_menu', // From
-            'admin_access_menu', // Join
-            'admin_menu.id = admin_access_menu.menu_id', // On 
-            'admin_access_menu.level_id = '.$level_id, $level_id, // Where 
+            'admin_access_menu', 'admin_menu.id = admin_access_menu.menu_id', // Join On 
+            100, 0, // Limit Offset
+            $where, // Where
             'admin_menu.urutan', 'ASC' // Order by
         );
         // Check if the menus_by_access_menu data store contains access_menu
@@ -355,9 +372,19 @@ class Api extends RestController {
 
     public function access_menus_get()
     {
-        // access_menus from a data store e.g. database
-        $level_id = $this->get('level_id');
-        $access_menus = $this->Api_model->getThreeJoinDatas('admin_level.role, admin_menu.menu, admin_access_menu.id', 'admin_access_menu', 'admin_menu', 'admin_menu.id = admin_access_menu.menu_id', 'admin_level', 'admin_level.id = admin_access_menu.level_id', 'admin_access_menu.level_id = '.$level_id, $level_id);
+        if (array_key_exists('level_id', $this->get())) {
+            $where = ['admin_access_menu.level_id' => $this->get('level_id')];
+        } else {
+            $where = NULL;
+        }
+
+        $access_menus = $this->Api_model->getThreeJoinDatas(
+            'admin_level.role, admin_menu.menu, admin_access_menu.id', // Select
+            'admin_access_menu', // From
+            'admin_menu', 'admin_menu.id = admin_access_menu.menu_id', // Join On
+            'admin_level', 'admin_level.id = admin_access_menu.level_id', // Join On
+            $where //Where
+        );
         // Check if the access_menus data store contains access_menu
         if ( $access_menus )
         {
@@ -443,11 +470,30 @@ class Api extends RestController {
     public function produk_get()
     {
         if (array_key_exists('id', $this->get())) {
-            $where = ['id' => $this->get('id')];
+            $where = ['produk.id' => $this->get('id')];
+        } else if (array_key_exists('id_kategori', $this->get())) {
+            $where = ['produk.id_kategori' => $this->get('id_kategori')];
         } else {
             $where = NULL;
         }
-        $produk = $this->Api_model->getDatas('produk', $where);
+
+        if (array_key_exists('limit', $this->get()) && array_key_exists('start', $this->get())) {
+            $limit = $this->get('limit');
+            $start = $this->get('start');
+        } else {
+            $limit = 10;
+            $start = 0;
+        }
+
+        $produk = $this->Api_model->getLeftThreeJoinDatas(
+            'produk.*, kategori.nama AS kategori, produk_gambar.gambar', // Select
+            'produk', // From
+            'kategori', 'kategori.id = produk.id_kategori', // Join On
+            'produk_gambar', 'produk_gambar.produk_id = produk.id', // Join On Left
+            $limit, $start, // Limit Offset
+            $where // Where
+        );
+
         if ($produk)
         {
             // Set the response and exit
@@ -467,6 +513,23 @@ class Api extends RestController {
                     'message' => 'Produk tidak ditemukan'
                 ], 404 );
             }
+        }
+    }
+
+    public function jumlah_produk_get()
+    {
+        $produk = $this->Api_model->getCountData('produk');
+        if ($produk)
+        {
+            // Set the response and exit
+            $this->response($produk, 200);
+        }
+        else
+        {
+            $this->response( [
+                'status' => false,
+                'message' => 'Jumlah Produk tidak ditemukan'
+            ], 404 );
         }
     }
 

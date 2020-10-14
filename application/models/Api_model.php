@@ -3,13 +3,18 @@ defined('BASEPATH') or exit('No direct script allowed');
 
 class Api_model extends CI_Model {
 
-    public function getDatas($table, $where)
+    public function getDatas($table, $where, $limit = 10, $start = 0)
     {
         if (is_array($where)) {
-            return $this->db->get_where($table, $where)->result_array();
+            return $this->db->get_where($table, $where, $limit, $start)->result_array();
         } else {
-            return $this->db->get($table)->result_array();
+            return $this->db->get($table, $limit, $start)->result_array();
         }
+    }
+
+    public function getCountData($table)
+    {
+        return $this->db->count_all_results($table);
     }
 
     public function insertData($table, $data)
@@ -31,13 +36,14 @@ class Api_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
-    public function getJoinDatas($select, $from, $join, $on, $where=NULL, $id=NULL, $order=NULL, $by=NULL)
+    public function getJoinDatas($select, $from, $join, $on, $limit = 10, $offset = 0, $where=NULL, $order=NULL, $by=NULL)
     {
-        if ($id === NULL) {
+        if ($where === NULL) {
             $this->db->select($select);
             $this->db->from($from);
             $this->db->join($join, $on);
             $this->db->order_by($order, $by);
+            $this->db->limit($limit, $offset);
             return $this->db->get()->result_array();
         } else {
             $this->db->select($select);
@@ -45,17 +51,19 @@ class Api_model extends CI_Model {
             $this->db->join($join, $on);
             $this->db->where($where);
             $this->db->order_by($order, $by);
+            $this->db->limit($limit, $offset);
             return $this->db->get()->result_array();
         }
     }
 
-    public function getThreeJoinDatas($select, $from, $join, $on, $join2, $on2, $where, $id=NULL)
+    public function getThreeJoinDatas($select, $from, $join, $on, $join2, $on2, $limit = 10, $offset = 0, $where = NULL)
     {
-        if ($id === NULL) {
+        if ($where === NULL) {
             $this->db->select($select);
             $this->db->from($from);
             $this->db->join($join, $on);
             $this->db->join($join2, $on2);
+            $this->db->limit($limit, $offset);
             return $this->db->get()->result_array();
         } else {
             $this->db->select($select);
@@ -63,6 +71,27 @@ class Api_model extends CI_Model {
             $this->db->join($join, $on);
             $this->db->join($join2, $on2);
             $this->db->where($where);
+            $this->db->limit($limit, $offset);
+            return $this->db->get()->result_array();
+        }
+    }
+
+    public function getLeftThreeJoinDatas($select, $from, $join, $on, $join2, $on2, $limit = 10, $offset = 0, $where = NULL)
+    {
+        if ($where === NULL) {
+            $this->db->select($select);
+            $this->db->from($from);
+            $this->db->join($join, $on,);
+            $this->db->join($join2, $on2, 'left');
+            $this->db->limit($limit, $offset);
+            return $this->db->get()->result_array();
+        } else {
+            $this->db->select($select);
+            $this->db->from($from);
+            $this->db->join($join, $on);
+            $this->db->join($join2, $on2);
+            $this->db->where($where);
+            $this->db->limit($limit, $offset);
             return $this->db->get()->result_array();
         }
     }
