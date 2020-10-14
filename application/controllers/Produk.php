@@ -14,47 +14,85 @@ class Produk extends CI_Controller {
 
         $data['kategori'] = $this->Utama_model->getDatas('kategori');
 
+        $uri_2 = $this->uri->segment(2);
+
+        $per_page = 2;
+
+        $send = ['limit' => $per_page];
+
         $kategori = $this->uri->segment(3);
 
-        $this->load->library('pagination');
+        if ($kategori) {
+            $kategori = str_replace('-', ' ', $kategori);
+            $judul = $kategori;
 
-        //konfigurasi pagination
-        $config['base_url'] = base_url('produk/index'); //site url
-        $config['total_rows'] = $this->Utama_model->getDatas('jumlah_produk'); //total row
-        $config['per_page'] = 8;  //show record per halaman
-        $config["uri_segment"] = 3;  // uri parameter
-        $choice = $config["total_rows"] / $config["per_page"];
-        $config["num_links"] = floor($choice);
+            foreach ($data['kategori'] as $key => $val) {
+                $nama = strtolower($val['nama']);
+                if ($nama == $kategori) {
+                    $nama = ucwords($nama);
+                    $id_kategori = $val['id'];
+                    $send['id_kategori'] = $id_kategori;
+                    break;
+                }
+            }
+        }
 
-        // Membuat Style pagination untuk BootStrap v4
-        $config['first_link']       = 'First';
-        $config['last_link']        = 'Last';
-        $config['next_link']        = '<i class="fa fa-angle-right"></i><span class="sr-only">Next</span>';
-        $config['prev_link']        = '<i class="fa fa-angle-left"></i><span class="sr-only">Prev</span>';
-        $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
-        $config['full_tag_close']   = '</ul></nav></div>';
-        $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
-        $config['num_tag_close']    = '</span></li>';
-        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
-        $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
-        $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
-        $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['prev_tagl_close']  = '</span>Next</li>';
-        $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
-        $config['first_tagl_close'] = '</span></li>';
-        $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['last_tagl_close']  = '</span></li>';
+        if ($uri_2 == 'kategori') {
+            $base_url = base_url('produk/kategori/' . $this->uri->segment(3));
+            $uri_segment = 4;
+            $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+            $total_rows = $this->Utama_model->getDatas('jumlah_produk', ['id_kategori' => $id_kategori]);
+            $data['breadcrumb'] = "<li class='breadcrumb-item'><a href='" . base_url('produk') . "'>Produk</a></li>
+                                <li class='breadcrumb-item'><a href='#'>Kategori</a></li>
+                                <li class='breadcrumb-item active' aria-current='page'>$nama</li>";
+        } else {
+            $base_url = base_url('produk/index');
+            $uri_segment = 3;
+            $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+            $total_rows = $this->Utama_model->getDatas('jumlah_produk');
+            $data['breadcrumb'] = '<li class="breadcrumb-item active" aria-current="page">Produk</li>';
+        }
 
-        $this->pagination->initialize($config);
-        $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $send['start'] = $data['page'];
 
-        $data['produk'] = $this->Utama_model->getDatas('produk', [
-            'limit' => $config['per_page'], 
-            'start' => $data['page']
-        ]);     
+        if ( ! isset($total_rows['status']) OR $total_rows['status'] != FALSE) {
 
-        $data['pagination'] = $this->pagination->create_links();
+            $this->load->library('pagination');
+
+            //konfigurasi pagination
+            $config['base_url'] =  $base_url; //site url
+            $config['total_rows'] = $total_rows; //total row
+            $config['per_page'] = $per_page;  //show record per halaman
+            $config["uri_segment"] = $uri_segment;  // uri parameter
+            $choice = $config["total_rows"] / $config["per_page"];
+            $config["num_links"] = floor($choice);
+
+            // Membuat Style pagination untuk BootStrap v4
+            $config['first_link']       = 'First';
+            $config['last_link']        = 'Last';
+            $config['next_link']        = '<i class="fa fa-angle-right"></i><span class="sr-only">Next</span>';
+            $config['prev_link']        = '<i class="fa fa-angle-left"></i><span class="sr-only">Prev</span>';
+            $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+            $config['full_tag_close']   = '</ul></nav></div>';
+            $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+            $config['num_tag_close']    = '</span></li>';
+            $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+            $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+            $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+            $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+            $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+            $config['prev_tagl_close']  = '</span>Next</li>';
+            $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+            $config['first_tagl_close'] = '</span></li>';
+            $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+            $config['last_tagl_close']  = '</span></li>';
+
+            $this->pagination->initialize($config);
+
+            $data['produk'] = $this->Utama_model->getDatas('produk', $send);
+
+            $data['pagination'] = $this->pagination->create_links();   
+        }
 
         //jika sudah login dan belum login
         if ($this->session->userdata('kustomer') == TRUE){
@@ -108,42 +146,6 @@ class Produk extends CI_Controller {
             $data['kustomer']['nm_lengkap'] = 'Pengunjung';
             $this->load->view('templates/templates-user/header', $data);
             $this->load->view('product/detail-produk', $data);
-            $this->load->view('templates/templates-user/modal');
-            $this->load->view('templates/templates-user/footer', $data);
-        }
-    }
-
-    public function kategori()
-    {
-        $data['judul'] = 'Daftar Produk';
-
-        $data['produk'] = $this->Utama_model->getDatas('produk');
-
-        $kategori = $this->uri->segment(3);
-        // var_dump($data['products']);die;
-
-        // $filterBy = 'CarEnquiry'; // or Finance etc.
-
-        // $new = array_filter($arr, function ($var) use ($filterBy) {
-        //     return ($var['name'] == $filterBy);
-        // });
-
-        if ($this->session->userdata('kustomer') == TRUE){
-            
-            $email = $this->session->email_kustomer;
-            $data['kustomer'] = $this->Utama_model->getDatas('kustomer', ['email' => $email])[0];
-            $data['booking_temp'] = $this->Utama_model->getDatas('booking_temp', ['id_kustomer' => $this->session->id_kustomer]);
-
-            $this->load->view('templates/templates-user/header', $data);
-            $this->load->view('product/daftar-produk', $data);
-            $this->load->view('templates/templates-user/modal');
-            $this->load->view('templates/templates-user/footer', $data);
-        } else {
-
-            $data['kustomer']['nm_lengkap'] = 'Pengunjung';
-
-            $this->load->view('templates/templates-user/header', $data);
-            $this->load->view('product/daftar-produk', $data);
             $this->load->view('templates/templates-user/modal');
             $this->load->view('templates/templates-user/footer', $data);
         }

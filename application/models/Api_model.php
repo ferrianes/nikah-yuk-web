@@ -12,8 +12,11 @@ class Api_model extends CI_Model {
         }
     }
 
-    public function getCountData($table)
+    public function getCountData($table, $where = NULL)
     {
+        if (is_array($where)) {
+            $this->db->where($where);
+        }
         return $this->db->count_all_results($table);
     }
 
@@ -89,7 +92,7 @@ class Api_model extends CI_Model {
             $this->db->select($select);
             $this->db->from($from);
             $this->db->join($join, $on);
-            $this->db->join($join2, $on2);
+            $this->db->join($join2, $on2, 'left');
             $this->db->where($where);
             $this->db->limit($limit, $offset);
             return $this->db->get()->result_array();

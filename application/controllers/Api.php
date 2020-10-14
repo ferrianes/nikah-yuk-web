@@ -518,7 +518,12 @@ class Api extends RestController {
 
     public function jumlah_produk_get()
     {
-        $produk = $this->Api_model->getCountData('produk');
+        if (array_key_exists('id_kategori', $this->get())) {
+            $where = ['id_kategori' => $this->get('id_kategori')];
+        } else {
+            $where = NULL;
+        }
+        $produk = $this->Api_model->getCountData('produk', $where);
         if ($produk)
         {
             // Set the response and exit
