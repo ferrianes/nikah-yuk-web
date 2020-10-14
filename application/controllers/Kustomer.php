@@ -66,7 +66,7 @@ class Kustomer extends CI_Controller
         ]);
 
         //Form Validation Email
-        $this->form_validation->set_rules('email', 'Alamat Email', 'required|trim|valid_email', [
+        $this->form_validation->set_rules('email', 'Alamat Email', 'required|trim|valid_email|is_unique[kustomer.email]', [
             'required' => 'Email Belum diisi!',
             'valid_email' => 'Email tidak benar!',
             'is_unique' => 'Email sudah terdaftar'
@@ -119,7 +119,15 @@ class Kustomer extends CI_Controller
         } else {
             $data['judul'] = 'Daftar Produk';
 
-            $data['products'] = $this->Utama_model->getDatas('products');
+            $data['produk'] = $this->Utama_model->getDatas('produk');
+
+            // sort by diorder DESC
+            usort($data['produk'], function($a, $b) {
+                return -($a['diorder'] <=> $b['diorder']);
+            });
+
+            // Limit to 2 Data
+            $data['produk'] = array_slice($data['produk'], 0, 2);
 
             $data['kustomer']['nm_lengkap'] = 'Pengunjung';
 

@@ -1043,6 +1043,24 @@ class Api extends RestController {
                 $this->response(['message' => 'email tidak ditemukan'], 400);
             }
         }
+    }
 
+    public function kustomer_delete()
+    {
+        if (array_key_exists('email', $this->delete())) {
+            $where = ['email' => $this->delete('email')];
+        } else {
+            $where = NULL;
+        }
+
+        if ($where === NULL) {
+            $this->response(['message' => 'Masukkan parameter!'], 400);
+        } else {
+            if ($this->Api_model->deleteData('kustomer', $where) > 0) {
+                $this->response(['message' => 'Data berhasil dihapus'], 200);
+            } else {
+                $this->response(['message' => 'Data tidak ditemukan'], 400);
+            }
+        }
     }
 }
