@@ -46,7 +46,7 @@
 																<button type="button" class="btn btn-outline-default btn-number fa fa-minus" disabled="disabled" data-type="minus" data-field="quant[<?= $key; ?>]" data-harga="<?= $produk['harga'] ?>">
 																</button>
 															</span>
-															<input type="text" name="quant[<?= $key; ?>]" class="form-control input-number text-center" value="1" min="1" max="<?= $produk['stok']; ?>">
+															<input type="text" name="quant[<?= $key; ?>]" class="form-control input-number text-center bg-white" value="1" min="1" max="<?= $produk['stok']; ?>" readonly>
 															<span class="input-group-append">
 																<button type="button" class="btn btn-outline-primary btn-number fa fa-plus" data-type="plus" data-field="quant[<?= $key; ?>]" data-harga="<?= $produk['harga'] ?>">
 																</button>
@@ -70,7 +70,7 @@
 									<div class="input-group-prepend">
 										<span class="input-group-text text-body bg-lighter" id="basic-addon1">Jumlah : </span>
 									</div>
-									<input id="harga" type="text" class="form-control text-body" value="<?= $total; ?>">
+									<input id="harga" type="text" class="form-control text-body" value="<?= $total; ?>" readonly>
 								</div>
 								<div class="row">
 									<div class="col-lg-3">
