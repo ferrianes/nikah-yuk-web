@@ -537,6 +537,28 @@ class Api extends RestController {
         }
     }
 
+    public function jumlah_booking_temp_get()
+    {
+        if (array_key_exists('id_produk', $this->get())) {
+            $where = ['id_produk' => $this->get('id_produk')];
+        } else {
+            $where = NULL;
+        }
+        $booking = $this->Api_model->getCountData('booking_temp', $where);
+        if ($booking)
+        {
+            // Set the response and exit
+            $this->response($booking, 200);
+        }
+        else
+        {
+            $this->response( [
+                'status' => false,
+                'message' => 'Jumlah booking tidak ditemukan'
+            ], 404 );
+        }
+    }
+
     public function kategori_get()
     {
         if (array_key_exists('id', $this->get())) {

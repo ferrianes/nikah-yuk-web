@@ -19,6 +19,17 @@ class Booking extends CI_Controller {
             'id_produk' => $id_produk
         ];
 
+        $temp = $this->Utama_model->getDatas('jumlah_booking_temp', ['id_produk' => $id_produk]);
+
+        if (isset($temp['status']) && $temp['status'] === FALSE) {
+            $temp = 0;
+        }
+
+        if ($temp > 0) {
+            $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-danger alert-message text-center" role="alert">Produk ini sudah ada dikeranjang mu.</div></div>');
+            redirect('produk');
+        }
+
         $this->Utama_model->insertData('booking_temp', $data);
         $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-success alert-message text-center" role="alert">Produk berhasil ditambahkan ke keranjangmu.</div></div>');
         redirect('produk');
