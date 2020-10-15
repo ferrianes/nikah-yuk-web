@@ -16,7 +16,7 @@ class Produk extends CI_Controller {
 
         $uri_2 = $this->uri->segment(2);
 
-        $per_page = 2;
+        $per_page = 4;
 
         $send = ['limit' => $per_page];
 
