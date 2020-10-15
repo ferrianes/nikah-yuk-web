@@ -118,19 +118,19 @@
             <div class="col px-0">
                 <div class="row align-items-center justify-content-center">
                     <div class="col-lg-6 text-center">
-    					<h1 class="text-white display-1">Cinta Sejati</h1>
-    					<h2 class="display-4 font-weight-normal text-white">Baru Dimulai Setelah Pernikahan</h2>
-    					<div class="btn-wrapper mt-4">
-    						<a href="<?= base_url('home/daftarproduk') ?>"
-    							class="btn btn-warning btn-icon mt-3 mb-sm-0">
-    							<span class="btn-inner--icon"><i class="fas fa-fw fa-chevron-right"></i></span>
-    							<span class="btn-inner--text">Lihat Produk</span>
-    						</a>
-    					</div>
-    				</div>
-    			</div>
-    		</div>
-    	</div>
+                        <h1 class="text-white display-1">Cinta Sejati</h1>
+                        <h2 class="display-4 font-weight-normal text-white">Baru Dimulai Setelah Pernikahan</h2>
+                        <div class="btn-wrapper mt-4">
+                            <a href="<?= base_url('produk/index') ?>"
+                                class="btn btn-warning btn-icon mt-3 mb-sm-0">
+                                <span class="btn-inner--icon"><i class="fas fa-fw fa-chevron-right"></i></span>
+                                <span class="btn-inner--text">Lihat Produk</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <?php endif; ?>
 	<!-- SVG separator -->
