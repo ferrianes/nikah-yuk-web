@@ -100,7 +100,7 @@
                     <?php endforeach; ?>
                 </div>
                 <div class="text-center">
-                    <a href="<?= base_url('home/daftarproduk') ?>" class="btn btn-outline-primary">Lihat Semua Produk <i class="fas fa-fw fa-chevron-right"></i></a>
+                    <a href="<?= base_url('produk/index') ?>" class="btn btn-outline-primary">Lihat Semua Produk <i class="fas fa-fw fa-chevron-right"></i></a>
                 </div>
             </div>
         </div>
