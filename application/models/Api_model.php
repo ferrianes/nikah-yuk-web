@@ -84,7 +84,7 @@ class Api_model extends CI_Model {
         if ($where === NULL) {
             $this->db->select($select);
             $this->db->from($from);
-            $this->db->join($join, $on,);
+            $this->db->join($join, $on);
             $this->db->join($join2, $on2, 'left');
             $this->db->limit($limit, $offset);
             return $this->db->get()->result_array();
