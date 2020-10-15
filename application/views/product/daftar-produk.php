@@ -41,7 +41,7 @@
 												<a class='btn btn-sm btn-outline-primary fas fw fa-shopping-cart text-nowrap'
 													href='<?= base_url('booking/tambahBooking/' . $p['id']); ?>'> Booking</a>
 												<?php endif; ?>
-												<a href="<?= base_url('home/detailProduct/'.$p['id']); ?>"
+												<a href="<?= base_url('produk/'. seo_title($p['nama']) . '-' . $p['id']); ?>"
 													class="btn btn-sm btn-outline-success fas fw fa-search text-nowrap"> Detail</a>
 											</div>
 										</div>

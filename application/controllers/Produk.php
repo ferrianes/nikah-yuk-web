@@ -122,21 +122,28 @@ class Produk extends CI_Controller {
 
     public function detailProduk()     
     {         
-        $id = $this->uri->segment(3);
+        // get id
+        $np = $this->uri->segment(2);
+        $id = explode("-", $np);
+        $id = end($id);
+
         $data['judul'] = 'Detail Produk';
 
-        $data['produk'] = $this->Utama_model->getDatas('produks', ['id' => $id])[0];
+        $data['produk'] = $this->Utama_model->getDatas('produk', ['id' => $id])[0];
 
         $data['kategori'] = $this->Utama_model->getDatas('kategori');
 
-        $data['produks_gambar'] = $this->Utama_model->getDatas('produks_gambar', ['produk_id' => $id, 'thumbnail' => 0]);
+        $data['produk_gambar'] = $this->Utama_model->getDatas('produk_gambar', ['produk_id' => $id, 'thumbnail' => 0]);
 
-        $data['thumbnail'] = $this->Utama_model->getDatas('produks_gambar', ['produk_id' => $id, 'thumbnail' => 1])[0];
          //jika sudah login dan belum login
         if ($this->session->userdata('kustomer') == TRUE){
             $email = $this->session->email_kustomer;
             $data['kustomer'] = $this->Utama_model->getDatas('kustomer', ['email' => $email])[0];
             $data['booking_temp'] = $this->Utama_model->getDatas('booking_temp', ['id_kustomer' => $this->session->id_kustomer]);
+
+            if (isset($data['booking_temp']['status']) && $data['booking_temp']['status'] === FALSE) {
+                $data['booking_temp'] = [];
+            }
 
             $this->load->view('templates/templates-user/header', $data);
             $this->load->view('product/detail-produk', $data);
