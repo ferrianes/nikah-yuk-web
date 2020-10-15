@@ -252,7 +252,6 @@ class Api extends RestController {
 
     public function booking_temp_get()
     {
-        // booking_temp from a data store e.g. database
         $id = $this->get('id');
         $id_kustomer = $this->get('id_kustomer');
 
@@ -940,7 +939,6 @@ class Api extends RestController {
     public function booking_temp_post()
     {
         $data = [
-            'tgl_acara' => $this->post('tgl_acara'),
             'id_kustomer' => $this->post('id_kustomer'),
             'id_produk' => $this->post('id_produk'),
             'tgl_booking' => date("Y-m-d"),

@@ -1,10 +1,10 @@
 <section class="section bg-white">
 	<div class="container-fluid">
+		<?= $this->session->flashdata('pesan'); ?>
         <div class="card card-product shadow mt--540">
 			<div class="p-4">
 				<!-- Tampilkan semua produk -->
 				<div class="container">
-					<?= $this->session->flashdata('pesan'); ?>
 					<h2 class="text-center mb-4">Daftar Produk</h2>
 					<nav aria-label="breadcrumb" role="navigation">
 						<ol class="breadcrumb">

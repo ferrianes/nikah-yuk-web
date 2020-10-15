@@ -11,54 +11,17 @@ class Booking extends CI_Controller {
 
     public function tambahBooking()
     {
+        $id_kustomer = $this->session->id_kustomer;
+        $id_produk = $this->uri->segment(3);
 
-        //Form Validation Tanggal
-        $this->form_validation->set_rules('tgl_acara', 'Tanggal Acara', 'required', [
-            'required' => 'Tanggal Acara harus diisi!'
-        ]); 
+        $data = [
+            'id_kustomer' => $id_kustomer,
+            'id_produk' => $id_produk
+        ];
 
-        if ($this->form_validation->run() == FALSE) {
-
-            $id = $this->uri->segment(3);
-            $data['judul'] = 'Tambah Ke Booking';
-    
-            $data['produk'] = $this->Utama_model->getDatas('produks', ['id' => $id])[0];
-    
-            $data['produks_gambar'] = $this->Utama_model->getDatas('produks_gambar', ['produk_id' => $id, 'thumbnail' => 0]);
-    
-            $data['thumbnail'] = $this->Utama_model->getDatas('produks_gambar', ['produk_id' => $id, 'thumbnail' => 1])[0];
-             //jika sudah login dan belum login
-            if ($this->session->userdata('kustomer') == TRUE){
-                $email = $this->session->email_kustomer;
-                $data['kustomer'] = $this->Utama_model->getDatas('kustomer', ['email' => $email])[0];
-                $data['booking_temp'] = $this->Utama_model->getDatas('booking_temp', ['id_kustomer' => $this->session->id_kustomer]);
-    
-                $this->load->view('templates/templates-user/header', $data);
-                $this->load->view('booking/tambah-booking', $data);
-                $this->load->view('templates/templates-user/modal');
-                $this->load->view('templates/templates-user/footer', $data);
-            } else {
-                $data['kustomer']['nm_lengkap'] = 'Pengunjung';
-                $this->load->view('templates/templates-user/header', $data);
-                $this->load->view('booking/tambah-booking', $data);
-                $this->load->view('templates/templates-user/modal');
-                $this->load->view('templates/templates-user/footer', $data);
-            }
-        } else {
-            $tgl_acara = $this->input->post('tgl_acara', true);
-            $id_kustomer = $this->session->id_kustomer;
-            $id_produk = $this->uri->segment(3);
-
-            $data = [
-                'tgl_acara' => $tgl_acara,
-                'id_kustomer' => $id_kustomer,
-                'id_produk' => $id_produk
-            ];
-
-            $this->Utama_model->insertData('booking_temp', $data);
-            $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Produk sudah ditambahkan ke keranjangmu.</div>');
-            redirect('home');
-        }
+        $this->Utama_model->insertData('booking_temp', $data);
+        $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-success alert-message text-center" role="alert">Produk berhasil ditambahkan ke keranjangmu.</div></div>');
+        redirect('produk');
     }
 
     public function dataBooking()
@@ -66,19 +29,21 @@ class Booking extends CI_Controller {
         $id = $this->uri->segment(3);
         $data['judul'] = 'Tambah Ke Booking';
 
-        $data['produk'] = $this->Utama_model->getDatas('produks', ['id' => $id])[0];
-
-        $data['produks_gambar'] = $this->Utama_model->getDatas('produks_gambar', ['produk_id' => $id, 'thumbnail' => 0]);
-
-        $data['thumbnail'] = $this->Utama_model->getDatas('produks_gambar', ['produk_id' => $id, 'thumbnail' => 1])[0];
+        $data['produk'] = $this->Utama_model->getDatas('produk', ['id' => $id])[0];
 
         $email = $this->session->email_kustomer;
+
+        $data['kategori'] = $this->Utama_model->getDatas('kategori');
+
         $data['kustomer'] = $this->Utama_model->getDatas('kustomer', ['email' => $email])[0];
 
         $data['booking_temp'] = $this->Utama_model->getDatas('booking_temp', ['id_kustomer' => $this->session->id_kustomer]);
 
+        if (isset($data['booking_temp']['status']) && $data['booking_temp']['status'] === FALSE) {
+            $data['booking_temp'] = [];
+        }
+
         $data['carbon'] = new Carbon();
-        // echo $data['carbon'];die;
     
         $this->load->view('templates/templates-user/header', $data);
         $this->load->view('booking/data-booking', $data);

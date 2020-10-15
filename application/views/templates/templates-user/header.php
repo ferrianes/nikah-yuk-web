@@ -60,8 +60,7 @@
                         foreach ($kategori as $k) : 
                         $seo = seo_title($k['nama']);
                         ?>
-                            <a class="dropdown-item" href="<?= base_url("produk/kategori/$seo"); ?>"><span
-                                    class="fa <?= $k['icon']; ?> mr-2"></span><?= $k['nama'] ?></a>
+                            <a class="dropdown-item" href="<?= base_url("produk/kategori/$seo"); ?>"><span class="fa <?= $k['icon']; ?> mr-2"></span><?= $k['nama'] ?></a>
                         <?php endforeach; ?>
                     </div>
                 </li>

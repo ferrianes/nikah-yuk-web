@@ -2,14 +2,14 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-7 col-12">
-            	<div class="info info-horizontal info-hover-primary">
-            		<div class="description pl-4">
-            			<h5 class="montserrat">Simple dan Mudah untuk Membantu Merencanakan Hari Spesialmu.</h5>
-            		</div>
-            	</div>
+                <div class="info info-horizontal info-hover-primary">
+                    <div class="description pl-4">
+                        <h5 class="montserrat">Simple dan Mudah untuk Membantu Merencanakan Hari Spesialmu.</h5>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-5 col-12 mx-md-auto d-flex justify-content-center">
-            	<img class="p-3" src="<?= base_url('assets/img/app/couple-ill.png') ?>" width="100%">
+                <img class="p-3" src="<?= base_url('assets/img/app/couple-ill.png') ?>" width="100%">
             </div>
         </div>
     </div>
