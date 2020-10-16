@@ -145,9 +145,9 @@ class Kustomer extends CI_Controller
     {
         $config = [
             'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => 'riandesu27@gmail.com',
-            'smtp_pass' => 'iamcold27',
+            'smtp_host' => getenv('EMAIL_HOST'),
+            'smtp_user' => getenv('EMAIL_USERNAME'),
+            'smtp_pass' => getenv('EMAIL_PASSWORD'),
             'smtp_port' => 465,
             'mailtype' => 'html',
             'charset' => 'utf-8',
@@ -156,7 +156,7 @@ class Kustomer extends CI_Controller
 
         $this->load->library('email', $config);
 
-        $this->email->from('riandesu27@gmail.com', 'Nikah Yuk App');
+        $this->email->from(getenv('EMAIL_USERNAME'), 'Nikah Yuk App');
         $this->email->to($this->input->post('email'));
 
         if ($type == 'verify') {
