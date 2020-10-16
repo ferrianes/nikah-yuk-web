@@ -9,6 +9,13 @@ function is_logged_in_admin() {
     }
 }
 
+function is_logged_in_kustomer() {
+    $ci = get_instance();
+    if (!$ci->session->has_userdata('kustomer') OR $ci->session->userdata('kustomer') == FALSE) {
+        redirect('home');
+    }
+}
+
 function filter_output($str){
     return htmlentities($str, ENT_QUOTES, 'UTF-8');
 }

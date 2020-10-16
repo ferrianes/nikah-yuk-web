@@ -6,6 +6,7 @@ class Booking extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+        is_logged_in_kustomer();
         $this->load->model('Utama_model');
     }
 
@@ -53,8 +54,6 @@ class Booking extends CI_Controller {
         if (isset($data['booking_temp']['status']) && $data['booking_temp']['status'] === FALSE) {
             $data['booking_temp'] = [];
         }
-
-        $data['carbon'] = new Carbon();
     
         $this->load->view('templates/templates-user/header', $data);
         $this->load->view('booking/data-booking', $data);
