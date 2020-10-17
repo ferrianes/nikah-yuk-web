@@ -131,6 +131,8 @@ class Kustomer extends CI_Controller
 
             $data['kustomer']['nm_lengkap'] = 'Pengunjung';
 
+            $data['kategori'] = $this->Utama_model->getDatas('kategori');
+
             $data['modal_active'] = TRUE;
 
             $this->load->view('templates/templates-user/header', $data);
@@ -218,6 +220,8 @@ class Kustomer extends CI_Controller
         $data['kustomer'] = $this->Utama_model->getDatas('kustomer', ['email' => $email])[0];
         $data['booking_temp'] = $this->Utama_model->getDatas('booking_temp', ['id_kustomer' => $this->session->id_kustomer]);
 
+        $data['kategori'] = $this->Utama_model->getDatas('kategori');
+
         $this->load->view('templates/templates-user/header', $data);
         $this->load->view('kustomer/profilku', $data);
         $this->load->view('templates/templates-user/modal', $data);
@@ -262,6 +266,8 @@ class Kustomer extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $data['judul'] = 'Ubah Profil';
+
+            $data['kategori'] = $this->Utama_model->getDatas('kategori');
     
             $email = $this->session->email_kustomer;
             $data['kustomer'] = $this->Utama_model->getDatas('kustomer', ['email' => $email])[0];
@@ -329,10 +335,6 @@ class Kustomer extends CI_Controller
                 $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-message" role="alert">Password Salah!!!</div>');
                 redirect('kustomer/ubahprofil');
             }
-
-            // $this->Utama_model->insertData('kustomer', $data);
-            // $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Selamat!! akun anda sudah dibuat.</div>');
-            // redirect('home');
         }
 
     }
