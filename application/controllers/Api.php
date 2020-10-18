@@ -175,6 +175,37 @@ class Api extends RestController {
         }
     }
 
+    public function booking_total_temp_get()
+    {
+        if (array_key_exists('id_kustomer', $this->get())) {
+            $where = ['id_kustomer' => $this->get('id_kustomer')];
+        } else {
+            $where = NULL;
+        }
+        $booking_total_temp = $this->Api_model->getDatas('booking_total_temp', $where);
+        // Check if the booking_total_temp data store contains booking_total_temp
+        if ( $booking_total_temp )
+        {
+            // Set the response and exit
+            $this->response($booking_total_temp, 200);
+        }
+        else
+        {
+            // Set the response and exit
+            if ($where === NULL) {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Booking Total kosong'
+                ], 404 );
+            } else {
+                $this->response( [
+                    'status' => false,
+                    'message' => 'Booking Total tidak ditemukan'
+                ], 404 );
+            }
+        }
+    }
+
     public function booking_details_get()
     {
         // booking_details from a data store e.g. database
@@ -963,11 +994,26 @@ class Api extends RestController {
         $data = [
             'id_kustomer' => $this->post('id_kustomer'),
             'id_produk' => $this->post('id_produk'),
+            'jumlah' => $this->post('jumlah'),
             'tgl_booking' => date("Y-m-d"),
             'jam_booking' => date('H:i:s')
         ];
 
         if ($this->Api_model->insertData('booking_temp', $data) > 0) {
+            $this->response(['message' => 'Data berhasil diinput'], 200);
+        } else {
+            $this->response(['message' => 'Data gagal diinput'], 400);
+        }
+    }
+
+    public function booking_total_temp_post()
+    {
+        $data = [
+            'id_kustomer' => $this->post('id_kustomer'),
+            'total' => $this->post('total')
+        ];
+
+        if ($this->Api_model->insertData('booking_total_temp', $data) > 0) {
             $this->response(['message' => 'Data berhasil diinput'], 200);
         } else {
             $this->response(['message' => 'Data gagal diinput'], 400);
@@ -1044,6 +1090,20 @@ class Api extends RestController {
         $where = ['id' => $this->put('id')];
 
         if ($this->Api_model->updateData('admin_menu', $data, $where) > 0) {
+            $this->response(['message' => 'Data berhasil diubah'], 200);
+        } else {
+            $this->response(['message' => 'Data gagal diubah'], 400);
+        }
+    }
+
+    public function booking_total_temp_put()
+    {
+        $data = [
+            'total' => $this->put('total')
+        ];
+        $where = ['id_kustomer' => $this->put('id_kustomer')];
+
+        if ($this->Api_model->updateData('booking_total_temp', $data, $where) > 0) {
             $this->response(['message' => 'Data berhasil diubah'], 200);
         } else {
             $this->response(['message' => 'Data gagal diubah'], 400);

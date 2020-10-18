@@ -14,10 +14,12 @@ class Booking extends CI_Controller {
     {
         $id_kustomer = $this->session->id_kustomer;
         $id_produk = $this->uri->segment(3);
+        $harga = $this->uri->segment(4);
 
         $data = [
             'id_kustomer' => $id_kustomer,
-            'id_produk' => $id_produk
+            'id_produk' => $id_produk,
+            'jumlah' => 1
         ];
 
         $temp = $this->Utama_model->getDatas('jumlah_booking_temp', ['id_produk' => $id_produk]);
@@ -29,6 +31,28 @@ class Booking extends CI_Controller {
         if ($temp > 0) {
             $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-danger alert-message text-center" role="alert">Produk ini sudah ada dikeranjang mu.</div></div>');
             redirect('produk');
+        }
+
+        $booking_total_temp = $this->Utama_model->getDatas('booking_total_temp', ['id_kustomer' => $this->session->id_kustomer]);
+
+        // Jika booking total belum ada
+        if (isset($booking_total_temp['status']) && $booking_total_temp['status'] === FALSE && $booking_total_temp['message'] == 'Booking Total tidak ditemukan') {
+
+            $data_total = [
+                'id_kustomer' => $id_kustomer,
+                'total' => $harga
+            ];
+
+            $this->Utama_model->insertData('booking_total_temp', $data_total);
+        } else {
+            $harga += $booking_total_temp[0]['total'];
+
+            $data_total = [
+                'id_kustomer' => $id_kustomer,
+                'total' => $harga
+            ];
+
+            $this->Utama_model->updateData('booking_total_temp', $data_total);
         }
 
         $this->Utama_model->insertData('booking_temp', $data);
@@ -50,6 +74,8 @@ class Booking extends CI_Controller {
         $data['kustomer'] = $this->Utama_model->getDatas('kustomer', ['email' => $email])[0];
 
         $data['booking_temp'] = $this->Utama_model->getDatas('booking_temp', ['id_kustomer' => $this->session->id_kustomer]);
+
+        $data['booking_total_temp'] = $this->Utama_model->getDatas('booking_total_temp', ['id_kustomer' => $this->session->id_kustomer])[0];
 
         if (isset($data['booking_temp']['status']) && $data['booking_temp']['status'] === FALSE) {
             $data['booking_temp'] = [];

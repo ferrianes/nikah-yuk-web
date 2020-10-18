@@ -75,6 +75,15 @@ $(document).ready(function () {
 		} 
 	});
 
+	let n = $('.input-number');
+	let inputNum = [];
+	n.each(function() {
+		inputNum.push({
+			status: true,
+			oldVal: $(this).val()
+		})
+	})
+
 	$('.btn-number').click(function(e){
 		e.preventDefault();
 		
@@ -90,6 +99,7 @@ $(document).ready(function () {
 				
 				if(currentVal > input.attr('min')) {
 					input.val(currentVal - 1).change();
+					newVal = currentVal - 1;
 					$('#harga').val(currentValHarga - harga);
 					// $('#harga').html(function(i, val) {
 					// 	return val*1-harga;
@@ -103,6 +113,7 @@ $(document).ready(function () {
 	
 				if(currentVal < input.attr('max')) {
 					input.val(currentVal + 1).change();
+					newVal = currentVal + 1;
 					$('#harga').val(currentValHarga + harga);
 					// $('#harga').html(function(i, val) {
 					// 	return val*1+harga;
@@ -120,11 +131,13 @@ $(document).ready(function () {
 	$('.input-number').focusin(function(){
 		$(this).data('oldValue', $(this).val());
 	});
+	
 	$('.input-number').change(function() {
-		
+
 		minValue =  parseInt($(this).attr('min'));
 		maxValue =  parseInt($(this).attr('max'));
 		valueCurrent = parseInt($(this).val());
+		key = parseInt($(this).attr('data-key'));
 		
 		name = $(this).attr('name');
 		if(valueCurrent >= minValue) {
@@ -139,6 +152,25 @@ $(document).ready(function () {
 			alert('Sorry, the maximum value was reached');
 			$(this).val($(this).data('oldValue'));
 		}
+
+		if (valueCurrent != inputNum[key].oldVal) {
+			inputNum[key].status = false;
+		} else {
+			inputNum[key].status = true;
+		}
+
+		function statusExists(status) {
+			return inputNum.some(function(el) {
+				return el.status === status;
+			}); 
+		}
+
+		if (statusExists(false)) {
+			$('#button-booking').html('<div class="col-lg-3"><button class="btn btn-primary" type="submit"><i class="fas fa-save mr-2"></i>Simpan</button></div>');
+		} else {
+			$('#button-booking').html('<div class="col-lg-4"><a href="#" type="submit" class="btn btn-success"><i class="fab fa-fw fa-whatsapp mr-2"></i>Minta Persetujuan Via Whatsapp(ANDROID)</a></div><div class="col-lg-4"><a href="#" type="submit" class="btn btn-success"><i class="fab fa-fw fa-whatsapp mr-2"></i>Minta Persetujuan Via Whatsapp (PC)</a></div>');
+		}
+
 	});
 	
 	$(".input-number").keydown(function (e) {
