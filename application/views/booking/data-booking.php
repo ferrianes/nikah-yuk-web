@@ -70,7 +70,7 @@
 								<div class="col-lg-8">	
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">
-											<span class="input-group-text text-body bg-lighter" id="basic-addon1">Jumlah : </span>
+											<span class="input-group-text text-body bg-lighter" id="basic-addon1">Estimasi Total : </span>
 										</div>
 										<input id="harga" type="text" name="total" class="form-control text-body" value="<?= $booking_total_temp['total']; ?>" readonly>
 									</div>
