@@ -1110,6 +1110,19 @@ class Api extends RestController {
         }
     }
 
+    public function booking_temp_batch_put()
+    {
+        $data = $this->put();
+
+        $where = 'id';
+
+        if ($this->Api_model->updateDataBatch('booking_temp', $data, $where) > 0) {
+            $this->response(['message' => 'Data berhasil diubah'], 200);
+        } else {
+            $this->response(['message' => 'Data gagal diubah'], 400);
+        }
+    }
+
     public function galeri_delete()
     {
         $id = $this->delete('id');

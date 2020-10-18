@@ -80,10 +80,10 @@ class Utama_model extends CI_Model {
 
     public function updateData($uri, $data)
     {
-        $data += [
-            'token' => 'Da0sxRC4'
-        ];
         $response = $this->_client->request('PUT', $uri, [
+            'headers' => [
+                'token' => 'Da0sxRC4'
+            ],
             'form_params' => $data,
             'http_errors' => FALSE
         ]);

@@ -86,4 +86,31 @@ class Booking extends CI_Controller {
         $this->load->view('templates/templates-user/modal');
         $this->load->view('templates/templates-user/footer', $data);
     }
+
+    public function simpanKeranjang()
+    {
+        $id = $this->input->post('id');
+        $jumlah = $this->input->post('jumlah');
+        $total = $this->input->post('total');
+        $id_kustomer = $this->session->id_kustomer;
+
+        $data = [];
+        foreach ($jumlah as $key => $jumlah) {
+            $data[] = [
+                'id' => $id[$key],
+                'jumlah' => $jumlah
+            ];
+        }
+
+        $data_total = [
+            'id_kustomer' => $id_kustomer,
+            'total' => $total
+        ];
+
+        $this->Utama_model->updateData('booking_temp_batch', $data);
+        $this->Utama_model->updateData('booking_total_temp', $data_total);
+
+        $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-success alert-message text-center" role="alert">Keranjangmu berhasil disimpan.</div></div>');
+        redirect('booking/dataBooking');
+    }
 }

@@ -1,11 +1,11 @@
 <?php use Carbon\Carbon; ?>
 <section class="section bg-white">
 	<div class="container-fluid">
+	<?= $this->session->flashdata('pesan'); ?>
         <div class="card card-product shadow mt--540">
 			<div class="p-4">
 				<!-- Tampilkan semua produk -->
 				<div class="container">
-					<?= $this->session->flashdata('pesan'); ?>
 					<h2 class="text-center mb-4">Daftar Produk di Keranjangmu</h2>
 					<form method="post" accept-charset="utf-8" action="<?= base_url('booking/simpankeranjang'); ?>">
 						<?php if ( ! empty($booking_temp) ) : ?>
@@ -16,6 +16,7 @@
 									foreach ($booking_temp as $key => $bt) : 
 									$produk = $this->Utama_model->getDatas('produk', ['id' => $bt['id_produk']])[0];
 									?>
+									<input type="hidden" name="id[<?= $key; ?>]" value="<?= $bt['id']; ?>">
 									<div class="card mb-3">
 										<div class="row no-gutters">
 											<div class="col-3 col-md-2 col-lg-2">
@@ -44,12 +45,12 @@
 														<div class="col-sm-4 pl-0">
 															<div class="input-group input-group-sm">
 																<span class="input-group-prepend">
-																	<button type="button" class="btn btn-outline-default btn-number fa fa-minus" <?= $bt['jumlah'] == 1 ? 'disabled="disabled"' : ''; ?> data-type="minus" data-field="quant[<?= $key; ?>]" data-harga="<?= $produk['harga'] ?>" data-oldval="<?= $bt['jumlah'] ?>">
+																	<button type="button" class="btn btn-outline-default btn-number fa fa-minus" <?= $bt['jumlah'] == 1 ? 'disabled="disabled"' : ''; ?> data-type="minus" data-field="jumlah[<?= $key; ?>]" data-harga="<?= $produk['harga'] ?>" data-oldval="<?= $bt['jumlah'] ?>">
 																	</button>
 																</span>
-																<input type="text" name="quant[<?= $key; ?>]" class="form-control input-number text-center bg-white" value="<?= $bt['jumlah'] ?>" min="1" max="<?= $produk['stok']; ?>" data-oldval="<?= $bt['jumlah'] ?>" data-key="<?= $key; ?>" readonly>
+																<input type="text" name="jumlah[<?= $key; ?>]" class="form-control input-number text-center bg-white" value="<?= $bt['jumlah'] ?>" min="1" max="<?= $produk['stok']; ?>" data-oldval="<?= $bt['jumlah'] ?>" data-key="<?= $key; ?>" readonly>
 																<span class="input-group-append">
-																	<button type="button" class="btn btn-outline-primary btn-number fa fa-plus" data-type="plus" data-field="quant[<?= $key; ?>]" data-harga="<?= $produk['harga'] ?>" data-oldval="<?= $bt['jumlah'] ?>">
+																	<button type="button" class="btn btn-outline-primary btn-number fa fa-plus" data-type="plus" data-field="jumlah[<?= $key; ?>]" data-harga="<?= $produk['harga'] ?>" data-oldval="<?= $bt['jumlah'] ?>">
 																	</button>
 																</span>
 															</div>
@@ -71,7 +72,7 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text text-body bg-lighter" id="basic-addon1">Jumlah : </span>
 										</div>
-										<input id="harga" type="text" class="form-control text-body" value="<?= $booking_total_temp['total']; ?>" readonly>
+										<input id="harga" type="text" name="total" class="form-control text-body" value="<?= $booking_total_temp['total']; ?>" readonly>
 									</div>
 								</div>
 							</div>

@@ -39,6 +39,11 @@ class Api_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
+    public function updateDataBatch($table, $data, $where)
+    {
+        return $this->db->update_batch($table, $data, $where);
+    }
+
     public function getJoinDatas($select, $from, $join, $on, $limit = 10, $offset = 0, $where=NULL, $order=NULL, $by=NULL)
     {
         if ($where === NULL) {
