@@ -146,11 +146,12 @@ class Kustomer extends CI_Controller
     private function _sendEmail($token, $type)
     {
         $config = [
-            'protocol' => 'smtp',
+            'protocol' => getenv('PROTOCOL'),
             'smtp_host' => getenv('EMAIL_HOST'),
+            'smtp_crypto' => getenv('CRYPTO'),
             'smtp_user' => getenv('EMAIL_USERNAME'),
             'smtp_pass' => getenv('EMAIL_PASSWORD'),
-            'smtp_port' => 465,
+            'smtp_port' => getenv('PORT'),
             'mailtype' => 'html',
             'charset' => 'utf-8',
             'newline' => "\r\n"
