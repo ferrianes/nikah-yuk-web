@@ -20,7 +20,6 @@
 
 									$text .= $key+1 . ". Produk  : " . $produk["nama"] . "\n";
 									$text .= "    Harga    : " . harga($produk["harga"]) . "\n";
-									$text .= "    Jumlah  : " . $bt["jumlah"] . "\n";
 									$text .= "\n";
 
 									?>
