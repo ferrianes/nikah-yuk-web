@@ -113,4 +113,25 @@ class Booking extends CI_Controller {
         $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-success alert-message text-center" role="alert">Keranjangmu berhasil disimpan.</div></div>');
         redirect('booking/dataBooking');
     }
+
+    public function hapusKeranjang()
+    {
+        $id = ['id' => $this->uri->segment(3)];
+        $harga = $this->uri->segment(4);
+        $total = $this->uri->segment(5);
+        $id_kustomer = $this->session->id_kustomer;
+
+        $total = $total - $harga;
+
+        $data_total = [
+            'id_kustomer' => $id_kustomer,
+            'total' => $total
+        ];
+
+        $this->Utama_model->deleteData('booking_temp', $id);
+        $this->Utama_model->updateData('booking_total_temp', $data_total);
+
+        $this->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-success alert-message text-center" role="alert">Produk dikeranjangmu berhasil dihapus.</div></div>');
+        redirect('booking/dataBooking');
+    }
 }

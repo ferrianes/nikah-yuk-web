@@ -41,9 +41,9 @@
 														<?php 
 															// Format harga ke IDR
 															echo harga($produk['harga']);
+															$hargaperproduk = $produk['harga'] * $bt['jumlah'];
 														?>
-														<button type="button" class="btn btn-sm btn-outline-danger fas fw fa-trash float-right"></button>
-														<button type="button" class="btn btn-sm btn-outline-warning fas fw fa-edit float-right mr-1"></button>
+														<a href="#" class="btn btn-sm btn-outline-danger fas fw fa-trash float-right" data-href="<?= base_url('booking/hapusKeranjang/' . $bt['id'] . '/' . $hargaperproduk . '/' . $booking_total_temp['total']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusKeranjang"></a>
 													</p>
 													<div class="row ml-0">
 														<div class="col-sm-4 pl-0">

@@ -1224,4 +1224,23 @@ class Api extends RestController {
             }
         }
     }
+
+    public function booking_temp_delete()
+    {
+        if (array_key_exists('id', $this->delete())) {
+            $where = ['id' => $this->delete('id')];
+        } else {
+            $where = NULL;
+        }
+
+        if ($where === NULL) {
+            $this->response(['message' => 'Masukkan parameter!'], 400);
+        } else {
+            if ($this->Api_model->deleteData('booking_temp', $where) > 0) {
+                $this->response(['message' => 'Data berhasil dihapus'], 200);
+            } else {
+                $this->response(['message' => 'Data tidak ditemukan'], 400);
+            }
+        }
+    }
 }
