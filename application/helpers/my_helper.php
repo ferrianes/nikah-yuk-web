@@ -12,6 +12,7 @@ function is_logged_in_admin() {
 function is_logged_in_kustomer() {
     $ci = get_instance();
     if (!$ci->session->has_userdata('kustomer') OR $ci->session->userdata('kustomer') == FALSE) {
+        $ci->session->set_flashdata('pesan', '<div class="fixed-top"><div class="alert alert-danger alert-message text-center" role="alert">Maaf kamu harus login terlebih dahulu untuk mengakses menu ini.</div></div>');
         redirect('home');
     }
 }

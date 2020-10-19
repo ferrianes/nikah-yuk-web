@@ -27,22 +27,16 @@
 											<p class="card-text mb-1 text-warning font-weight-bold">
 												<?php 
 												// Format harga ke IDR
-												$crncy = new NumberFormatter( 'id_ID', NumberFormatter::CURRENCY );
-												$crncy->setTextAttribute(NumberFormatter::CURRENCY_CODE, 'IDR');
-												$crncy->setAttribute(NumberFormatter::FRACTION_DIGITS, 0);
-												echo $crncy->formatCurrency($p['harga'], "IDR");
+												echo harga($p['harga']);
 												?>
 											</p>
 											<div class="d-flex flex-row justify-content-start">
 												<?php if (filter_output($p['stok']) < 1 ) : ?>
-												<i class='btn btn-sm btn-outline-primary fas fw fa-shopping-cart text-nowrap'> Booking
-													0</i>
+												<i class='btn btn-sm btn-outline-primary fas fw fa-shopping-cart text-nowrap'> Booking 0</i>
 												<?php else : ?>
-												<a class='btn btn-sm btn-outline-primary fas fw fa-shopping-cart text-nowrap'
-													href='<?= base_url('booking/tambahBooking/' . $p['id'] . '/' . $p['harga']); ?>'> Booking</a>
+												<a class='btn btn-sm btn-outline-primary fas fw fa-shopping-cart text-nowrap' href='<?= base_url('booking/tambahBooking/' . $p['id'] . '/' . $p['harga']); ?>'> Booking</a>
 												<?php endif; ?>
-												<a href="<?= base_url('produk/'. seo_title($p['nama']) . '-' . $p['id']); ?>"
-													class="btn btn-sm btn-outline-success fas fw fa-search text-nowrap"> Detail</a>
+												<a href="<?= base_url('produk/'. seo_title($p['nama']) . '-' . $p['id']); ?>" class="btn btn-sm btn-outline-success fas fw fa-search text-nowrap"> Detail</a>
 											</div>
 										</div>
 									</div>
