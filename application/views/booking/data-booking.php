@@ -12,8 +12,17 @@
 							<div class="row">
 								<div class="col-12 col-lg-8">
 									<?php 
+									$text = "Halo, Saya ingin Booking : \n";
+									$text .= "\n";
+
 									foreach ($booking_temp as $key => $bt) : 
 									$produk = $this->Utama_model->getDatas('produk', ['id' => $bt['id_produk']])[0];
+
+									$text .= $key+1 . ". Produk  : " . $produk["nama"] . "\n";
+									$text .= "    Harga    : " . harga($produk["harga"]) . "\n";
+									$text .= "    Jumlah  : " . $bt["jumlah"] . "\n";
+									$text .= "\n";
+
 									?>
 									<input type="hidden" name="id[<?= $key; ?>]" value="<?= $bt['id']; ?>">
 									<div class="card mb-3">
@@ -58,7 +67,10 @@
 											</div> -->
 										</div>
 									</div>
-									<?php endforeach; ?>
+									<?php 
+									endforeach; 
+									$text .= "  Estimasi Total    : " . harga($booking_total_temp['total']);
+									?>
 								</div>
 							</div>
 							<div class="row">
@@ -74,10 +86,10 @@
 							</div>
 							<div class="row" id="button-booking">
 								<div class="col-lg-4">
-									<a href="#" type="submit" class="btn btn-success"><i class="fab fa-fw fa-whatsapp mr-2"></i>Minta Persetujuan Via Whatsapp (ANDROID)</a>
+									<a href="https://wa.me/6285929346973?text=<?= urlencode($text); ?>" type="button" class="btn btn-success"><i class="fab fa-fw fa-whatsapp mr-2"></i>Minta Persetujuan Via Whatsapp (ANDROID)</a>
 								</div>
 								<div class="col-lg-4">
-									<a href="https://web.whatsapp.com/send?phone=6288806940958&text=<?= $text; ?>" target="_blank" type="submit" class="btn btn-success"><i class="fab fa-fw fa-whatsapp mr-2"></i>Minta Persetujuan Via Whatsapp (PC)</a>
+									<a href="https://web.whatsapp.com/send?phone=6285929346973&text=<?= urlencode($text); ?>" target="_blank" type="button" class="btn btn-success"><i class="fab fa-fw fa-whatsapp mr-2"></i>Minta Persetujuan Via Whatsapp (PC)</a>
 								</div>
 							</div>
 						<?php else : ?>
