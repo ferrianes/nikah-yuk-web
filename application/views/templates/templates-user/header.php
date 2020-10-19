@@ -4,7 +4,8 @@
 <head>     
     <meta charset="utf-8">     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">     
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">     
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" href="<?= base_url('assets/img/app/icon.png') ?>">
     <title>NIKAHYUK | <?= $judul; ?></title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
@@ -32,7 +33,7 @@
             <div class="navbar-collapse-header">
                 <div class="row">
                     <div class="col-6 collapse-brand">
-                        <a class="navbar-brand" href="<?= base_url('home/index'); ?>">NIKAHYUK</a>
+                        <img src="<?= base_url('assets/img/app/icon.png') ?>">
                     </div>
                     <div class="col-6 collapse-close">
                         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
