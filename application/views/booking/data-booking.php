@@ -67,7 +67,8 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text text-body bg-lighter" id="basic-addon1">Estimasi Total : </span>
 										</div>
-										<input id="harga" type="text" name="total" class="form-control text-body" data-value="<?= $booking_total_temp['total']; ?>" value="<?= harga($booking_total_temp['total']); ?>" readonly>
+										<input id="harga" type="text" class="form-control text-body" data-value="<?= $booking_total_temp['total']; ?>" value="<?= harga($booking_total_temp['total']); ?>" readonly>
+										<input id="ht" type="hidden" name="total" value="<?= $booking_total_temp['total']; ?>">
 									</div>
 								</div>
 							</div>

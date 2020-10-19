@@ -113,6 +113,7 @@ $(document).ready(function () {
 					newVal = currentVal - 1;
 					$('#harga').val(formatter.format(currentValHarga - harga));
 					$('#harga').attr('data-value', currentValHarga - harga);
+					$('#ht').val(currentValHarga - harga);
 				} 
 				if(parseInt(input.val()) == input.attr('min')) {
 					$(this).attr('disabled', true);
@@ -125,6 +126,7 @@ $(document).ready(function () {
 					newVal = currentVal + 1;
 					$('#harga').val(formatter.format(currentValHarga + harga));
 					$('#harga').attr('data-value', currentValHarga + harga);
+					$('#ht').val(currentValHarga + harga);
 				}
 				if(parseInt(input.val()) == input.attr('max')) {
 					$(this).attr('disabled', true);
