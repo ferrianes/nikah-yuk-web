@@ -27,3 +27,12 @@ function seo_title($s) {
     $s = strtolower(str_replace($c, '-', $s)); // Ganti spasi dengan tanda - dan ubah hurufnya menjadi kecil semua
     return $s;
 }
+
+function harga($harga)
+{
+    $crncy = new NumberFormatter( 'id_ID', NumberFormatter::CURRENCY );
+    $crncy->setTextAttribute(NumberFormatter::CURRENCY_CODE, 'IDR');
+    $crncy->setAttribute(NumberFormatter::FRACTION_DIGITS, 0);
+    $crncy = $crncy->formatCurrency($harga, "IDR");
+    return $crncy;
+}

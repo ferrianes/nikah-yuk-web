@@ -12,7 +12,6 @@
 							<div class="row">
 								<div class="col-12 col-lg-8">
 									<?php 
-									$total = 0;
 									foreach ($booking_temp as $key => $bt) : 
 									$produk = $this->Utama_model->getDatas('produk', ['id' => $bt['id_produk']])[0];
 									?>
@@ -32,11 +31,7 @@
 													<p class="card-text mb-0 text-warning font-weight-bold">
 														<?php 
 															// Format harga ke IDR
-															$crncy = new NumberFormatter( 'id_ID', NumberFormatter::CURRENCY );
-															$crncy->setTextAttribute(NumberFormatter::CURRENCY_CODE, 'IDR');
-															$crncy->setAttribute(NumberFormatter::FRACTION_DIGITS, 0);
-															$total += $produk['harga'];
-															echo $crncy->formatCurrency($produk['harga'], "IDR");
+															echo harga($produk['harga']);
 														?>
 														<button type="button" class="btn btn-sm btn-outline-danger fas fw fa-trash float-right"></button>
 														<button type="button" class="btn btn-sm btn-outline-warning fas fw fa-edit float-right mr-1"></button>
@@ -72,7 +67,7 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text text-body bg-lighter" id="basic-addon1">Estimasi Total : </span>
 										</div>
-										<input id="harga" type="text" name="total" class="form-control text-body" value="<?= $booking_total_temp['total']; ?>" readonly>
+										<input id="harga" type="text" name="total" class="form-control text-body" data-value="<?= $booking_total_temp['total']; ?>" value="<?= harga($booking_total_temp['total']); ?>" readonly>
 									</div>
 								</div>
 							</div>
@@ -81,7 +76,7 @@
 									<a href="#" type="submit" class="btn btn-success"><i class="fab fa-fw fa-whatsapp mr-2"></i>Minta Persetujuan Via Whatsapp (ANDROID)</a>
 								</div>
 								<div class="col-lg-4">
-									<a href="#" type="submit" class="btn btn-success"><i class="fab fa-fw fa-whatsapp mr-2"></i>Minta Persetujuan Via Whatsapp (PC)</a>
+									<a href="https://web.whatsapp.com/send?phone=6288806940958&text=<?= $text; ?>" target="_blank" type="submit" class="btn btn-success"><i class="fab fa-fw fa-whatsapp mr-2"></i>Minta Persetujuan Via Whatsapp (PC)</a>
 								</div>
 							</div>
 						<?php else : ?>

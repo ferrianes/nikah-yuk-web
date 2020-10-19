@@ -93,17 +93,26 @@ $(document).ready(function () {
 		harga	  = parseInt(harga);
 		let input = $("input[name='"+fieldName+"']");
 		let currentVal = parseInt(input.val());
-		let currentValHarga = parseInt($('#harga').val());
+		let currentValHarga = parseInt($('#harga').attr('data-value'));
+
+		// Create our number formatter.
+		let formatter = new Intl.NumberFormat('id-ID', {
+			style: 'currency',
+			currency: 'IDR',
+		
+			// These options are needed to round to whole numbers if that's what you want.
+			minimumFractionDigits: 0,
+			maximumFractionDigits: 0,
+		});
+
 		if (!isNaN(currentVal)) {
 			if(type == 'minus') {
 				
 				if(currentVal > input.attr('min')) {
 					input.val(currentVal - 1).change();
 					newVal = currentVal - 1;
-					$('#harga').val(currentValHarga - harga);
-					// $('#harga').html(function(i, val) {
-					// 	return val*1-harga;
-					// });
+					$('#harga').val(formatter.format(currentValHarga - harga));
+					$('#harga').attr('data-value', currentValHarga - harga);
 				} 
 				if(parseInt(input.val()) == input.attr('min')) {
 					$(this).attr('disabled', true);
@@ -114,10 +123,8 @@ $(document).ready(function () {
 				if(currentVal < input.attr('max')) {
 					input.val(currentVal + 1).change();
 					newVal = currentVal + 1;
-					$('#harga').val(currentValHarga + harga);
-					// $('#harga').html(function(i, val) {
-					// 	return val*1+harga;
-					// });
+					$('#harga').val(formatter.format(currentValHarga + harga));
+					$('#harga').attr('data-value', currentValHarga + harga);
 				}
 				if(parseInt(input.val()) == input.attr('max')) {
 					$(this).attr('disabled', true);

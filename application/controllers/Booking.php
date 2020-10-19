@@ -80,6 +80,26 @@ class Booking extends CI_Controller {
         if (isset($data['booking_temp']['status']) && $data['booking_temp']['status'] === FALSE) {
             $data['booking_temp'] = [];
         }
+
+        $text = "Halo, Saya ingin Booking : \n";
+        $text .= "\n";
+
+        if ( ! empty($data['booking_temp'])) {
+            $no = 1;
+            foreach ($data['booking_temp'] as $bt) {
+                $produk = $this->Utama_model->getDatas('produk', ['id' => $bt['id_produk']])[0];
+                $text .= $no . ". Produk  : " . $produk["nama"] . "\n";
+                $text .= "    Harga    : " . harga($produk["harga"]) . "\n";
+                $text .= "    Jumlah  : " . $bt["jumlah"] . "\n";
+                $text .= "\n";
+
+                $no++;
+            }
+
+            $text .= "  Estimasi Total    : " . harga($data['booking_total_temp']['total']);
+        }
+
+        $data['text'] = urlencode($text);
     
         $this->load->view('templates/templates-user/header', $data);
         $this->load->view('booking/data-booking', $data);
