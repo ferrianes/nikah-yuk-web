@@ -37,6 +37,7 @@
 											<div class="col col-md col-lg">
 												<div class="card-body pl-3 py-1 pr-2 pr-md-3">
 													<p class="card-text mb-0 font-weight-bold"><?= $produk['nama'] ?></p>
+													<small class="text-muted"><?= $produk['kategori'] ?></small>
 													<p class="card-text mb-0 text-warning font-weight-bold">
 														<?php 
 															// Format harga ke IDR
@@ -45,21 +46,6 @@
 														?>
 														<a href="#" class="btn btn-sm btn-outline-danger fas fw fa-trash float-right" data-href="<?= base_url('booking/hapusKeranjang/' . $bt['id'] . '/' . $hargaperproduk . '/' . $booking_total_temp['total']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusKeranjang"></a>
 													</p>
-													<div class="row ml-0">
-														<div class="col-sm-4 pl-0">
-															<div class="input-group input-group-sm">
-																<span class="input-group-prepend">
-																	<button type="button" class="btn btn-outline-default btn-number fa fa-minus" <?= $bt['jumlah'] == 1 ? 'disabled="disabled"' : ''; ?> data-type="minus" data-field="jumlah[<?= $key; ?>]" data-harga="<?= $produk['harga'] ?>" data-oldval="<?= $bt['jumlah'] ?>">
-																	</button>
-																</span>
-																<input type="text" name="jumlah[<?= $key; ?>]" class="form-control input-number text-center bg-white" value="<?= $bt['jumlah'] ?>" min="1" max="<?= $produk['stok']; ?>" data-oldval="<?= $bt['jumlah'] ?>" data-key="<?= $key; ?>" readonly>
-																<span class="input-group-append">
-																	<button type="button" class="btn btn-outline-primary btn-number fa fa-plus" data-type="plus" data-field="jumlah[<?= $key; ?>]" data-harga="<?= $produk['harga'] ?>" data-oldval="<?= $bt['jumlah'] ?>">
-																	</button>
-																</span>
-															</div>
-														</div>
-													</div>
 												</div>
 											</div>
 											<!-- <div class="col col-md col-lg align-self-center">
