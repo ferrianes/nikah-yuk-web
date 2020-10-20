@@ -8,7 +8,7 @@
 					<h2 class="text-center mb-4">Detail Produk</h2>
 					<nav aria-label="breadcrumb" role="navigation">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="">Produk</a></li>
+							<li class="breadcrumb-item"><a href="<?= base_url('produk') ?>">Produk</a></li>
 							<li class="breadcrumb-item"><a href="#">Kategori</a></li>
 							<li class="breadcrumb-item"><a href="<?= base_url(); ?>produk/kategori/<?= seo_title($produk['kategori']); ?>"><?= $produk['kategori']; ?></a></li>
 							<li class="breadcrumb-item active" aria-current="page"><?= $produk['nama']; ?></li>
