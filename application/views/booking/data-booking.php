@@ -43,7 +43,7 @@
 															echo harga($produk['harga']);
 															$hargaperproduk = $produk['harga'] * $bt['jumlah'];
 														?>
-														<a href="#" class="btn btn-sm btn-outline-danger fas fw fa-trash float-right" data-href="<?= base_url('booking/hapusKeranjang/' . $bt['id'] . '/' . $hargaperproduk . '/' . $booking_total_temp['total']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusKeranjang"></a>
+														<a href="#" class="btn btn-sm btn-outline-danger fas fw fa-trash float-right" data-href="<?= base_url('booking/hapusKeranjang/' . $bt['id'] . '/' . $hargaperproduk . '/' . $booking_total_temp[0]['total']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusKeranjang"></a>
 													</p>
 												</div>
 											</div>
@@ -54,7 +54,7 @@
 									</div>
 									<?php 
 									endforeach; 
-									$text .= "  Estimasi Total    : " . harga($booking_total_temp['total']);
+									$text .= "  Estimasi Total    : " . harga($booking_total_temp[0]['total']);
 									?>
 								</div>
 							</div>
@@ -64,8 +64,8 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text text-body bg-lighter" id="basic-addon1">Estimasi Total : </span>
 										</div>
-										<input id="harga" type="text" class="form-control text-body" data-value="<?= $booking_total_temp['total']; ?>" value="<?= harga($booking_total_temp['total']); ?>" readonly>
-										<input id="ht" type="hidden" name="total" value="<?= $booking_total_temp['total']; ?>">
+										<input id="harga" type="text" class="form-control text-body" data-value="<?= $booking_total_temp[0]['total']; ?>" value="<?= harga($booking_total_temp[0]['total']); ?>" readonly>
+										<input id="ht" type="hidden" name="total" value="<?= $booking_total_temp[0]['total']; ?>">
 									</div>
 								</div>
 							</div>

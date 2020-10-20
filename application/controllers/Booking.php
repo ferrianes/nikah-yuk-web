@@ -75,7 +75,7 @@ class Booking extends CI_Controller {
 
         $data['booking_temp'] = $this->Utama_model->getDatas('booking_temp', ['id_kustomer' => $this->session->id_kustomer]);
 
-        $data['booking_total_temp'] = $this->Utama_model->getDatas('booking_total_temp', ['id_kustomer' => $this->session->id_kustomer])[0];
+        $data['booking_total_temp'] = $this->Utama_model->getDatas('booking_total_temp', ['id_kustomer' => $this->session->id_kustomer]);
 
         if (isset($data['booking_temp']['status']) && $data['booking_temp']['status'] === FALSE) {
             $data['booking_temp'] = [];
