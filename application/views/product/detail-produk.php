@@ -17,7 +17,7 @@
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
 							<?php if ($produk['gambar'] === NULL) : ?>
-								<?php if (isset($produk_gambar['status']) && $produk_gambar['status'] == FALSE) : ?>
+								<?php if (isset($produks_gambar['status']) && $produks_gambar['status'] == FALSE) : ?>
 									<img src="<?= base_url('assets/img/api/produk/noimage_content.jpg') ?>" class="img-thumbnail" alt="">
 								<?php else : ?>
 									<!-- Carousel -->
@@ -76,7 +76,7 @@
 									<!-- End Carousel -->
 								<?php endif;?>
 							<?php else : ?>
-								<?php if (isset($produk_gambar['status']) && $produk_gambar['status'] == FALSE) : ?>
+								<?php if (isset($produks_gambar['status']) && $produks_gambar['status'] == FALSE) : ?>
 									<div class="text-center mb-2">
 										<img class="img-thumbnail thumb" src="<?= base_url('assets/img/api/produk/' . $produk['gambar']) ?>" alt="slide ke-1">
 									</div>
@@ -87,7 +87,7 @@
 											<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
 											<?php 
 											$i = 1; 
-											foreach ($produk_gambar as $produk_gambar) : 
+											foreach ($produks_gambar as $produk_gambar) : 
 											?>
 												<li data-target="#carouselExampleIndicators" data-slide-to="<?= $i ?>"></li>
 											<?php 
@@ -101,7 +101,7 @@
 											</div>
 											<?php 
 											$i = 2; 
-											foreach ($produk_gambar as $produk_gambar) : 
+											foreach ($produks_gambar as $produk_gambar) : 
 											?>
 											<div class="carousel-item">
 												<?php 
