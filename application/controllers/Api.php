@@ -500,7 +500,9 @@ class Api extends RestController {
     public function produk_get()
     {
         if (array_key_exists('id', $this->get())) {
-            $where = ['produk.id' => $this->get('id')];
+            $where = [
+                'produk.id' => $this->get('id')
+            ];
         } else if (array_key_exists('id_kategori', $this->get())) {
             $where = ['produk.id_kategori' => $this->get('id_kategori')];
         } else {
@@ -519,7 +521,7 @@ class Api extends RestController {
             'produk.*, kategori.nama AS kategori, produk_gambar.gambar', // Select
             'produk', // From
             'kategori', 'kategori.id = produk.id_kategori', // Join On
-            'produk_gambar', 'produk_gambar.produk_id = produk.id', // Join On Left
+            'produk_gambar', '(produk_gambar.produk_id = produk.id) && (produk_gambar.thumbnail = 1)', // Join On Left
             $limit, $start, // Limit Offset
             $where // Where
         );
