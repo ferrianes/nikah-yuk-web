@@ -17,8 +17,64 @@
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
 							<?php if ($produk['gambar'] === NULL) : ?>
-							<img src="<?= base_url('assets/img/api/produk/noimage_content.jpg') ?>"
-								class="img-thumbnail" alt="">
+								<?php if (isset($produk_gambar['status']) && $produk_gambar['status'] == FALSE) : ?>
+									<img src="<?= base_url('assets/img/api/produk/noimage_content.jpg') ?>" class="img-thumbnail" alt="">
+								<?php else : ?>
+									<!-- Carousel -->
+									<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+										<ol class="carousel-indicators">
+											<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+											<?php 
+											$i = 1; 
+											foreach ($produks_gambar as $produk_gambar) : 
+											?>
+												<li data-target="#carouselExampleIndicators" data-slide-to="<?= $i ?>"></li>
+											<?php 
+											$i++; 
+											endforeach; 
+											?>
+										</ol>
+										<div class="carousel-inner">
+											<div class="carousel-item active">
+												<img class="d-block w-100 thumb" src="<?= base_url('assets/img/api/produk/noimage_content.jpg') ?>" alt="slide ke-1">
+											</div>
+											<?php 
+											$i = 2; 
+											foreach ($produks_gambar as $produk_gambar) : 
+											?>
+											<div class="carousel-item">
+												<?php 
+												$file_parts = pathinfo($produk_gambar['gambar']);
+												
+												if ($file_parts['extension'] == 'mp4' OR $file_parts['extension'] == 'ogg' OR $file_parts['extension'] == 'webm') : 
+												?>
+													<video autoplay loop muted class="w-100 thumb-video">
+														<source src="<?= base_url('assets/img/api/produk/') . $produk_gambar['gambar'] ?>" type="video/<?= $file_parts['extension'] ?>">
+														Your browser does not support HTML video.
+													</video>
+												<?php else : ?>
+													<img class="d-block w-100 thumb"
+														src="<?= base_url('assets/img/api/produk/') . $produk_gambar['gambar'] ?>" alt="slide ke-<?= $i; ?>">
+												<?php endif; ?>
+											</div>
+											<?php 
+											$i++; 
+											endforeach; 
+											?>
+										</div>
+										<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+											data-slide="prev">
+											<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+											<span class="sr-only">Previous</span>
+										</a>
+										<a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+											data-slide="next">
+											<span class="carousel-control-next-icon" aria-hidden="true"></span>
+											<span class="sr-only">Next</span>
+										</a>
+									</div>
+									<!-- End Carousel -->
+								<?php endif;?>
 							<?php else : ?>
 								<?php if (isset($produk_gambar['status']) && $produk_gambar['status'] == FALSE) : ?>
 									<div class="text-center mb-2">
@@ -41,9 +97,7 @@
 										</ol>
 										<div class="carousel-inner">
 											<div class="carousel-item active">
-												<img class="d-block w-100 thumb"
-													src="<?= base_url('assets/img/api/produk/' . $produk['gambar']) ?>"
-													alt="slide ke-1">
+												<img class="d-block w-100 thumb" src="<?= base_url('assets/img/api/produk/' . $produk['gambar']) ?>" alt="slide ke-1">
 											</div>
 											<?php 
 											$i = 2; 
@@ -56,12 +110,12 @@
 												if ($file_parts['extension'] == 'mp4' OR $file_parts['extension'] == 'ogg' OR $file_parts['extension'] == 'webm') : 
 												?>
 													<video autoplay loop muted class="w-100 thumb-video">
-														<source src="<?= base_url('assets/img/api/products/') . $produk_gambar['gambar'] ?>" type="video/<?= $file_parts['extension'] ?>">
+														<source src="<?= base_url('assets/img/api/produk/') . $produk_gambar['gambar'] ?>" type="video/<?= $file_parts['extension'] ?>">
 														Your browser does not support HTML video.
 													</video>
 												<?php else : ?>
 													<img class="d-block w-100 thumb"
-														src="<?= base_url('assets/img/api/products/') . $produk_gambar['gambar'] ?>" alt="slide ke-<?= $i; ?>">
+														src="<?= base_url('assets/img/api/produk/') . $produk_gambar['gambar'] ?>" alt="slide ke-<?= $i; ?>">
 												<?php endif; ?>
 											</div>
 											<?php 

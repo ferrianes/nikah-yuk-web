@@ -133,7 +133,7 @@ class Produk extends CI_Controller {
 
         $data['kategori'] = $this->Utama_model->getDatas('kategori');
 
-        $data['produk_gambar'] = $this->Utama_model->getDatas('produk_gambar', ['produk_id' => $id, 'thumbnail' => 0]);
+        $data['produks_gambar'] = $this->Utama_model->getDatas('produk_gambar', ['produk_id' => $id, 'thumbnail' => 0]);
 
          //jika sudah login dan belum login
         if ($this->session->userdata('kustomer') == TRUE){
