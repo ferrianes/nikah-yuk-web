@@ -3,7 +3,7 @@
         <div class="row align-items-center">
             <div class="col-lg-7 col-12">
                 <div class="info info-horizontal info-hover-primary">
-                    <div class="description pl-4">
+                    <div class="description">
                         <h5 class="montserrat">Simple dan Mudah untuk Membantu Merencanakan Hari Spesialmu.</h5>
                     </div>
                 </div>
@@ -71,8 +71,8 @@
     
                     $thumbnail = $this->Utama_model->getDatas('produk_gambar', ['produk_id' => $p['id'], 'thumbnail' => 1]); 
                     ?>
-                    <div class="col-md-6 mb-3 d-flex">
-                        <div class="card shadow flex-fill">
+                    <div class="col-md-6 mb-3">
+                        <div class="card shadow">
                             <?php if (isset($thumbnail['status']) && $thumbnail['status'] == FALSE) : ?>
                                 <img src="<?php echo base_url('assets/img/api/produk/noimage_content.jpg')?>" class="card-img-top">
                             <?php else : ?>
@@ -89,11 +89,11 @@
                                 </p>
                                 <div class="d-flex flex-row justify-content-center">
                                     <?php if (filter_output($p['stok']) < 1 ) : ?>
-                                    <i class='btn btn-sm btn-outline-primary fas fw fa-shopping-cart text-nowrap'> Booking 0</i>
+                                    <i class='btn btn-sm btn-outline-primary fas fw fa-shopping-cart'> Booking 0</i>
                                     <?php else : ?>
-                                    <a class='btn btn-sm btn-outline-primary fas fw fa-shopping-cart text-nowrap' href='<?= base_url('booking/tambahBooking/' . $p['id'] . '/' . $p['harga']); ?>'> Booking</a>
+                                    <a class='btn btn-sm btn-outline-primary fas fw fa-shopping-cart' href='<?= base_url('booking/tambahBooking/' . $p['id'] . '/' . $p['harga']); ?>'> Booking</a>
                                     <?php endif; ?>
-                                    <a href="<?= base_url('produk/'. seo_title($p['nama']) . '-' . $p['id']); ?>" class="btn btn-sm btn-outline-success fas fw fa-search text-nowrap"> Detail</a>
+                                    <a href="<?= base_url('produk/'. seo_title($p['nama']) . '-' . $p['id']); ?>" class="btn btn-sm btn-outline-success fas fw fa-search"> Detail</a>
                                 </div>
                             </div>
                         </div>
