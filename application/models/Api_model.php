@@ -64,7 +64,7 @@ class Api_model extends CI_Model {
         }
     }
 
-    public function getThreeJoinDatas($select, $from, $join, $on, $join2, $on2, $limit = 10, $offset = 0, $where = NULL)
+    public function getThreeJoinDatas($select, $from, $join, $on, $join2, $on2, $where = NULL, $limit = 10, $offset = 0)
     {
         if ($where === NULL) {
             $this->db->select($select);

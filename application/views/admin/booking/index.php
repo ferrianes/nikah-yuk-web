@@ -29,13 +29,12 @@
                                     <th scope="col">Produk</th>
                                     <th scope="col">Tanggal Dibooking</th>
                                     <th scope="col">No. Telp Customer</th>
-                                    <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php if (is_null($booking)) : ?>
                                 <tr>
-                                    <td colspan="8" class="text-center">Data kosong</td>
+                                    <td colspan="5" class="text-center">Data kosong</td>
                                 </tr>
                                 <?php else : ?>
                                     <!-- Looping product -->
@@ -49,9 +48,6 @@
                                         <td><?= filter_output($booking['produk']); ?></td>
                                         <td><?= Carbon::parse(filter_output($booking['tgl_booking']))->locale('id_ID')->isoFormat('dddd, D MMMM Y'); ?></td>
                                         <td><?= filter_output($booking['telepon']); ?></td>
-                                        <td>
-                                            <a href="<?= base_url('admin/detailbooking/'.$booking['id_booking']); ?>" class="badge badge-info"><i class="fas fa-fw fa-info"></i> Detail</a>
-                                        </td>
                                     </tr>
                                     <?php 
                                     $no++; 

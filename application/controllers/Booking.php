@@ -1,5 +1,4 @@
 <?php
-use Carbon\Carbon;
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Booking extends CI_Controller {
@@ -75,7 +74,12 @@ class Booking extends CI_Controller {
 
         $data['booking_temp'] = $this->Utama_model->getDatas('booking_temp', ['id_kustomer' => $this->session->id_kustomer]);
 
+        usort($data['booking_temp'], function($a, $b) {
+            return -($a['nm_lengkap'] <=> $b['nm_lengkap']);
+        });
+
         $data['booking_total_temp'] = $this->Utama_model->getDatas('booking_total_temp', ['id_kustomer' => $this->session->id_kustomer]);
+
 
         if (isset($data['booking_temp']['status']) && $data['booking_temp']['status'] === FALSE) {
             $data['booking_temp'] = [];
