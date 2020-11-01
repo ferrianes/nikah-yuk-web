@@ -385,20 +385,10 @@ class Admin extends CI_Controller {
     
         $data['admin'] = $this->Utama_model->getDatas('admin', ['email' => $this->session->userdata('email')])[0];
 
-        $data['booking'] = $this->Utama_model->getDatas('booking');
+        $data['booking'] = $this->Utama_model->getDatas('booking_temp');
         if (isset($data['booking']['status']) && $data['booking']['status'] == FALSE) {
             $data['booking'] = NULL;
-        } else {
-            $array = [];
-            foreach ($data['booking'] as $key => $value) {  
-                $kustomer = $this->Utama_model->getDatas('kustomer', ['id_kustomer' => $data['booking'][$key]['id_kustomer']])[0];
-                $array[] = [
-                    'nm_lengkap' => $kustomer['nm_lengkap']
-                ];
-            }
-    
-            $data['kustomer'] = $array;
-        }        
+        }
 
         $data['menus_by_access_menu'] = $this->Utama_model->getDatas('menus_by_access_menu', ['level_id' => $this->session->userdata('level')]);
 

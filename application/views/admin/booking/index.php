@@ -24,18 +24,17 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">ID Booking</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Tanggal Dibooking</th>
-                                    <th scope="col">Tanggal Acara</th>
                                     <th scope="col">Nama Customer</th>
+                                    <th scope="col">Produk</th>
+                                    <th scope="col">Tanggal Dibooking</th>
+                                    <th scope="col">No. Telp Customer</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php if (is_null($booking)) : ?>
                                 <tr>
-                                    <td colspan="7" class="text-center">Data kosong</td>
+                                    <td colspan="8" class="text-center">Data kosong</td>
                                 </tr>
                                 <?php else : ?>
                                     <!-- Looping product -->
@@ -45,11 +44,10 @@
                                     ?>
                                     <tr>
                                         <th scope="row"><?= $no; ?></th>
-                                        <td><?= filter_output($booking['id_booking']); ?></td>
-                                        <td><?= filter_output($booking['status']); ?></td>
+                                        <td><?= filter_output($booking['nm_lengkap']); ?></td>
+                                        <td><?= filter_output($booking['produk']); ?></td>
                                         <td><?= filter_output($booking['tgl_booking']); ?></td>
-                                        <td><?= filter_output($booking['tgl_acara']); ?></td>
-                                        <td><?= filter_output($kustomer[$key]['nm_lengkap']); ?></td>
+                                        <td><?= filter_output($booking['telepon']); ?></td>
                                         <td>
                                             <a href="<?= base_url('admin/detailbooking/'.$booking['id_booking']); ?>" class="badge badge-info"><i class="fas fa-fw fa-info"></i> Detail</a>
                                         </td>

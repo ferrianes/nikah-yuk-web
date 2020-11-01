@@ -287,14 +287,21 @@ class Api extends RestController {
         $id_kustomer = $this->get('id_kustomer');
 
         if (array_key_exists('id', $this->get())) {
-            $where = ['id' => $id];
+            $where = ['booking_temp.id' => $id];
         } else if (array_key_exists('id_kustomer', $this->get())) {
-            $where = ['id_kustomer' => $id_kustomer];
+            $where = ['booking_temp.id_kustomer' => $id_kustomer];
         } else {
             $where = NULL;
         }
 
         $booking_temp = $this->Api_model->getDatas('booking_temp', $where);
+        $booking_temp = $this->Api_model->getThreeJoinDatas(
+            'booking_temp.id AS id_booking, booking_temp.tgl_booking, produk.nama AS produk, kustomer.nm_lengkap, kustomer.telepon', // Select
+            'booking_temp', // From
+            'produk', 'produk.id = booking_temp.id_produk', // Join On
+            'kustomer', 'kustomer.id_kustomer = booking_temp.id_kustomer', // Join On
+            $where //Where
+        );
         // Check if the booking_temp data store contains booking_temp
         if ( $booking_temp )
         {
