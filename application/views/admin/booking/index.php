@@ -1,3 +1,4 @@
+<?php use Carbon\Carbon; ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -46,7 +47,7 @@
                                         <th scope="row"><?= $no; ?></th>
                                         <td><?= filter_output($booking['nm_lengkap']); ?></td>
                                         <td><?= filter_output($booking['produk']); ?></td>
-                                        <td><?= filter_output($booking['tgl_booking']); ?></td>
+                                        <td><?= Carbon::parse(filter_output($booking['tgl_booking']))->locale('id_ID')->isoFormat('dddd, D MMMM Y'); ?></td>
                                         <td><?= filter_output($booking['telepon']); ?></td>
                                         <td>
                                             <a href="<?= base_url('admin/detailbooking/'.$booking['id_booking']); ?>" class="badge badge-info"><i class="fas fa-fw fa-info"></i> Detail</a>
