@@ -21,7 +21,7 @@ class Booking extends CI_Controller {
             'jumlah' => 1
         ];
 
-        $temp = $this->Utama_model->getDatas('jumlah_booking_temp', ['id_produk' => $id_produk]);
+        $temp = $this->Utama_model->getDatas('jumlah_booking_temp', ['id_produk' => $id_produk, 'id_kustomer' => $id_kustomer]);
 
         if (isset($temp['status']) && $temp['status'] === FALSE) {
             $temp = 0;
@@ -73,6 +73,10 @@ class Booking extends CI_Controller {
         $data['kustomer'] = $this->Utama_model->getDatas('kustomer', ['email' => $email])[0];
 
         $data['booking_temp'] = $this->Utama_model->getDatas('booking_temp', ['id_kustomer' => $this->session->id_kustomer]);
+
+        if (isset($data['booking_temp']['status']) && $data['booking_temp']['status'] === FALSE) {
+            $data['booking_temp'] = [];
+        }
 
         usort($data['booking_temp'], function($a, $b) {
             return -($a['nm_lengkap'] <=> $b['nm_lengkap']);
