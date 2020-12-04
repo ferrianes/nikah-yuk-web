@@ -579,9 +579,8 @@ class Api extends RestController {
 
     public function jumlah_booking_temp_get()
     {
-        if (array_key_exists('id_produk', $this->get()) && array_key_exists('id_kustomer', $this->get())) {
+        if (array_key_exists('id_kustomer', $this->get())) {
             $where = [
-                'id_produk' => $this->get('id_produk'),
                 'id_kustomer' => $this->get('id_kustomer')
             ];
         } else {
