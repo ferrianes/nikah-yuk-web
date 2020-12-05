@@ -583,6 +583,10 @@ class Api extends RestController {
             $where = [
                 'id_kustomer' => $this->get('id_kustomer')
             ];
+        } else if (array_key_exists('id_produk', $this->get())) {
+            $where = [
+                'id_produk' => $this->get('id_produk')
+            ];
         } else {
             $where = NULL;
         }
