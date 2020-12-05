@@ -15,11 +15,10 @@
 									$text = "Halo, Saya ingin Booking : \n";
 									$text .= "\n";
 
-									foreach ($booking_temp as $key => $bt) : 
-									$produk = $this->Utama_model->getDatas('produk', ['id' => $bt['id_produk']])[0];
+									foreach ($booking_temp as $key => $bt) :
 
-									$text .= $key+1 . ". Produk  : " . $produk["nama"] . "\n";
-									$text .= "    Harga    : " . harga($produk["harga"]) . "\n";
+									$text .= $key+1 . ". Produk  : " . $bt["produk"] . "\n";
+									$text .= "    Harga    : " . harga($bt["harga"]) . "\n";
 									$text .= "\n";
 
 									?>
@@ -27,21 +26,21 @@
 									<div class="card mb-3">
 										<div class="row no-gutters">
 											<div class="col-3 col-md-2 col-lg-2">
-												<?php if ($produk['gambar'] == NULL) : ?>
+												<?php if ($bt['gambar'] == NULL) : ?>
 													<img src="<?= base_url('assets/img/api/produk/noimage_content.jpg')?>" alt="Raised image" class="img-fluid rounded card-img" style="width: 100px;">
 												<?php else : ?>
-													<img src="<?= base_url('assets/img/api/produk/' . $produk['gambar'])?>" alt="Raised image" class="img-fluid rounded card-img" style="width: 100px;">
+													<img src="<?= base_url('assets/img/api/produk/' . $bt['gambar'])?>" alt="Raised image" class="img-fluid rounded card-img" style="width: 100px;">
 												<?php endif; ?>
 											</div>
 											<div class="col col-md col-lg">
 												<div class="card-body pl-3 py-1 pr-2 pr-md-3">
-													<p class="card-text mb-0 font-weight-bold"><?= $produk['nama'] ?></p>
-													<small class="text-muted"><?= $produk['kategori'] ?></small>
+													<p class="card-text mb-0 font-weight-bold"><?= $bt['produk'] ?></p>
+													<small class="text-muted"><?= $bt['kategori'] ?></small>
 													<p class="card-text mb-0 text-warning font-weight-bold">
 														<?php 
 															// Format harga ke IDR
-															echo harga($produk['harga']);
-															$hargaperproduk = $produk['harga'] * $bt['jumlah'];
+															echo harga($bt['harga']);
+															$hargaperproduk = $bt['harga'] * $bt['jumlah'];
 														?>
 														<a href="#" class="btn btn-sm btn-outline-danger fas fw fa-trash float-right" data-href="<?= base_url('booking/hapusKeranjang/' . $bt['id'] . '/' . $hargaperproduk . '/' . $booking_total_temp[0]['total']) ?>" data-toggle="modal" data-target="#modalKonfirmasiHapusKeranjang"></a>
 													</p>
