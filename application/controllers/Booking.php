@@ -21,7 +21,7 @@ class Booking extends CI_Controller {
             'jumlah' => 1
         ];
 
-        $temp = $this->Utama_model->getDatas('jumlah_booking_temp', ['id_produk' => $id_produk]);
+        $temp = $this->Utama_model->getDatas('jumlah_booking_temp', ['id_kustomer' => $id_kustomer, 'id_produk' => $id_produk]);
 
         if (isset($temp['status']) && $temp['status'] === FALSE) {
             $temp = 0;
