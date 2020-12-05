@@ -294,13 +294,13 @@ class Api extends RestController {
             $where = NULL;
         }
 
-        $booking_temp = $this->Api_model->getDatas('booking_temp', $where);
         $booking_temp = $this->Api_model->getThreeJoinDatas(
             'booking_temp.* ,produk.nama AS produk, kustomer.nm_lengkap, kustomer.telepon', // Select
             'booking_temp', // From
             'produk', 'produk.id = booking_temp.id_produk', // Join On
             'kustomer', 'kustomer.id_kustomer = booking_temp.id_kustomer', // Join On
-            $where //Where
+            $where, //Where
+            999 // limit
         );
         // Check if the booking_temp data store contains booking_temp
         if ( $booking_temp )
