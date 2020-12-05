@@ -294,11 +294,12 @@ class Api extends RestController {
             $where = NULL;
         }
 
-        $booking_temp = $this->Api_model->getThreeJoinDatas(
-            'booking_temp.* ,produk.nama AS produk, kustomer.nm_lengkap, kustomer.telepon', // Select
+        $booking_temp = $this->Api_model->getFourJoinDatas(
+            'booking_temp.* , produk.nama AS produk, produk.harga, kustomer.nm_lengkap, kustomer.telepon, kategori.nama AS kategori', // Select
             'booking_temp', // From
             'produk', 'produk.id = booking_temp.id_produk', // Join On
             'kustomer', 'kustomer.id_kustomer = booking_temp.id_kustomer', // Join On
+            'kategori', 'kategori.id = produk.id_kategori', // Join On
             $where, //Where
             999 // limit
         );

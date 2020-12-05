@@ -103,4 +103,26 @@ class Api_model extends CI_Model {
             return $this->db->get()->result_array();
         }
     }
+
+    public function getFourJoinDatas($select, $from, $join, $on, $join2, $on2, $join3, $on3, $where = NULL, $limit = 10, $offset = 0)
+    {
+        if ($where === NULL) {
+            $this->db->select($select);
+            $this->db->from($from);
+            $this->db->join($join, $on);
+            $this->db->join($join2, $on2);
+            $this->db->join($join3, $on3);
+            $this->db->limit($limit, $offset);
+            return $this->db->get()->result_array();
+        } else {
+            $this->db->select($select);
+            $this->db->from($from);
+            $this->db->join($join, $on);
+            $this->db->join($join2, $on2);
+            $this->db->join($join3, $on3);
+            $this->db->where($where);
+            $this->db->limit($limit, $offset);
+            return $this->db->get()->result_array();
+        }
+    }
 }
