@@ -104,7 +104,7 @@ class Api_model extends CI_Model {
         }
     }
 
-    public function getLeftFiveJoinDatas($select, $from, $join, $on, $join2, $on2, $join3, $on3, $join4, $on4, $where = NULL, $limit = 10, $offset = 0)
+    public function getLeftFiveJoinDatas($select, $from, $join, $on, $join2, $on2, $join3, $on3, $join4, $on4, $where = NULL, $limit = 10, $offset = 0, $order=NULL, $by=NULL)
     {
         if ($where === NULL) {
             $this->db->select($select);
@@ -113,6 +113,7 @@ class Api_model extends CI_Model {
             $this->db->join($join2, $on2);
             $this->db->join($join3, $on3);
             $this->db->join($join4, $on4);
+            $this->db->order_by($order, $by);
             $this->db->limit($limit, $offset);
             return $this->db->get()->result_array();
         } else {
@@ -123,6 +124,7 @@ class Api_model extends CI_Model {
             $this->db->join($join3, $on3);
             $this->db->join($join4, $on4);
             $this->db->where($where);
+            $this->db->order_by($order, $by);
             $this->db->limit($limit, $offset);
             return $this->db->get()->result_array();
         }

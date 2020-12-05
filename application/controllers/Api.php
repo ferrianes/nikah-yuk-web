@@ -301,8 +301,10 @@ class Api extends RestController {
             'kustomer', 'kustomer.id_kustomer = booking_temp.id_kustomer', // Join On
             'kategori', 'kategori.id = produk.id_kategori', // Join On
             'produk_gambar', '(produk_gambar.produk_id = produk.id) && (produk_gambar.thumbnail = 1)', // Join On Left
-            $where, //Where
-            999 // limit
+            $where, // Where
+            999, // limit
+            0, // offset
+            'booking_temp.id', 'ASC' // Order By
         );
         // Check if the booking_temp data store contains booking_temp
         if ( $booking_temp )
