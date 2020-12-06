@@ -1255,12 +1255,14 @@ class Api extends RestController {
     {
         if (array_key_exists('id', $this->delete())) {
             $where = ['id' => $this->delete('id')];
+        } else if (array_key_exists('id', $this->input->get())) {
+            $where = ['id' => $this->input->get('id')];
         } else {
             $where = NULL;
         }
 
         if ($where === NULL) {
-            $this->response(['message' => 'Masukkan parameter!'], 400);
+            $this->response(['message' => $this->input->get()], 400);
         } else {
             if ($this->Api_model->deleteData('booking_temp', $where) > 0) {
                 $this->response(['message' => 'Data berhasil dihapus'], 200);
