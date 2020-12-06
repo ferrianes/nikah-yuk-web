@@ -1262,7 +1262,7 @@ class Api extends RestController {
         }
 
         if ($where === NULL) {
-            $this->response(['message' => $this->input->get()], 400);
+            $this->response(['message' => 'Masukkan parameter'], 400);
         } else {
             if ($this->Api_model->deleteData('booking_temp', $where) > 0) {
                 $this->response(['message' => 'Data berhasil dihapus'], 200);
